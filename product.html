@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Прибор — ГК «УЛЬТРА»</title>
+<meta name="theme-color" content="#0a0810">
+<script>document.documentElement.classList.add('js');try{if(sessionStorage.getItem('ultraNav'))document.documentElement.classList.add('arriving')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=2">
+</head>
+<body data-page="product">
+<div id="header-slot"></div>
+
+<main>
+  <section class="page-head" style="padding-bottom:24px"><div class="wrap">
+    <nav class="crumbs" aria-label="Хлебные крошки" style="margin:0"><a href="index.html">Главная</a><span><a href="catalog.html">Каталог</a></span><span><a data-sec-link href="#"></a></span><span data-crumb></span></nav>
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="pdp">
+      <div class="gallery">
+        <div class="gallery-main" data-zoom><img data-main alt=""><div class="scan"></div><div class="badges" data-badges style="top:16px;left:16px"></div></div>
+        <div class="thumbs" data-thumbs></div>
+      </div>
+      <div class="pdp-info">
+        <span class="marker" data-type></span>
+        <h1 data-name></h1>
+        <div class="pdp-type" data-desc-short></div>
+        <div class="pdp-badges" data-chips></div>
+        <div class="kpis" data-kpis></div>
+        <div class="pdp-cta" data-cta-anchor>
+          <button class="btn btn-accent" data-modal="Запрос ТКП" data-product-btn>Запросить ТКП <i data-i="arrow"></i></button>
+          <a class="btn btn-line" href="#docs">Опросный лист <i data-i="down"></i></a>
+        </div>
+        <div class="assure">
+          <div><i data-i="shield"></i>Внесён в Госреестр СИ, сертификаты ТР ТС</div>
+          <div><i data-i="gauge"></i>Первичная поверка на собственной базе УЛЬТРА-СТАНДАРТ</div>
+          <div><i data-i="truck"></i>Поставка по России и СНГ, пусконаладка на объекте</div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="tabs" data-tabs aria-label="Разделы карточки">
+      <a href="#about" class="is-active">Описание</a><a href="#specs">Характеристики</a><a href="#docs">Документация</a><a href="#apps">Применение</a><a href="#related">Похожие</a>
+    </nav>
+
+    <div class="pdp-sec" id="about">
+      <h2 data-blur>Описание прибора</h2>
+      <div class="desc"><div data-desc class="reveal"></div><div class="features" data-features></div></div>
+    </div>
+    <div class="pdp-sec" id="specs">
+      <h2 data-blur>Технические характеристики</h2>
+      <table class="spec-table" data-spec></table>
+    </div>
+    <div class="pdp-sec" id="docs">
+      <h2 data-blur>Документация</h2>
+      <div class="docs" data-docs></div>
+    </div>
+    <div class="pdp-sec" id="apps">
+      <h2 data-blur>Применение в промышленности</h2>
+      <div class="apps" data-apps></div>
+    </div>
+    <div class="pdp-sec" id="related">
+      <h2 data-blur>Похожие приборы</h2>
+      <div class="related" data-related></div>
+    </div>
+  </div></section>
+
+  <div class="sticky-buy" data-sticky><div class="wrap">
+    <img data-sticky-img alt=""><div><b data-sticky-name></b><small data-sticky-type></small></div>
+    <button class="btn btn-accent btn-s" data-modal="Запрос ТКП" data-product-btn>Запросить ТКП <i data-i="arrow"></i></button>
+  </div></div>
+</main>
+
+<div id="footer-slot"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="data.js"></script>
+<script src="app.js?v=2"></script>
+<script>
+(function () {
+  const U = window.ULTRA, { $, $$, I, tile, sections, products, reduce, hasGsap } = U;
+  const G = hasGsap && !reduce;
+  const p = products.find(x => x.id === new URLSearchParams(location.search).get('id')) || products.find(x => x.hero);
+  const full = `${p.type} ${p.name}`;
+  document.title = `${full} — ГК «УЛЬТРА»`;
+  $('[data-crumb]').textContent = p.name;
+  $('[data-sec-link]').textContent = sections[p.s].name; $('[data-sec-link]').href = sections[p.s].url;
+  $('[data-type]').textContent = p.type;
+  $('[data-name]').textContent = p.name;
+  $('[data-desc-short]').textContent = `Для измерения: ${p.medium.join(', ').toLowerCase()}`;
+  $$('[data-product-btn]').forEach(b => b.dataset.product = full);
+  $('[data-badges]').innerHTML = p.soon ? '<span class="badge soon">Скоро в каталоге</span>' : '';
+  $('[data-chips]').innerHTML = [...p.medium, ...(p.ex ? ['Взрывозащита Ex'] : []), ...p.signal.slice(0, 3)].map(v => `<span class="chip">${v}</span>`).join('');
+  const k = Object.entries(p.key).slice(0, 4);
+  if (k.length < 4) k.push(['МПИ', '4 года']);
+  $('[data-kpis]').innerHTML = k.map(([a, b]) => `<div class="kpi"><span class="label">${a}</span><b>${b}</b></div>`).join('');
+
+  // Галерея с лупой
+  const imgs = [p.img, ...({ optiflux9090: ['optiflux9090-2.png'], rrf5: ['rrf5-2.png', 'rrf5-3.png'], optiswirl4200: ['optiswirl4070.png'] }[p.id] || [])];
+  const main = $('[data-main]'); main.src = 'img/' + imgs[0]; main.alt = full;
+  $('[data-sticky-img]').src = 'img/' + imgs[0]; $('[data-sticky-name]').textContent = p.name; $('[data-sticky-type]').textContent = p.type;
+  $('[data-thumbs]').innerHTML = imgs.length > 1 ? imgs.map((s, i) => `<button aria-current="${i === 0}" aria-label="Фото ${i + 1}"><img src="img/${s}" alt=""></button>`).join('') : '';
+  $('[data-thumbs]').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    $$('[data-thumbs] button').forEach(x => x.setAttribute('aria-current', x === b));
+    main.style.opacity = 0; setTimeout(() => { main.src = $('img', b).src; main.style.opacity = 1; }, 200);
+  });
+  const z = $('[data-zoom]');
+  z.addEventListener('pointermove', e => { const r = z.getBoundingClientRect(); z.style.setProperty('--zx', `${(e.clientX - r.left) / r.width * 100}%`); z.style.setProperty('--zy', `${(e.clientY - r.top) / r.height * 100}%`); });
+  z.addEventListener('click', () => z.classList.toggle('is-zoom'));
+  z.addEventListener('pointerleave', () => z.classList.remove('is-zoom'));
+
+  const isSwirl = p.id.startsWith('optiswirl');
+  $('[data-desc]').innerHTML = isSwirl
+    ? `<p>Вихревые расходомеры серии OPTISWIRL обеспечивают надёжное измерение объёмного и массового расхода проводящих и непроводящих жидкостей, газов и пара, даже при колебаниях температуры и давления.</p><p>Принцип — дорожка Кармана: за телом обтекания срываются вихри, частота которых пропорциональна скорости потока. Без движущихся частей — минимум обслуживания.</p>`
+    : `<p>${full} — прибор для измерения ${p.s === 'level' ? 'уровня' : 'расхода'} сред: ${p.medium.join(', ').toLowerCase()}. Здесь будет текст, написанный по итогам SEO-аналитики (ТЗ п. 8.2) на основе фактуры заказчика.</p><p>Описание, характеристики и документы управляются из админки Битрикс: свойства инфоблока, а не текстовая таблица (ТЗ п. 4.1).</p>`;
+  const feats = isSwirl
+    ? ['2-проводной прибор на базе платформы GDC', 'Сертификация для применений по SIL 2', 'Встроенная компенсация плотности для газов и пара по данным P и T', 'Межповерочный интервал — 5 лет']
+    : ['Структурированные характеристики для умного фильтра', 'Документы с типизацией: сертификат, СИ, МП, РЭ', 'Связь с отраслевыми страницами', 'Форма запроса с автоподстановкой прибора'];
+  $('[data-features]').innerHTML = feats.map((f, i) => `<div class="feature reveal"><span>0${i + 1}</span><div>${f}</div></div>`).join('');
+
+  const spec = isSwirl ? [
+    ['Измеряемая среда', 'Жидкость, газ, пар'], ['Функционал', 'Измерение расхода, температуры'], ['Давление измеряемой среды', 'до 10 МПа'],
+    ['Диаметр условного прохода', 'от 15 до 300 мм'], ['Взрывозащита', 'Ex d, Ex i'], ['Выходные сигналы', '4…20 мА, HART, частотный/импульсный, Profibus, Foundation Fieldbus'],
+    ['Напряжение питания', '24 В DC'], ['Погрешность', '±0,75 % (жидкость), ±1 % (газ и пар)'], ['Температура среды', '−40…+240 °С'],
+    ['Температура окружающей среды', '−60…+85 °С (общепром.), −60…+65 °С (Ex)'], ['Межповерочный интервал', '5 лет'], ['Степень защиты', 'IP66/IP67, IP66/IP68']
+  ] : [
+    ['Измеряемая среда', p.medium.join(', ')], ...Object.entries(p.key), ['Взрывозащита', p.ex ? 'Ex d, Ex i' : '—'],
+    ['Выходные сигналы', p.signal.join(', ') || '—'], ['Питание', '24 В DC'], ['Степень защиты', 'IP67'], ['Производитель', p.made ? 'УЛЬТРАМАШ, Россия' : 'Партнёр ГК УЛЬТРА']
+  ];
+  $('[data-spec]').innerHTML = spec.map(([a, b]) => `<tr class="reveal"><th>${a}</th><td>${b}</td></tr>`).join('');
+
+  const docs = [
+    ['Сертификат', `${p.name} — сертификат соответствия ТР ТС 012`, 'PDF · 1,2 МБ · до 27.09.2028'],
+    ['СИ', `${p.name} — свидетельство об утверждении типа СИ`, 'PDF · 0,8 МБ · рег. № 91500-24'],
+    ['МП', 'Методика поверки МП 208-004-2024', 'PDF · 2,4 МБ'],
+    ['РЭ', `${p.name} — руководство по эксплуатации`, 'PDF · 6,1 МБ'],
+    ['РЭ Ex', `${p.name} Ex — руководство для взрывозащищённого исполнения`, 'PDF · 5,3 МБ'],
+    ['ОЛ', `Опросный лист на ${p.type.toLowerCase()}`, 'DOCX · 0,1 МБ']
+  ].filter(d => p.ex || d[0] !== 'РЭ Ex');
+  $('[data-docs]').innerHTML = docs.map(([t, n, m]) => `<a class="doc reveal" href="#"><span class="ext">${m.slice(0, m.indexOf(' '))}</span><span><b>${n}</b><small><span class="doc-type">${t}</span>${m}</small></span><span class="dl">${I.down}</span></a>`).join('');
+
+  $('[data-apps]').innerHTML = p.industry.map(v => `<a class="reveal" href="catalog.html?industry=${encodeURIComponent(v)}">${v} →</a>`).join('');
+  const rel = products.filter(x => x.s === p.s && x.id !== p.id).sort((a, b) => b.medium.filter(m => p.medium.includes(m)).length - a.medium.filter(m => p.medium.includes(m)).length).slice(0, 4);
+  $('[data-related]').innerHTML = rel.map(tile).join('');
+
+  U.ready();
+  if (G) {
+    U.blurIn($('[data-name]'), { delay: .35 });
+    gsap.from('.gallery-main', { clipPath: 'inset(100% 0 0 0)', duration: 1.4, ease: 'expo.inOut', delay: .15 });
+    gsap.from('.gallery-main img', { scale: 1.3, duration: 2, ease: 'expo.out', delay: .3 });
+    gsap.from('.pdp-info > *:not(h1)', { opacity: 0, y: 24, duration: 1, stagger: .06, ease: 'expo.out', delay: .5 });
+  }
+
+  // Активная вкладка и липкая панель запроса
+  const tabs = $$('[data-tabs] a'), secs = tabs.map(a => $(a.getAttribute('href')));
+  const anchor = $('[data-cta-anchor]'), sticky = $('[data-sticky]');
+  addEventListener('scroll', () => {
+    let cur = 0; secs.forEach((s, i) => { if (s.getBoundingClientRect().top < 200) cur = i; });
+    tabs.forEach((a, i) => a.classList.toggle('is-active', i === cur));
+    sticky.classList.toggle('is-on', anchor.getBoundingClientRect().bottom < 0);
+  }, { passive: true });
+})();
+</script>
+</body>
+</html>

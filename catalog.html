@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Каталог — ГК «УЛЬТРА»</title>
+<meta name="theme-color" content="#0a0810">
+<script>document.documentElement.classList.add('js');try{if(sessionStorage.getItem('ultraNav'))document.documentElement.classList.add('arriving')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=2">
+</head>
+<body data-page="catalog">
+<div id="header-slot"></div>
+
+<main>
+  <section class="page-head"><div class="wrap">
+    <nav class="crumbs" aria-label="Хлебные крошки"><a href="index.html">Главная</a><span><a href="catalog.html">Каталог</a></span><span data-crumb></span></nav>
+    <span class="marker" data-count style="margin-bottom:20px"></span>
+    <h1 data-title>Измерение расхода</h1>
+    <p class="lead" data-sub></p>
+    <div class="cat-tabs" data-tabs></div>
+  </div></section>
+
+  <section><div class="wrap catalog">
+    <aside class="filters" data-filters aria-label="Фильтр">
+      <div class="filters-head"><b>Фильтр</b><button class="icon-btn" data-close-filters aria-label="Закрыть"><i data-i="close"></i></button></div>
+      <div data-facets></div>
+      <button class="reset" data-reset>Сбросить фильтр</button>
+      <div class="filters-apply"><button class="btn btn-accent" data-close-filters>Показать <span data-n2>0</span> <i data-i="arrow"></i></button></div>
+    </aside>
+    <div>
+      <div class="toolbar">
+        <div class="found">Найдено<b data-n>0</b></div>
+        <div class="active-chips" data-chips></div>
+        <button class="btn btn-line btn-s filter-toggle" data-open-filters>Фильтр <i data-i="filter"></i></button>
+      </div>
+      <div class="grid" data-grid></div>
+      <p class="note">[ Значения характеристик в концепции условные — точная матрица свойств составляется на этапе аналитики, ТЗ п. 4.2 ]</p>
+      <div class="seo-text">
+        <h2>Расходомеры для жидкостей, газа и пара</h2>
+        <p>Здесь будет SEO-текст раздела по итогам семантики (ТЗ п. 3.4, 9.3): типы расходомеров, принципы измерения, как выбрать прибор под среду и диапазон, поверка и межповерочный интервал. Блок редактируется из админки Битрикс.</p>
+      </div>
+    </div>
+  </div></section>
+  <div class="scrim" data-scrim></div>
+</main>
+
+<div id="footer-slot"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="data.js"></script>
+<script src="app.js?v=2"></script>
+<script>
+(function () {
+  const U = window.ULTRA, { $, $$, I, tile, sections, products, facets, reduce, hasGsap } = U;
+  const G = hasGsap && !reduce;
+  const qs = new URLSearchParams(location.search);
+  const sec = sections[qs.get('s')] ? qs.get('s') : (qs.has('s') || qs.get('industry') ? '' : 'flow');
+  const sel = { medium: new Set(), signal: new Set(), ex: '', industry: new Set() };
+  ['medium', 'signal', 'industry'].forEach(k => qs.getAll(k).forEach(v => sel[k].add(v)));
+  if (qs.get('ex')) sel.ex = qs.get('ex');
+
+  const base = products.filter(p => !sec || p.s === sec);
+  const s = sections[sec];
+  $('[data-title]').textContent = s ? s.name : 'Каталог оборудования';
+  $('[data-crumb]').textContent = s ? s.name : 'Все приборы';
+  $('[data-sub]').textContent = s ? s.text : 'Расходомеры, уровнемеры и вспомогательное оборудование';
+  $('[data-count]').textContent = `${String(base.length).padStart(2, '0')} позиций`;
+  document.title = `${s ? s.name : 'Каталог'} — ГК «УЛЬТРА»`;
+  $('[data-tabs]').innerHTML = `<a href="catalog.html?s=" class="${!sec ? 'is-active' : ''}">Все <i>${products.length}</i></a>` +
+    Object.entries(sections).map(([k, v]) => `<a href="${v.url}" class="${k === sec ? 'is-active' : ''}">${v.name} <i>${products.filter(p => p.s === k).length}</i></a>`).join('');
+
+  const isEx = p => (p.ex ? 'Взрывозащищенное Ex' : 'Общепромышленное');
+  function match(p, skip) {
+    if (skip !== 'medium' && sel.medium.size && !p.medium.some(v => sel.medium.has(v))) return false;
+    if (skip !== 'signal' && sel.signal.size && !p.signal.some(v => sel.signal.has(v))) return false;
+    if (skip !== 'industry' && sel.industry.size && !p.industry.some(v => sel.industry.has(v))) return false;
+    if (skip !== 'ex' && sel.ex && isEx(p) !== sel.ex) return false;
+    return true;
+  }
+  // До 4 фасетов (ТЗ 6.3)
+  const box = $('[data-facets]');
+  box.innerHTML = ['medium', 'signal', 'ex', 'industry'].map(k => `
+    <div class="facet" data-facet="${k}">
+      <button type="button">${facets[k].name}${I.chev}</button>
+      ${k === 'ex'
+        ? `<div class="opts"><div class="ex-switch">${['', ...facets.ex.values].map(v => `<button type="button" data-ex="${v}">${v ? (v.includes('Ex') ? 'Ex' : 'Общепром.') : 'Любое'}</button>`).join('')}</div></div>`
+        : `<div class="opts">${facets[k].values.map(v => `<label class="opt"><input type="checkbox" value="${v}"><span>${v}</span><em></em></label>`).join('')}</div>`}
+    </div>`).join('');
+
+  $$('.facet > button', box).forEach(b => b.addEventListener('click', () => b.parentElement.classList.toggle('is-closed')));
+  box.addEventListener('change', e => {
+    const k = e.target.closest('[data-facet]').dataset.facet;
+    e.target.checked ? sel[k].add(e.target.value) : sel[k].delete(e.target.value);
+    render();
+  });
+  box.addEventListener('click', e => { const b = e.target.closest('[data-ex]'); if (b) { sel.ex = b.dataset.ex; render(); } });
+  $('[data-reset]').addEventListener('click', () => { ['medium', 'signal', 'industry'].forEach(k => sel[k].clear()); sel.ex = ''; render(); });
+  $('[data-chips]').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    b.dataset.k === 'ex' ? (sel.ex = '') : sel[b.dataset.k].delete(b.dataset.v); render();
+  });
+
+  function render() {
+    const list = base.filter(p => match(p));
+    // Счётчики и скрытие пустых значений
+    ['medium', 'signal', 'industry'].forEach(k => $$(`[data-facet="${k}"] .opt`, box).forEach(o => {
+      const v = $('input', o).value, n = base.filter(p => match(p, k) && p[k].includes(v)).length;
+      $('input', o).checked = sel[k].has(v);
+      $('em', o).textContent = n;
+      o.classList.toggle('is-empty', n === 0 && !sel[k].has(v));
+    }));
+    $$('[data-ex]', box).forEach(b => b.setAttribute('aria-pressed', b.dataset.ex === sel.ex));
+    $('[data-n]').textContent = String(list.length).padStart(2, '0'); $('[data-n2]').textContent = list.length;
+    const grid = $('[data-grid]');
+    grid.innerHTML = list.map(tile).join('') ||
+      `<div class="empty"><p>Готового прибора под эти условия нет</p>Инженер подберёт решение по опросному листу.<br><button class="btn btn-accent" data-modal="Запрос ТКП">Оставить запрос ${I.arrow}</button></div>`;
+    if (G) gsap.from($$('.tile', grid), { opacity: 0, y: 30, duration: .9, stagger: .04, ease: 'expo.out', clearProps: 'all' });
+    const chips = [];
+    ['medium', 'signal', 'industry'].forEach(k => sel[k].forEach(v => chips.push(`<button data-k="${k}" data-v="${v}">${v}</button>`)));
+    if (sel.ex) chips.push(`<button data-k="ex">${sel.ex}</button>`);
+    $('[data-chips]').innerHTML = chips.join('');
+    const q = new URLSearchParams(); if (sec) q.set('s', sec);
+    ['medium', 'signal', 'industry'].forEach(k => sel[k].forEach(v => q.append(k, v))); if (sel.ex) q.set('ex', sel.ex);
+    history.replaceState(null, '', '?' + q);
+    if (G) ScrollTrigger.refresh();
+  }
+  render();
+
+  const f = $('[data-filters]'), scrim = $('[data-scrim]');
+  const toggle = on => { f.classList.toggle('is-open', on); scrim.classList.toggle('is-on', on); document.body.style.overflow = on ? 'hidden' : ''; U.lenis && (on ? U.lenis.stop() : U.lenis.start()); };
+  $('[data-open-filters]').addEventListener('click', () => toggle(true));
+  $$('[data-close-filters]').forEach(b => b.addEventListener('click', () => toggle(false)));
+  scrim.addEventListener('click', () => toggle(false));
+  f.setAttribute('data-lenis-prevent', '');
+
+  U.ready();
+  if (G) { U.blurIn($('[data-title]'), { delay: .35 }); gsap.from('.page-head .lead, .cat-tabs a, .page-head .marker', { opacity: 0, y: 20, duration: 1, stagger: .05, ease: 'expo.out', delay: .5 }); }
+})();
+</script>
+</body>
+</html>

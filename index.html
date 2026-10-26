@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ГК «УЛЬТРА» — расходомеры и уровнемеры российского производства</title>
+<meta name="description" content="Разработка, производство и поверка КИПиА: расходомеры, уровнемеры, оборудование узлов учёта. Собственная метрологическая база.">
+<meta name="theme-color" content="#0a0810">
+<script>document.documentElement.classList.add('js');try{if(sessionStorage.getItem('ultraNav'))document.documentElement.classList.add('arriving');if(sessionStorage.getItem('ultraSeen')||sessionStorage.getItem('ultraNav'))document.documentElement.classList.add('seen')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=2">
+</head>
+<body data-page="home">
+<div id="header-slot"></div>
+
+<!-- Прелоадер-HUD (Aether / Zeggo) -->
+<div class="preloader" id="preloader" aria-hidden="true">
+  <svg viewBox="-260 -260 520 520">
+    <circle class="ring" r="60"/><circle class="ring" r="110"/><circle class="ring" r="160"/><circle class="ring" r="210"/>
+    <circle class="ring tick" r="236"/>
+    <circle class="arc" r="210" transform="rotate(-90)" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" id="plArc"/>
+    <g class="orbit" data-s="1"><circle class="orb" r="3.5" cx="110"/></g>
+    <g class="orbit" data-s="-.6"><circle class="orb" r="3" cx="160"/></g>
+    <g class="orbit" data-s="1.8"><circle class="orb" r="2.5" cx="60"/></g>
+  </svg>
+  <span class="pl-tag" style="left:calc(50% + min(26vmin,200px));top:calc(50% - min(26vmin,200px))">[ РАСХОД ]</span>
+  <span class="pl-tag" style="right:calc(50% + min(30vmin,230px));top:50%">[ УРОВЕНЬ ]</span>
+  <span class="pl-tag" style="left:50%;top:calc(50% + min(31vmin,240px));transform:translateX(-50%)">[ ПОВЕРКА ]</span>
+  <div class="pl-brand"><span class="label br">ГК УЛЬТРА · КИПиА</span></div>
+  <div class="pl-count" id="plCount">000</div>
+</div>
+
+<main>
+  <!-- HERO: редакционная вёрстка (Cascade Space) + размытие → резкость (ON) -->
+  <section class="hero" id="hero">
+    <div class="hero-media"><img src="img/factory.jpg" alt="" fetchpriority="high"></div>
+    <canvas id="heroFlow" aria-hidden="true"></canvas>
+    <div class="hero-in">
+      <p class="hero-note reveal"><span class="label br">Разработка · производство · поверка</span>Расходомеры и уровнемеры для нефтегаза, энергетики и водоканалов. Собственная метрологическая база в России.</p>
+      <h1 id="heroTitle"><span class="sub">Расходомеры и уровнемеры российского производства</span>Точность<br>в потоке</h1>
+      <div class="hero-cta reveal">
+        <div class="hero-data">
+          <div><span class="label">Расход Q</span><b data-live="1284.6,3.2,1">1 284,6<em>м³/ч</em></b></div>
+          <div><span class="label">Давл. P</span><b data-live="6.42,.02,2">6,42<em>МПа</em></b></div>
+          <div><span class="label">Темп. T</span><b data-live="186.3,.4,1">186,3<em>°С</em></b></div>
+        </div>
+        <a class="btn btn-accent" href="#picker">Подобрать прибор <i data-i="arrow"></i></a>
+        <a class="btn btn-line" href="#ql">Скачать опросный лист <i data-i="down"></i></a>
+      </div>
+    </div>
+    <div class="scroll-hint" aria-hidden="true"><span class="label">Прокрутите</span><i></i></div>
+  </section>
+
+  <!-- СЦЕНА «ВНУТРЬ ПРИБОРА» (Bright Biotech / ON) -->
+  <section class="scene" id="scene" aria-label="Как работает вихревой расходомер">
+    <canvas id="sceneCanvas" aria-hidden="true"></canvas>
+    <div class="scene-specimen" id="specimen"><img src="img/optiswirl4200.png" alt="Вихревой расходомер OPTISWIRL 4200"></div>
+    <div class="scene-frame" id="frame"><span class="c"></span><span class="c"></span><span class="c"></span><span class="c"></span>
+      <span class="label scene-tag" style="left:calc(100% + 34px);top:12%">Ду 15–300 мм</span>
+      <span class="label scene-tag" style="left:calc(100% + 34px);top:46%">до 10 МПа</span>
+      <span class="label scene-tag" style="right:calc(100% + 34px);top:30%">Ex d · Ex i</span>
+      <span class="label scene-tag" style="right:calc(100% + 34px);top:70%">SIL 2</span>
+    </div>
+    <div class="scene-top"><span class="label br">OPTISWIRL 4200 · вихревой расходомер</span><span class="label br" id="sceneCounter">01 / 04</span></div>
+    <div class="scene-dots" id="sceneDots"><i class="is-on"></i><i></i><i></i><i></i></div>
+    <div class="scene-chapters">
+      <div class="chapter" data-ch="0"><span class="label">01 · Прибор</span><h2>Сделан, чтобы измерять</h2></div>
+      <div class="chapter" data-ch="1"><span class="label">02 · Поток</span><h2>Внутри трубы</h2></div>
+      <div class="chapter" data-ch="2"><span class="label">03 · Вихрь</span><h2>Частота вихрей — это расход</h2></div>
+      <div class="chapter" data-ch="3"><span class="label">04 · Точность</span><h2>Поверено до отгрузки</h2></div>
+      <div class="chapter-note" data-ch="0"><b>±0,75 %</b><p>Жидкость, газ и пар. Встроенная компенсация по давлению и температуре.</p></div>
+      <div class="chapter-note" data-ch="1"><b id="vNote">3,2 м/с</b><p>У стенки поток тормозится, в центре — быстрее всего. Профиль скорости параболический.</p></div>
+      <div class="chapter-note" data-ch="2"><b id="fNote">42,7 Гц</b><p>Тело обтекания срывает вихри поочерёдно сверху и снизу. Датчик считает их частоту — она пропорциональна скорости.</p></div>
+      <div class="chapter-note" data-ch="3"><b>5 лет</b><p>Межповерочный интервал. Первичная поверка — на собственной базе УЛЬТРА-СТАНДАРТ.</p></div>
+    </div>
+  </section>
+
+  <!-- МАНИФЕСТ: слова закрашиваются по прокрутке (ON / Vast) -->
+  <section class="section" id="company">
+    <div class="wrap">
+      <span class="marker reveal" style="margin-bottom:40px">О группе компаний</span>
+      <p class="manifesto" id="manifesto">ГК «УЛЬТРА» разрабатывает, производит и поверяет приборы учёта расхода и уровня. <em>Своё производство</em> в Самарской области и <em>своя метрологическая база</em> — прибор приходит к вам уже поверенным, а сроки зависят от нас, а не от импорта.</p>
+    </div>
+  </section>
+
+  <!-- КАТАЛОГ: редакционные строки -->
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="s-head">
+        <div><span class="marker reveal">Каталог · 25 позиций</span><h2 class="d2" data-blur>Три направления</h2></div>
+        <p class="lead reveal">Характеристики, документация и опросный лист — в карточке каждого прибора.</p>
+      </div>
+      <div class="dir-list" id="dirList"></div>
+    </div>
+    <div class="dir-float" id="dirFloat"><img alt=""></div>
+  </section>
+
+  <!-- ПОДБОР -->
+  <section class="section" id="picker" style="padding-top:0">
+    <div class="wrap">
+      <div class="s-head">
+        <div><span class="marker reveal">Подбор за 10 секунд</span><h2 class="d2" data-blur>Что нужно измерить?</h2></div>
+        <p class="lead reveal">Задача, среда, исполнение — и сразу подходящие приборы. Тот же фильтр работает в каталоге.</p>
+      </div>
+      <div class="picker reveal">
+        <div class="picker-panel">
+          <div class="picker-step"><span class="label">01 · Задача</span><div class="seg" data-pick="s">
+            <button aria-pressed="true" data-v="flow">Расход</button><button aria-pressed="false" data-v="level">Уровень</button></div></div>
+          <div class="picker-step"><span class="label">02 · Среда</span><div class="seg" data-pick="medium">
+            <button aria-pressed="true" data-v="">Любая</button><button aria-pressed="false" data-v="Жидкость">Жидкость</button><button aria-pressed="false" data-v="Газ">Газ</button><button aria-pressed="false" data-v="Пар">Пар</button><button aria-pressed="false" data-v="Сыпучие">Сыпучие</button></div></div>
+          <div class="picker-step"><span class="label">03 · Исполнение</span><div class="seg" data-pick="ex">
+            <button aria-pressed="true" data-v="">Любое</button><button aria-pressed="false" data-v="1">Взрывозащищённое Ex</button></div></div>
+          <div class="picker-count"><div><b data-picker-n>0</b><div class="label" style="margin-top:10px">приборов подходят</div></div><a class="btn btn-accent btn-s" data-picker-link href="catalog.html">Смотреть <i data-i="arrow"></i></a></div>
+        </div>
+        <div class="picker-results" data-picker-out></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ЗАНАВЕС: отраслевые решения (ON) + лесенка (Zeggo) -->
+  <section class="curtain-sec" id="solutions">
+    <div class="curtain-panel" id="curtainPanel">
+      <div class="section"><div class="wrap">
+        <div class="s-head">
+          <div><span class="marker">Отраслевые решения</span><h2 class="d2" data-blur>Под задачу отрасли</h2></div>
+          <p class="lead">Типовые задачи, подборка приборов и примеры поставок. Отрасль — это и фильтр каталога: один справочник для обоих.</p>
+        </div>
+        <div class="stairs" id="stairs"></div>
+        <div class="ind-row reveal"><span class="label">Фильтр «Применение»</span><span id="indChips" style="display:contents"></span></div>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- СХЕМА УЗЛА УЧЁТА (Zeggo wireframe) -->
+  <section class="section">
+    <div class="wrap">
+      <div class="s-head">
+        <div><span class="marker reveal">Узел учёта под ключ</span><h2 class="d2" data-blur>Не только прибор — весь участок трубы</h2></div>
+        <p class="lead reveal">Струевыпрямители, прямые участки, фланцы и колонки производим сами — узел собирается из одного источника и поверяется целиком.</p>
+      </div>
+      <div class="scheme-wrap" id="schemeWrap">
+        <svg class="scheme" id="scheme" viewBox="0 0 1200 380" role="img" aria-label="Схема измерительного участка: струевыпрямитель, прямой участок, расходомер, датчики давления и температуры">
+          <path class="ln" d="M20 170H1180M20 250H1180"/>
+          <path class="ln thin" d="M20 210H1180"/>
+          <path class="ln" d="M150 150v120M158 150v120M290 150v120M298 150v120M600 140v140M608 140v140M780 140v140M788 140v140M1040 150v120M1048 150v120"/>
+          <rect class="ln" x="160" y="170" width="128" height="80"/>
+          <path class="ln thin" d="M160 186H288M160 202H288M160 218H288M160 234H288"/>
+          <rect class="ln" x="610" y="160" width="168" height="100"/>
+          <path class="ln" d="M694 160v-38M682 122h24"/>
+          <rect class="ln" x="652" y="56" width="84" height="66"/>
+          <circle class="ln" cx="694" cy="89" r="22"/>
+          <path class="ln acc" d="M688 178v64"/>
+          <path class="ln" d="M880 170v-60M960 170v-74"/>
+          <circle class="ln" cx="880" cy="96" r="14"/>
+          <rect class="ln" x="948" y="70" width="24" height="26"/>
+          <path class="ln thin" d="M224 250v60M450 250v60M694 260v50M920 110h70v-48M1110 250v60"/>
+          <g class="sch-labels">
+            <circle class="pt" cx="224" cy="250" r="3.5"/><circle class="pt" cx="450" cy="250" r="3.5"/><circle class="pt" cx="694" cy="260" r="3.5"/><circle class="pt" cx="920" cy="110" r="3.5"/><circle class="pt" cx="1110" cy="250" r="3.5"/>
+            <text x="150" y="332">01 СТРУЕВЫПРЯМИТЕЛЬ</text><text class="m" x="150" y="350">формирует профиль потока</text>
+            <text x="390" y="332">02 ПРЯМОЙ УЧАСТОК</text><text class="m" x="390" y="350">10 Ду до прибора</text>
+            <text x="630" y="332">03 РАСХОДОМЕР</text><text class="m" x="630" y="350">вихревой / ультразвуковой</text>
+            <text x="1000" y="44">04 ДАТЧИКИ P/T</text><text class="m" x="1000" y="62">компенсация плотности</text>
+            <text x="1010" y="332">05 ПРЯМОЙ УЧАСТОК</text><text class="m" x="1010" y="350">5 Ду после</text>
+            <text class="m" x="40" y="196">ПОТОК →</text>
+          </g>
+          <path class="ln acc flow-dash" d="M30 210H1170" stroke-dasharray="14 16"/>
+        </svg>
+        <div class="scheme-legend">
+          <a href="product.html?id=straighteners" class="reveal"><span class="label">01</span><b>Струевыпрямители</b><span>пластинчатые и трубчатые, Ду 50–1400</span></a>
+          <a href="product.html?id=straight" class="reveal"><span class="label">02 · 05</span><b>Прямые участки</b><span>измерительные трубопроводы по расчёту</span></a>
+          <a href="catalog.html?s=flow" class="reveal"><span class="label">03</span><b>Расходомеры</b><span>12 моделей: жидкость · газ · пар</span></a>
+          <a href="catalog.html?s=aux" class="reveal"><span class="label">+</span><b>Фланцы и колонки</b><span>ГОСТ 33259, выносные колонки</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ОДОМЕТРЫ (Vast) -->
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="s-head">
+        <div><span class="marker reveal">Производство и метрология</span><h2 class="d2" data-blur>Своё производство. Своя поверка.</h2></div>
+        <p class="lead reveal">Производственная и метрологическая база в России сокращает сроки поставки и позволяет поверять приборы до отгрузки и весь срок службы.</p>
+      </div>
+      <div class="odo-list">
+        <div class="odo-row"><div class="odo" data-odo="25" aria-label="25"></div><div><span class="marker">Моделей в каталоге</span><p>Расходомеры, уровнемеры, оборудование узлов учёта</p></div></div>
+        <div class="odo-row"><div class="odo" data-odo="5" data-unit="лет" aria-label="5 лет"></div><div><span class="marker">Межповерочный интервал</span><p>OPTISWIRL 4200, рег. № 91500-24 в Госреестре СИ</p></div></div>
+        <div class="odo-row"><div class="odo" data-odo="0,1" data-unit="%" aria-label="0,1 %"></div><div><span class="marker">Лучшая погрешность</span><p>Массовые расходомеры WMF</p></div></div>
+        <div class="odo-row"><div class="odo" data-odo="4" data-unit="офиса" aria-label="4 офиса"></div><div><span class="marker">Присутствие</span><p>Москва · Самара · Санкт-Петербург · Ярославль</p></div></div>
+      </div>
+      <div class="companies">
+        <div class="company reveal"><span class="label">Производство</span><b style="display:block;margin-top:10px">УЛЬТРАМАШ</b><span>Самарская область, сборка и испытания</span></div>
+        <div class="company reveal"><span class="label">Метрология</span><b style="display:block;margin-top:10px">УЛЬТРА-СТАНДАРТ</b><span>поверка и калибровка</span></div>
+        <div class="company reveal"><span class="label">Партнёр</span><b style="display:block;margin-top:10px">КРОНЕ-Автоматика</b><span>эксклюзивное представительство</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- УСЛУГИ: шаги + шкала-прогресс (Vast) -->
+  <section class="section" id="services" style="background:var(--bg-2)">
+    <div class="wrap">
+      <div class="s-head">
+        <div><span class="marker reveal">Услуги</span><h2 class="d2" data-blur>От опросного листа до поверки</h2></div>
+        <p class="lead reveal">Сопровождаем прибор весь срок службы: подбор, производство, пусконаладка, сервис и периодическая поверка.</p>
+      </div>
+      <div id="steps">
+        <div class="steps">
+          <div class="step"><span class="label">01 · 1 день</span><h4>Опросный лист</h4><p>Заполняете онлайн или присылаете PDF — инженер уточнит параметры среды.</p></div>
+          <div class="step"><span class="label">02 · 1–2 дня</span><h4>Подбор и ТКП</h4><p>Расчёт прибора, комплектация и сроки в одном предложении.</p></div>
+          <div class="step"><span class="label">03 · от 4 недель</span><h4>Производство и поверка</h4><p>Сборка на УЛЬТРАМАШ, первичная поверка на собственной базе.</p></div>
+          <div class="step"><span class="label">04 · весь срок</span><h4>Пусконаладка и сервис</h4><p>Ввод в эксплуатацию, техподдержка 8 (800) 505-25-87.</p></div>
+        </div>
+        <div class="ticks" id="ticks"></div>
+      </div>
+      <div class="services">
+        <a class="service reveal" href="#"><span class="label">01</span><b>Метрологические услуги</b><span>Поверка и калибровка расходомеров, уровнемеров и ротаметров</span><i>Подробнее →</i></a>
+        <a class="service reveal" href="#"><span class="label">02</span><b>Техническое обслуживание</b><span>Пусконаладка, диагностика, ремонт, техподдержка</span><i>Подробнее →</i></a>
+        <a class="service reveal" href="#"><span class="label">03</span><b>Сертификация</b><span>Организация испытаний и сертификации оборудования</span><i>Подробнее →</i></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ОПРОСНЫЕ ЛИСТЫ -->
+  <section class="section" id="ql">
+    <div class="wrap">
+      <div class="ql reveal">
+        <div class="ql-left">
+          <span class="marker">Опросные листы</span>
+          <h2 class="d2" style="font-size:clamp(34px,4vw,64px)">Заполните — получите точный подбор</h2>
+          <p class="lead">Без цен на сайте, но с быстрым ответом: инженер рассчитает прибор и пришлёт ТКП с комплектацией.</p>
+          <button class="btn btn-accent" data-modal="Отправить опросный лист">Отправить заполненный <i data-i="arrow"></i></button>
+        </div>
+        <div class="ql-docs">
+          <a href="#"><span class="ext">PDF</span><span><b>Расходомеры</b><small>ультразвуковые, вихревые, электромагнитные</small></span><i data-i="down"></i></a>
+          <a href="#"><span class="ext">PDF</span><span><b>Уровнемеры</b><small>радарные, магнитострикционные, буйковые</small></span><i data-i="down"></i></a>
+          <a href="#"><span class="ext">DOCX</span><span><b>Узлы учёта</b><small>струевыпрямители, прямые участки</small></span><i data-i="down"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- НОВОСТИ -->
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="s-head">
+        <div><span class="marker reveal">Новости</span><h2 class="d2" data-blur>События компании</h2></div>
+        <a class="btn btn-line reveal" href="#" style="justify-self:start">Все новости <i data-i="arrow"></i></a>
+      </div>
+      <div>
+        <a class="news-row reveal" href="#"><time>14.10.2026</time><b>Стенд ГК «УЛЬТРА» на «Нефтегаз-2026»</b><span>Показали радарный уровнемер RRF-5 80 ГГц и вихревой OPTISWIRL 4200.</span><i data-i="ne"></i></a>
+        <a class="news-row reveal" href="#"><time>02.09.2026</time><b>OPTISWIRL 4200 в Госреестре СИ</b><span>Рег. № 91500-24, межповерочный интервал — 5 лет.</span><i data-i="ne"></i></a>
+        <a class="news-row reveal" href="#"><time>18.06.2026</time><b>Совет метрологов НПЗ 2026</b><span>Доклад о поверке ультразвуковых расходомеров без демонтажа.</span><i data-i="ne"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ФОРМА ТКП -->
+  <section class="section" style="background:var(--bg-2)">
+    <div class="wrap cta-grid">
+      <div>
+        <span class="marker reveal">Технико-коммерческое предложение</span>
+        <h2 class="d2" data-blur style="margin-top:24px">Получите ТКП на оборудование</h2>
+        <p class="lead reveal" style="margin-top:24px">Стоимость зависит от параметров и комплектации. Приложите опросный лист — инженер подготовит предложение и при необходимости уточнит детали.</p>
+        <div class="contacts-list reveal">
+          <a href="tel:+74999677799"><span>+7 (499) 967-77-99</span><small>Отдел продаж</small></a>
+          <a href="tel:88005052587"><span>8 (800) 505-25-87</span><small>Техподдержка</small></a>
+          <a href="mailto:sales.msh@ultra-gk.ru"><span>sales.msh@ultra-gk.ru</span><small>Опросные листы</small></a>
+        </div>
+      </div>
+      <div class="reveal" id="inlineForm"></div>
+    </div>
+  </section>
+</main>
+
+<div id="footer-slot"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="data.js"></script>
+<script src="app.js?v=2"></script>
+<script src="scene.js?v=2"></script>
+<script src="home.js?v=2"></script>
+</body>
+</html>
