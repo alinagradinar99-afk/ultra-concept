@@ -84,7 +84,7 @@ button { cursor: pointer; background: none; border: 0; padding: 0; }
 .logo b { display: block; font: 500 19px/.9 var(--f); letter-spacing: .02em; }
 .logo small { display: block; font: 400 8.5px/1 var(--f-mono); letter-spacing: .16em; color: var(--muted); }
 .plates { display: flex; gap: 6px; flex: 1; }
-.plate { position: relative; flex: 1; max-width: 220px; height: 40px; padding: 0 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 13.5px; background: rgba(28, 24, 38, .78); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid var(--line); transition: background .3s, border-color .3s; white-space: nowrap; }
+.plate { position: relative; flex: 1; max-width: 220px; height: 40px; padding: 0 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 13.5px; background: rgba(24, 20, 34, .94); border: 1px solid var(--line); transition: background .3s, border-color .3s; white-space: nowrap; }
 .plate:hover, .plate.is-active { background: rgba(48, 40, 66, .9); border-color: var(--line-2); }
 .plate svg { width: 12px; height: 12px; opacity: .6; transition: transform .3s; }
 .has-mega:hover > .plate svg { transform: rotate(180deg); }
@@ -98,7 +98,7 @@ button { cursor: pointer; background: none; border: 0; padding: 0; }
 .mega span { font-size: 12.5px; color: var(--muted); line-height: 1.4; }
 .mega i { margin-top: auto; font: 400 11px var(--f-mono); font-style: normal; color: var(--accent); }
 .h-actions { display: flex; gap: 6px; margin-left: auto; }
-.icon-btn { width: 40px; height: 40px; display: grid; place-items: center; background: rgba(28, 24, 38, .78); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid var(--line); transition: background .3s; flex: none; }
+.icon-btn { width: 40px; height: 40px; display: grid; place-items: center; background: rgba(24, 20, 34, .94); border: 1px solid var(--line); transition: background .3s; flex: none; }
 .icon-btn:hover { background: rgba(48, 40, 66, .9); }
 .icon-btn svg { width: 17px; height: 17px; }
 .h-cta { height: 40px; }
@@ -158,7 +158,7 @@ button { cursor: pointer; background: none; border: 0; padding: 0; }
 .device-glow { position: absolute; inset: 12%; border-radius: 50%; background: radial-gradient(circle, rgba(155, 107, 255, .35), transparent 65%); filter: blur(40px); }
 .device-rig { position: absolute; inset: 0; transform-style: preserve-3d; will-change: transform; }
 .part { position: absolute; transform-style: preserve-3d; will-change: transform; }
-.part img { width: 100%; height: 100%; display: block; filter: drop-shadow(0 30px 40px rgba(0, 0, 0, .55)); user-select: none; -webkit-user-drag: none; }
+.part img { width: 100%; height: 100%; display: block; user-select: none; -webkit-user-drag: none; }
 .device-tag { position: absolute; color: var(--text); white-space: nowrap; }
 .device-tag::before { content: ''; position: absolute; width: 6px; height: 6px; background: var(--accent); left: -14px; top: 4px; }
 .device-tag.t1 { left: 64%; top: 6%; } .device-tag.t2 { left: 6%; top: 46%; } .device-tag.t3 { left: 70%; top: 92%; }
@@ -166,13 +166,13 @@ button { cursor: pointer; background: none; border: 0; padding: 0; }
 .scroll-hint { position: absolute; left: 50%; bottom: 18px; z-index: 2; transform: translateX(-50%); display: grid; justify-items: center; gap: 8px; }
 .scroll-hint i { width: 1px; height: 40px; background: var(--text); animation: drip 2.2s var(--ease) infinite; }
 @keyframes drip { 0% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform: scaleY(1); transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
-.blur-chars .ch { display: inline-block; white-space: pre; will-change: filter, opacity; }
+.blur-chars .ch { display: inline-block; white-space: pre; }
 
 /* ——— Сцена «Внутрь прибора» ——— */
 .scene { position: relative; height: 100svh; overflow: hidden; background: var(--bg); }
 .scene canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 .scene-specimen { position: absolute; left: 50%; top: 50%; width: min(58vh, 540px); aspect-ratio: 1; margin: calc(min(58vh, 540px) / -2) 0 0 calc(min(58vh, 540px) / -2); overflow: visible; will-change: transform; }
-.scene-specimen img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 30px 50px rgba(0, 0, 0, .5)); }
+.scene-specimen img { width: 100%; height: 100%; object-fit: contain; }
 .scene-frame { position: absolute; left: 50%; top: 50%; width: min(58vh, 540px); aspect-ratio: 1; margin: calc(min(58vh, 540px) / -2) 0 0 calc(min(58vh, 540px) / -2); pointer-events: none; }
 .scene-frame .c { position: absolute; width: 18px; height: 18px; border: 1px solid var(--text); }
 .scene-frame .c:nth-child(1) { left: -22px; top: -22px; border-right: 0; border-bottom: 0; }
@@ -236,7 +236,7 @@ button { cursor: pointer; background: none; border: 0; padding: 0; }
 /* Плитка товара */
 .tile { position: relative; display: flex; flex-direction: column; background: var(--bg); border: 1px solid var(--line); transition: background .4s; overflow: hidden; }
 .tile:hover { background: var(--surface); }
-.tile-img { position: relative; aspect-ratio: 4 / 3; background: var(--specimen); overflow: hidden; }
+.tile-img { position: relative; aspect-ratio: 1 / 1; background: var(--specimen); overflow: hidden; }
 .tile-img img { width: 100%; height: 100%; object-fit: contain; transition: transform 1s var(--ease); }
 .tile:hover .tile-img img { transform: scale(1.07); }
 .badges { position: absolute; left: 10px; top: 10px; display: flex; gap: 4px; z-index: 1; }
@@ -249,12 +249,13 @@ button { cursor: pointer; background: none; border: 0; padding: 0; }
 .specs div { display: flex; justify-content: space-between; gap: 12px; padding: 7px 0; border-top: 1px solid var(--line); }
 .specs dt { color: var(--muted); }
 .specs dd { margin: 0; font: 400 12.5px var(--f-mono); text-align: right; }
-.tile-foot { margin-top: auto; padding-top: 16px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-.tile-foot .link { font-size: 14px; display: inline-flex; gap: 8px; align-items: center; }
+.tile-foot { margin-top: auto; padding-top: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.tile-foot .link { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 44px; padding: 0 12px; border: 1px solid var(--line-2); font-size: 14px; white-space: nowrap; transition: background .3s, color .3s, border-color .3s; }
+.tile:hover .tile-foot .link { border-color: var(--text); }
 .tile-foot .link::after { content: '→'; transition: transform .5s var(--ease); }
 .tile:hover .tile-foot .link::after { transform: translateX(5px); }
-.tile-foot .ql { position: relative; z-index: 4; white-space: nowrap; height: 40px; padding: 0 14px; border: 1px solid var(--accent); color: var(--accent); font-size: 14px; font-weight: 500; transition: background .3s, color .3s; }
-.tile-foot .ql:hover { background: var(--accent); color: var(--accent-ink); }
+.tile-foot .ql { position: relative; z-index: 4; display: inline-flex; align-items: center; justify-content: center; white-space: nowrap; height: 44px; padding: 0 12px; background: var(--accent); color: var(--accent-ink); font-size: 14px; font-weight: 500; line-height: 1; transition: background .3s; }
+.tile-foot .ql:hover { background: #fff; }
 .tile a.cover { position: absolute; inset: 0; z-index: 3; }
 
 /* ——— «Занавес» с отраслевыми решениями ——— */
@@ -507,7 +508,7 @@ button { cursor: pointer; background: none; border: 0; padding: 0; }
 .apps a:hover { background: var(--text); color: var(--bg); }
 .related { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
 .related .tile { border: 0; }
-.sticky-buy { position: fixed; left: 0; right: 0; bottom: 0; z-index: 45; transform: translateY(105%); transition: transform .6s var(--ease); background: rgba(16, 13, 24, .94); backdrop-filter: blur(14px); border-top: 1px solid var(--line-2); }
+.sticky-buy { position: fixed; left: 0; right: 0; bottom: 0; z-index: 45; transform: translateY(105%); transition: transform .6s var(--ease); background: rgba(16, 13, 24, .97); border-top: 1px solid var(--line-2); }
 .sticky-buy.is-on { transform: none; }
 .sticky-buy .wrap { display: flex; align-items: center; gap: 16px; height: 72px; }
 .sticky-buy img { width: 48px; height: 48px; background: var(--specimen); object-fit: contain; }
@@ -607,8 +608,9 @@ body[data-page='product'] .badge-cta { bottom: 92px; }
   .grid .tile-body, .picker-results .tile-body, .related .tile-body { padding: 12px; }
   .grid .tile-name, .picker-results .tile-name, .related .tile-name { font-size: 17px; }
   .grid .specs div:nth-child(n+3), .picker-results .specs, .related .specs { display: none; }
+  .grid .tile-foot, .picker-results .tile-foot, .related .tile-foot { grid-template-columns: 1fr; }
   .grid .tile-foot .link, .picker-results .tile-foot .link, .related .tile-foot .link { display: none; }
-  .tile-foot .ql { width: 100%; height: 38px; padding: 0 8px; font-size: 13px; }
+  .tile-foot .ql { width: 100%; height: 42px; padding: 0 8px; font-size: 13px; }
   .grid { grid-template-columns: 1fr 1fr; }
   .related { grid-template-columns: 1fr 1fr; }
   .pdp-cta { grid-template-columns: 1fr; }

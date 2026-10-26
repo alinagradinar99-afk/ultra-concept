@@ -4,7 +4,7 @@
 (function () {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const small = matchMedia('(max-width: 680px)').matches;
-  const DPR = Math.min(devicePixelRatio || 1, 2);
+  const DPR = Math.min(devicePixelRatio || 1, 1.25); // полное разрешение Retina для частиц не нужно, а нагрузка ×2,5
   const ACC = '62,230,200', VIO = '155,107,255', WHITE = '242,239,247';
 
   function setup(cv) {
@@ -34,7 +34,7 @@
   let t = 0;
 
   // Туннель: частицы в цилиндре (r, θ, z), камера смотрит вдоль оси
-  const N = small ? 420 : 900, FAR = 14;
+  const N = small ? 320 : 640, FAR = 14;
   const tp = Array.from({ length: N }, () => ({ r: Math.sqrt(Math.random()), a: Math.random() * Math.PI * 2, z: Math.random() * FAR + .3, pz: 0 }));
   const rings = Array.from({ length: 14 }, (_, i) => ({ z: (i / 14) * FAR + .3 }));
   function drawTunnel(alpha) {
@@ -47,23 +47,23 @@
       c.strokeStyle = `rgba(${VIO},${Math.min(.35, .9 / g.z)})`; c.lineWidth = 1;
       c.beginPath(); c.arc(cx, cy, rr, 0, Math.PI * 2); c.stroke();
     }
+    // 4 группы: быстрые/медленные × близкие/дальние — каждая рисуется одним stroke
+    const paths = [new Path2D(), new Path2D(), new Path2D(), new Path2D()];
     for (const p of tp) {
       const v = (1 - p.r * p.r) * .9 + .1; // параболический профиль
       p.pz = p.z; p.z -= sp * v * 2.2;
       if (p.z < .25) { p.z += FAR; p.pz = p.z; continue; }
-      const s0 = f / p.pz, s1 = f / p.z;
-      const x0 = cx + Math.cos(p.a) * p.r * R * s0, y0 = cy + Math.sin(p.a) * p.r * R * s0;
-      const x1 = cx + Math.cos(p.a) * p.r * R * s1, y1 = cy + Math.sin(p.a) * p.r * R * s1;
-      const near = Math.min(1, 2.2 / p.z);
-      c.strokeStyle = v > .7 ? `rgba(${ACC},${.25 + near * .7})` : `rgba(${WHITE},${.12 + near * .45})`;
-      c.lineWidth = .6 + near * 1.6;
-      c.beginPath(); c.moveTo(x0, y0); c.lineTo(x1, y1); c.stroke();
+      const s0 = f / p.pz, s1 = f / p.z, cr = p.cos || (p.cos = Math.cos(p.a)), sr = p.sin || (p.sin = Math.sin(p.a)), rr = p.r * R;
+      const path = paths[(v > .7 ? 0 : 2) + (p.z < 3 ? 0 : 1)];
+      path.moveTo(cx + cr * rr * s0, cy + sr * rr * s0); path.lineTo(cx + cr * rr * s1, cy + sr * rr * s1);
     }
+    const st = [[`rgba(${ACC},.9)`, 2], [`rgba(${ACC},.45)`, 1], [`rgba(${WHITE},.5)`, 1.6], [`rgba(${WHITE},.22)`, .8]];
+    paths.forEach((p, i) => { c.strokeStyle = st[i][0]; c.lineWidth = st[i][1]; c.stroke(p); });
     c.globalAlpha = 1;
   }
 
   // Дорожка Кармана: частицы + точечные вихри, срывающиеся с тела обтекания
-  const M = small ? 500 : 1100;
+  const M = small ? 380 : 760;
   const vp = [], vort = [];
   const body = () => ({ x: o.W * (small ? .2 : .26), y: o.H * .44, h: Math.min(o.H * .14, 110), w: 14 });
   const seedV = () => { vp.length = 0; for (let i = 0; i < M; i++) vp.push({ x: Math.random() * o.W, y: o.H * .44 + (Math.random() * 2 - 1) * o.H * .36 }); };
@@ -79,13 +79,13 @@
       vort.push({ x: B.x + B.w + 6, y: B.y + side * B.h * .5, g: -side * 2600, age: 0 });
       if (vort.length > 14) vort.shift();
     }
-    for (const v of vort) { v.x += U * .82; v.age++; v.y += Math.sin(v.age * .02) * .05; }
+    for (const v of vort) { v.x += U * .82; v.age++; v.y += Math.sin(v.age * .02) * .05; v.k = v.g / (2 * Math.PI) * Math.exp(-v.age / 260); } // затухание — раз на вихрь, а не на каждую частицу
+    const fast = new Path2D(), slow = new Path2D();
     for (const p of vp) {
       let ux = U, uy = 0;
       for (const v of vort) {
-        const dx = p.x - v.x, dy = p.y - v.y, r2 = dx * dx + dy * dy + 900;
-        const k = v.g / (2 * Math.PI * r2) * Math.exp(-v.age / 260);
-        ux += -dy * k; uy += dx * k;
+        const dx = p.x - v.x, dy = p.y - v.y, k = v.k / (dx * dx + dy * dy + 900);
+        ux -= dy * k; uy += dx * k;
       }
       // обтекание тела
       const bx = p.x - (B.x + B.w / 2), by = p.y - B.y;
@@ -93,11 +93,11 @@
       const px = p.x, py = p.y;
       p.x += ux; p.y += uy;
       if (p.x > o.W + 10 || p.y < -20 || p.y > o.H + 20) { p.x = -10 + Math.random() * 20; p.y = B.y + (Math.random() * 2 - 1) * o.H * .36; continue; }
-      const sp = Math.min(1, Math.hypot(ux - U, uy) / 3);
-      c.strokeStyle = sp > .35 ? `rgba(${ACC},${.35 + sp * .5})` : `rgba(${WHITE},.28)`;
-      c.lineWidth = sp > .35 ? 1.2 : .7;
-      c.beginPath(); c.moveTo(px, py); c.lineTo(p.x, p.y); c.stroke();
+      const dvx = ux - U, path = dvx * dvx + uy * uy > 1.1 ? fast : slow;
+      path.moveTo(px, py); path.lineTo(p.x, p.y);
     }
+    c.strokeStyle = `rgba(${WHITE},.28)`; c.lineWidth = .7; c.stroke(slow);
+    c.strokeStyle = `rgba(${ACC},.75)`; c.lineWidth = 1.2; c.stroke(fast);
     // тело обтекания
     c.fillStyle = `rgba(${WHITE},.95)`; c.fillRect(B.x, B.y - B.h / 2, B.w, B.h);
     c.strokeStyle = `rgba(${WHITE},.35)`; c.setLineDash([3, 5]);

@@ -40,7 +40,7 @@
         const p = PARTS[i], k = 2.4;
         intro.from(el, {
           x: -sx(p.ax) * k, y: -sy(p.ay) * k, z: `+=${400 + Math.random() * 300}`, rotation: (Math.random() - .5) * 40,
-          opacity: 0, filter: 'blur(14px)', duration: 1.6, ease: 'expo.out'
+          opacity: 0, filter: 'blur(14px)', duration: 1.6, ease: 'expo.out', clearProps: 'filter'
         }, .05 * i);
       });
 

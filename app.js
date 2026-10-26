@@ -293,7 +293,7 @@
   function blurIn(el, opts = {}) {
     const chars = splitChars(el);
     if (!hasGsap || reduce) return null;
-    return gsap.from(chars, { opacity: 0, filter: 'blur(16px)', x: -10, duration: 1.3, ease: 'expo.out', stagger: .028, ...opts });
+    return gsap.from(chars, { opacity: 0, filter: 'blur(16px)', x: -10, duration: 1.3, ease: 'expo.out', stagger: .028, clearProps: 'filter,transform', ...opts });
   }
 
   function initReveals(root = document) {
