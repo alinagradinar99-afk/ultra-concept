@@ -8,7 +8,7 @@
   /* ——— Направления (строки) ——— */
   const art = { flow: 'optiflux9090.webp', level: 'rrf5.webp', aux: 'venturi.webp' };
   $('#dirList').innerHTML = Object.entries(sections).map(([k, s], i) => `
-    <a class="dir-row reveal" href="${s.url}" data-img="img/${art[k]}?v=2">
+    <a class="dir-row reveal" href="${s.url}" data-img="img/${art[k]}?v=3">
       <span class="num">0${i + 1}</span><h3>${s.name}</h3><p>${s.text}</p>
       <span class="cnt">${String(products.filter(p => p.s === k).length).padStart(2, '0')} поз. ${I.ne}</span>
     </a>`).join('');
@@ -32,7 +32,7 @@
     if (G) gsap.to(from, { v: list.length, duration: .6, ease: 'power2.out', onUpdate: () => nEl.textContent = String(Math.round(from.v)).padStart(2, '0') });
     else nEl.textContent = String(list.length).padStart(2, '0');
     $$('[data-pick="medium"] button').forEach(b => { const v = b.dataset.v; b.disabled = !!v && !products.some(p => p.s === st.s && p.medium.includes(v)); });
-    out.innerHTML = list.slice(0, 6).map(tile).join('') || '<div class="empty"><p>Готового прибора нет</p>Инженер подберёт решение по опросному листу.</div>';
+    out.innerHTML = list.slice(0, 6).map(tile).join('') || '<div class="empty"><p>Готового прибора нет</p>Инженер подберёт решение по опросному листу</div>';
     if (G) gsap.from($$('.tile', out), { opacity: 0, y: 24, duration: .8, stagger: .05, ease: 'expo.out' });
     const q = new URLSearchParams({ s: st.s }); if (st.medium) q.set('medium', st.medium); if (st.ex) q.set('ex', 'Взрывозащищенное Ex');
     $('[data-picker-link]').href = 'catalog.html?' + q;
@@ -52,7 +52,6 @@
     return `<a class="stair reveal" href="catalog.html?industry=${encodeURIComponent(s.industry)}"><span class="label">0${i + 1}</span>
       <div><h3>${s.name}</h3><p>${s.text}</p><span class="go">${n} приборов в фильтре →</span></div></a>`;
   }).join('');
-  $('#indChips').innerHTML = facets.industry.values.map(v => `<a class="chip" href="catalog.html?industry=${encodeURIComponent(v)}">${v}</a>`).join('');
 
   $('#inlineForm').innerHTML = U.formHtml('inline');
   U.bindForms($('#inlineForm'));
@@ -71,7 +70,7 @@
     [...n.childNodes].forEach(c => {
       if (c.nodeType === 3) {
         const f = document.createDocumentFragment();
-        c.textContent.split(/(\s+)/).forEach(w => { if (!w) return; if (/^\s+$/.test(w)) { f.append(w); return; } const s = document.createElement('span'); s.className = 'w'; s.textContent = w; f.append(s); });
+        c.textContent.split(/([ \t\n\r]+)/).forEach(w => { if (!w) return; if (/^[ \t\n\r]+$/.test(w)) { f.append(w); return; } const s = document.createElement('span'); s.className = 'w'; s.textContent = w; f.append(s); });
         c.replaceWith(f);
       } else if (c.nodeType === 1) { c.style.fontStyle = 'normal'; split(c); [...c.querySelectorAll('.w')].forEach(w => w.dataset.hl = 1); }
     });

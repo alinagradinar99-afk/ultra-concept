@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin><link rel="preconnect" href="https://unpkg.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
-<link rel="stylesheet" href="styles.css?v=12">
+<link rel="stylesheet" href="styles.css?v=14">
 </head>
 <body data-page="home">
 <div id="header-slot"></div>
@@ -40,7 +40,7 @@
       <div class="hero-text">
         <span class="hero-over reveal"><i></i>Точность в потоке</span>
         <h1 id="heroTitle">Расходомеры и уровнемеры российского производства</h1>
-        <p class="hero-note reveal">Разработка, производство и поверка КИПиА для нефтегаза, энергетики и водоканалов. Собственная метрологическая база в России.</p>
+        <p class="hero-note reveal">Разработка, производство и поверка КИПиА для нефтегаза, энергетики и водоканалов. Собственная метрологическая база в России</p>
         <div class="hero-cta reveal">
           <a class="btn btn-accent" href="#picker">Подобрать прибор <i data-i="arrow"></i></a>
           <a class="btn btn-line" href="#ql">Скачать опросный лист <i data-i="down"></i></a>
@@ -66,7 +66,7 @@
   <!-- СЦЕНА «ВНУТРЬ ПРИБОРА» (Bright Biotech / ON) -->
   <section class="scene" id="scene" aria-label="Как работает вихревой расходомер">
     <canvas id="sceneCanvas" aria-hidden="true"></canvas>
-    <div class="scene-specimen" id="specimen"><img src="img/flowmeter-ultra.webp" alt="Расходомер ГК «УЛЬТРА»"></div>
+    <div class="scene-specimen" id="specimen"><img src="img/flowmeter-ultra.webp?v=2" alt="Расходомер ГК «УЛЬТРА»"></div>
     <div class="scene-frame" id="frame"><span class="c"></span><span class="c"></span><span class="c"></span><span class="c"></span>
       <span class="label scene-tag" style="left:calc(100% + 34px);top:12%">Ду 15–300 мм</span>
       <span class="label scene-tag" style="left:calc(100% + 34px);top:46%">до 10 МПа</span>
@@ -80,10 +80,10 @@
       <div class="chapter" data-ch="1"><span class="label">02 · Поток</span><h2>Внутри трубы</h2></div>
       <div class="chapter" data-ch="2"><span class="label">03 · Вихрь</span><h2>Частота вихрей — это расход</h2></div>
       <div class="chapter" data-ch="3"><span class="label">04 · Точность</span><h2>Поверено до отгрузки</h2></div>
-      <div class="chapter-note" data-ch="0"><b>±0,75 %</b><p>Жидкость, газ и пар. Встроенная компенсация по давлению и температуре.</p></div>
-      <div class="chapter-note" data-ch="1"><b id="vNote">3,2 м/с</b><p>У стенки поток тормозится, в центре — быстрее всего. Профиль скорости параболический.</p></div>
-      <div class="chapter-note" data-ch="2"><b id="fNote">42,7 Гц</b><p>Тело обтекания срывает вихри поочерёдно сверху и снизу. Датчик считает их частоту — она пропорциональна скорости.</p></div>
-      <div class="chapter-note" data-ch="3"><b>5 лет</b><p>Межповерочный интервал. Первичная поверка — на собственной базе УЛЬТРА-СТАНДАРТ.</p></div>
+      <div class="chapter-note" data-ch="0"><b>±0,75 %</b><p>Жидкость, газ и пар. Встроенная компенсация по давлению и температуре</p></div>
+      <div class="chapter-note" data-ch="1"><b id="vNote">3,2 м/с</b><p>У стенки поток тормозится, в центре — быстрее всего. Профиль скорости параболический</p></div>
+      <div class="chapter-note" data-ch="2"><b id="fNote">42,7 Гц</b><p>Тело обтекания срывает вихри поочерёдно сверху и снизу. Датчик считает их частоту — она пропорциональна скорости</p></div>
+      <div class="chapter-note" data-ch="3"><b>5 лет</b><p>Межповерочный интервал. Первичная поверка — на собственной базе УЛЬТРА-СТАНДАРТ</p></div>
     </div>
   </section>
 
@@ -91,7 +91,7 @@
   <section class="section" id="company">
     <div class="wrap">
       <span class="marker reveal" style="margin-bottom:40px">О группе компаний</span>
-      <p class="manifesto" id="manifesto">ГК «УЛЬТРА» разрабатывает, производит и поверяет приборы учёта расхода и уровня. <em>Своё производство</em> в Самарской области и <em>своя метрологическая база</em> — прибор приходит к вам уже поверенным, а сроки зависят от нас, а не от импорта.</p>
+      <p class="manifesto" id="manifesto">ГК «УЛЬТРА» разрабатывает, производит и поверяет приборы учёта расхода и уровня. <em>Своё производство</em> в Самарской области и <em>своя метрологическая база</em> — прибор приходит к вам уже поверенным, а сроки зависят от нас, а не от импорта</p>
     </div>
   </section>
 
@@ -100,7 +100,7 @@
     <div class="wrap">
       <div class="s-head">
         <div><span class="marker reveal">Каталог · 25 позиций</span><h2 class="d2" data-blur>Три направления</h2></div>
-        <p class="lead reveal">Характеристики, документация и опросный лист — в карточке каждого прибора.</p>
+        <p class="lead reveal">Характеристики, документация и опросный лист — в карточке каждого прибора</p>
       </div>
       <div class="dir-list" id="dirList"></div>
     </div>
@@ -112,7 +112,7 @@
     <div class="wrap">
       <div class="s-head">
         <div><span class="marker reveal">Подбор за 10 секунд</span><h2 class="d2" data-blur>Что нужно измерить?</h2></div>
-        <p class="lead reveal">Задача, среда, исполнение — и сразу подходящие приборы. Тот же фильтр работает в каталоге.</p>
+        <p class="lead reveal">Задача, среда, исполнение — и сразу подходящие приборы. Тот же фильтр работает в каталоге</p>
       </div>
       <div class="picker reveal">
         <div class="picker-panel">
@@ -135,10 +135,9 @@
       <div class="section"><div class="wrap">
         <div class="s-head">
           <div><span class="marker">Отраслевые решения</span><h2 class="d2" data-blur>Под задачу отрасли</h2></div>
-          <p class="lead">Типовые задачи, подборка приборов и примеры поставок. Отрасль — это и фильтр каталога: один справочник для обоих.</p>
+          <p class="lead">Типовые задачи, подборка приборов и примеры поставок. Отрасль — это и фильтр каталога: один справочник для обоих</p>
         </div>
         <div class="stairs" id="stairs"></div>
-        <div class="ind-row reveal"><span class="label">Фильтр «Применение»</span><span id="indChips" style="display:contents"></span></div>
       </div></div>
     </div>
   </section>
@@ -148,7 +147,7 @@
     <div class="wrap">
       <div class="s-head">
         <div><span class="marker reveal">Узел учёта под ключ</span><h2 class="d2" data-blur>Не только прибор — весь участок трубы</h2></div>
-        <p class="lead reveal">Струевыпрямители, прямые участки, фланцы и колонки производим сами — узел собирается из одного источника и поверяется целиком.</p>
+        <p class="lead reveal">Струевыпрямители, прямые участки, фланцы и колонки производим сами — узел собирается из одного источника и поверяется целиком</p>
       </div>
       <div class="scheme-wrap" id="schemeWrap">
         <svg class="scheme" id="scheme" viewBox="0 0 1200 380" role="img" aria-label="Схема измерительного участка: струевыпрямитель, прямой участок, расходомер, датчики давления и температуры">
@@ -191,8 +190,8 @@
   <section class="section" style="padding-top:0">
     <div class="wrap">
       <div class="s-head">
-        <div><span class="marker reveal">Производство и метрология</span><h2 class="d2" data-blur>Своё производство. Своя поверка.</h2></div>
-        <p class="lead reveal">Производственная и метрологическая база в России сокращает сроки поставки и позволяет поверять приборы до отгрузки и весь срок службы.</p>
+        <div><span class="marker reveal">Производство и метрология</span><h2 class="d2" data-blur>Своё производство</h2></div>
+        <p class="lead reveal">Производственная и метрологическая база в России сокращает сроки поставки и позволяет поверять приборы до отгрузки и весь срок службы</p>
       </div>
       <div class="odo-list">
         <div class="odo-row"><div class="odo" data-odo="25" aria-label="25"></div><div><span class="marker">Моделей в каталоге</span><p>Расходомеры, уровнемеры, оборудование узлов учёта</p></div></div>
@@ -213,14 +212,14 @@
     <div class="wrap">
       <div class="s-head">
         <div><span class="marker reveal">Услуги</span><h2 class="d2" data-blur>От опросного листа до поверки</h2></div>
-        <p class="lead reveal">Сопровождаем прибор весь срок службы: подбор, производство, пусконаладка, сервис и периодическая поверка.</p>
+        <p class="lead reveal">Сопровождаем прибор весь срок службы: подбор, производство, пусконаладка, сервис и периодическая поверка</p>
       </div>
       <div id="steps">
         <div class="steps">
-          <div class="step"><span class="label">01 · 1 день</span><h4>Опросный лист</h4><p>Заполняете онлайн или присылаете PDF — инженер уточнит параметры среды.</p></div>
-          <div class="step"><span class="label">02 · 1–2 дня</span><h4>Подбор и ТКП</h4><p>Расчёт прибора, комплектация и сроки в одном предложении.</p></div>
-          <div class="step"><span class="label">03 · от 4 недель</span><h4>Производство и поверка</h4><p>Сборка на УЛЬТРАМАШ, первичная поверка на собственной базе.</p></div>
-          <div class="step"><span class="label">04 · весь срок</span><h4>Пусконаладка и сервис</h4><p>Ввод в эксплуатацию, техподдержка 8 (800) 505-25-87.</p></div>
+          <div class="step"><span class="label">01 · 1 день</span><h4>Опросный лист</h4><p>Заполняете онлайн или присылаете PDF — инженер уточнит параметры среды</p></div>
+          <div class="step"><span class="label">02 · 1–2 дня</span><h4>Подбор и ТКП</h4><p>Расчёт прибора, комплектация и сроки в одном предложении</p></div>
+          <div class="step"><span class="label">03 · от 4 недель</span><h4>Производство и поверка</h4><p>Сборка на УЛЬТРАМАШ, первичная поверка на собственной базе</p></div>
+          <div class="step"><span class="label">04 · весь срок</span><h4>Пусконаладка и сервис</h4><p>Ввод в эксплуатацию, техподдержка 8 (800) 505-25-87</p></div>
         </div>
         <div class="ticks" id="ticks"></div>
       </div>
@@ -239,7 +238,7 @@
         <div class="ql-left">
           <span class="marker">Опросные листы</span>
           <h2 class="d2" style="font-size:clamp(34px,4vw,64px)">Заполните — получите точный подбор</h2>
-          <p class="lead">Без цен на сайте, но с быстрым ответом: инженер рассчитает прибор и пришлёт ТКП с комплектацией.</p>
+          <p class="lead">Без цен на сайте, но с быстрым ответом: инженер рассчитает прибор и пришлёт ТКП с комплектацией</p>
           <button class="btn btn-accent" data-modal="Отправить опросный лист">Отправить заполненный <i data-i="arrow"></i></button>
         </div>
         <div class="ql-docs">
@@ -259,9 +258,9 @@
         <a class="btn btn-line reveal" href="#" style="justify-self:start">Все новости <i data-i="arrow"></i></a>
       </div>
       <div>
-        <a class="news-row reveal" href="#"><time>14.10.2026</time><b>Стенд ГК «УЛЬТРА» на «Нефтегаз-2026»</b><span>Показали радарный уровнемер RRF-5 80 ГГц и вихревой OPTISWIRL 4200.</span><i data-i="ne"></i></a>
-        <a class="news-row reveal" href="#"><time>02.09.2026</time><b>OPTISWIRL 4200 в Госреестре СИ</b><span>Рег. № 91500-24, межповерочный интервал — 5 лет.</span><i data-i="ne"></i></a>
-        <a class="news-row reveal" href="#"><time>18.06.2026</time><b>Совет метрологов НПЗ 2026</b><span>Доклад о поверке ультразвуковых расходомеров без демонтажа.</span><i data-i="ne"></i></a>
+        <a class="news-row reveal" href="#"><time>14.10.2026</time><b>Стенд ГК «УЛЬТРА» на «Нефтегаз-2026»</b><span>Показали радарный уровнемер RRF-5 80 ГГц и вихревой OPTISWIRL 4200</span><i data-i="ne"></i></a>
+        <a class="news-row reveal" href="#"><time>02.09.2026</time><b>OPTISWIRL 4200 в Госреестре СИ</b><span>Рег. № 91500-24, межповерочный интервал — 5 лет</span><i data-i="ne"></i></a>
+        <a class="news-row reveal" href="#"><time>18.06.2026</time><b>Совет метрологов НПЗ 2026</b><span>Доклад о поверке ультразвуковых расходомеров без демонтажа</span><i data-i="ne"></i></a>
       </div>
     </div>
   </section>
@@ -272,7 +271,7 @@
       <div>
         <span class="marker reveal">Технико-коммерческое предложение</span>
         <h2 class="d2" data-blur style="margin-top:24px">Получите ТКП на оборудование</h2>
-        <p class="lead reveal" style="margin-top:24px">Стоимость зависит от параметров и комплектации. Приложите опросный лист — инженер подготовит предложение и при необходимости уточнит детали.</p>
+        <p class="lead reveal" style="margin-top:24px">Стоимость зависит от параметров и комплектации. Приложите опросный лист — инженер подготовит предложение и при необходимости уточнит детали</p>
         <div class="contacts-list reveal">
           <a href="tel:+74999677799"><span>+7 (499) 967-77-99</span><small>Отдел продаж</small></a>
           <a href="tel:88005052587"><span>8 (800) 505-25-87</span><small>Техподдержка</small></a>
@@ -290,9 +289,9 @@
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script defer src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 <script defer src="data.js"></script>
-<script defer src="app.js?v=11"></script>
-<script defer src="scene.js?v=11"></script>
-<script defer src="device.js?v=11"></script>
-<script defer src="home.js?v=11"></script>
+<script defer src="app.js?v=13"></script>
+<script defer src="scene.js?v=13"></script>
+<script defer src="device.js?v=13"></script>
+<script defer src="home.js?v=13"></script>
 </body>
 </html>

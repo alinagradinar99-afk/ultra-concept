@@ -13,7 +13,7 @@
   --brand-2: #3a1c60;
   --accent: #3ee6c8;       /* единственный акцент: действия и живые данные */
   --accent-ink: #03201b;
-  --specimen: #eef0f4;       /* фон рендеров приборов */
+  --specimen: #ffffff;       /* фон рендеров приборов */
   --wrap: 1440px;
   --gutter: clamp(16px, 3.4vw, 48px);
   --f: 'Inter Tight', 'Helvetica Neue', Arial, sans-serif;
@@ -144,7 +144,7 @@ button { cursor: pointer; background: none; border: 0; padding: 0; }
 .hero-text { position: relative; z-index: 3; }
 .hero-over { display: inline-flex; align-items: center; gap: 12px; font: 400 12px var(--f-mono); letter-spacing: .18em; text-transform: uppercase; color: var(--accent); margin-bottom: 28px; }
 .hero-over i { width: 28px; height: 1px; background: var(--accent); }
-.hero h1 { margin: 0; font-size: clamp(40px, 5.3vw, 92px); line-height: .96; font-weight: 300; letter-spacing: -.05em; text-wrap: balance; }
+.hero h1 { margin: 0; font-size: clamp(36px, 4vw, 66px); line-height: 1; font-weight: 300; letter-spacing: -.05em; text-wrap: balance; }
 .hero-note { margin: 28px 0 0; max-width: 44ch; color: var(--muted); font-size: clamp(15px, 1.2vw, 18px); line-height: 1.5; }
 .hero-cta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 36px; }
 .hero-cta .btn { --h: 60px; min-width: 250px; }
@@ -171,8 +171,8 @@ button { cursor: pointer; background: none; border: 0; padding: 0; }
 /* ——— Сцена «Внутрь прибора» ——— */
 .scene { position: relative; height: 100svh; overflow: hidden; background: var(--bg); }
 .scene canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-.scene-specimen { position: absolute; left: 50%; top: 50%; width: min(58vh, 540px); aspect-ratio: 1; margin: calc(min(58vh, 540px) / -2) 0 0 calc(min(58vh, 540px) / -2); background: var(--specimen); overflow: hidden; will-change: transform; }
-.scene-specimen img { width: 100%; height: 100%; object-fit: cover; }
+.scene-specimen { position: absolute; left: 50%; top: 50%; width: min(58vh, 540px); aspect-ratio: 1; margin: calc(min(58vh, 540px) / -2) 0 0 calc(min(58vh, 540px) / -2); overflow: visible; will-change: transform; }
+.scene-specimen img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 30px 50px rgba(0, 0, 0, .5)); }
 .scene-frame { position: absolute; left: 50%; top: 50%; width: min(58vh, 540px); aspect-ratio: 1; margin: calc(min(58vh, 540px) / -2) 0 0 calc(min(58vh, 540px) / -2); pointer-events: none; }
 .scene-frame .c { position: absolute; width: 18px; height: 18px; border: 1px solid var(--text); }
 .scene-frame .c:nth-child(1) { left: -22px; top: -22px; border-right: 0; border-bottom: 0; }
@@ -249,23 +249,30 @@ button { cursor: pointer; background: none; border: 0; padding: 0; }
 .specs div { display: flex; justify-content: space-between; gap: 12px; padding: 7px 0; border-top: 1px solid var(--line); }
 .specs dt { color: var(--muted); }
 .specs dd { margin: 0; font: 400 12.5px var(--f-mono); text-align: right; }
-.tile-foot { margin-top: auto; padding-top: 14px; display: flex; justify-content: space-between; align-items: center; }
+.tile-foot { margin-top: auto; padding-top: 16px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
 .tile-foot .link { font-size: 14px; display: inline-flex; gap: 8px; align-items: center; }
 .tile-foot .link::after { content: '→'; transition: transform .5s var(--ease); }
 .tile:hover .tile-foot .link::after { transform: translateX(5px); }
-.tile-foot .ql { position: relative; z-index: 4; white-space: nowrap; font: 400 11px var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
-.tile-foot .ql:hover { color: var(--accent); }
+.tile-foot .ql { position: relative; z-index: 4; white-space: nowrap; height: 40px; padding: 0 14px; border: 1px solid var(--accent); color: var(--accent); font-size: 14px; font-weight: 500; transition: background .3s, color .3s; }
+.tile-foot .ql:hover { background: var(--accent); color: var(--accent-ink); }
 .tile a.cover { position: absolute; inset: 0; z-index: 3; }
 
 /* ——— «Занавес» с отраслевыми решениями ——— */
 .curtain-panel { position: relative; background: var(--brand); color: #fff; clip-path: inset(0 var(--gutter) 0 var(--gutter) round 28px 28px 0 0); overflow: hidden; }
-.curtain-panel::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(255, 255, 255, .07) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .07) 1px, transparent 1px); background-size: 80px 80px; mask-image: linear-gradient(transparent, #000 30%, #000 70%, transparent); -webkit-mask-image: linear-gradient(transparent, #000 30%, #000 70%, transparent); pointer-events: none; }
+.curtain-panel .wrap { position: relative; }
+/* Сетка из 12 колонок по краю контента: линии совпадают с началом заголовков и текста */
+.curtain-panel .wrap::before { content: ''; position: absolute; top: calc(clamp(96px, 13vw, 200px) * -1); bottom: calc(clamp(96px, 13vw, 200px) * -1); left: var(--gutter); right: var(--gutter); pointer-events: none;
+  background-image: linear-gradient(90deg, rgba(255, 255, 255, .09) 1px, transparent 1px); background-size: calc(100% / 12) 100%;
+  box-shadow: inset -1px 0 rgba(255, 255, 255, .09); }
 .curtain-panel .marker { color: rgba(255, 255, 255, .7); }
 .curtain-panel .lead { color: rgba(255, 255, 255, .72); }
-.stair { display: grid; grid-template-columns: 60px minmax(0, 560px); gap: 20px; padding: 28px 0; border-top: 1px solid rgba(255, 255, 255, .22); max-width: 640px; }
-.stair:nth-child(2) { margin-left: 22%; }
-.stair:nth-child(3) { margin-left: 44%; }
-.stair .label { color: rgba(255, 255, 255, .6); padding-top: 10px; }
+.stair { position: relative; display: grid; grid-template-columns: calc(100% / 6) 1fr; padding: 28px 0; border-top: 1px solid rgba(255, 255, 255, .22); width: 50%; }
+.stair:nth-child(2) { margin-left: 25%; }
+.stair:nth-child(3) { margin-left: 50%; }
+.stair .label { color: rgba(255, 255, 255, .6); padding: 10px 0 0 8px; }
+.curtain-panel .s-head { grid-template-columns: 8fr 4fr; gap: 0; }
+.curtain-panel .s-head .lead { padding-left: 8px; }
+.curtain-panel .s-head > div { padding-left: 0; }
 .stair h3 { font-size: clamp(26px, 3vw, 46px); font-weight: 300; letter-spacing: -.04em; line-height: 1; margin: 0 0 12px; }
 .stair p { margin: 0 0 16px; color: rgba(255, 255, 255, .75); font-size: 15px; }
 .stair .go { font: 400 12px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
@@ -380,9 +387,9 @@ button { cursor: pointer; background: none; border: 0; padding: 0; }
 .footer h5 { margin: 0 0 16px; font: 400 11px var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
 .footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-size: 14.5px; }
 .footer a:hover { color: var(--accent); }
-.footer-word { margin: 80px 0 0; font-size: clamp(80px, 23.5vw, 390px); line-height: .76; font-weight: 300; letter-spacing: -.075em; white-space: nowrap; }
+.footer-word { display: none; margin: 80px 0 0; font-size: clamp(80px, 23.5vw, 390px); line-height: .76; font-weight: 300; letter-spacing: -.075em; white-space: nowrap; }
 .footer-word span { display: inline-block; }
-.footer-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-top: 28px; padding-top: 18px; border-top: 1px solid var(--line); font: 400 11px var(--f-mono); letter-spacing: .06em; color: var(--muted); }
+.footer-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line); font: 400 11px var(--f-mono); letter-spacing: .06em; color: var(--muted); }
 
 /* Модалка */
 .modal { position: fixed; inset: 0; z-index: 130; display: grid; place-items: center; padding: 16px; background: rgba(6, 4, 10, .78); backdrop-filter: blur(8px); opacity: 0; visibility: hidden; transition: .4s; }
@@ -528,7 +535,9 @@ body[data-page='product'] .badge-cta { bottom: 92px; }
   .chapter-note { grid-area: 2 / 1; }
   .dir-row { grid-template-columns: 48px 1fr auto; }
   .dir-row p { display: none; }
-  .stair:nth-child(2) { margin-left: 8%; } .stair:nth-child(3) { margin-left: 16%; }
+  .stair { width: 75%; grid-template-columns: calc(100% / 9) 1fr; }
+  .stair:nth-child(2) { margin-left: calc(100% / 12); } .stair:nth-child(3) { margin-left: calc(100% / 6); }
+  .curtain-panel .s-head { grid-template-columns: 1fr; }
   .scheme-legend { grid-template-columns: 1fr 1fr; }
   .odo-row { grid-template-columns: 1fr; gap: 0; }
   .steps { grid-template-columns: 1fr 1fr; row-gap: 32px; }
@@ -563,7 +572,7 @@ body[data-page='product'] .badge-cta { bottom: 92px; }
   .header { padding: 9px var(--gutter); }
   .logo small { display: none; }
   .hero-in { padding-top: calc(var(--header-h) + 8px); }
-  .hero h1 { font-size: 40px; }
+  .hero h1 { font-size: 34px; }
   .hero-over { margin-bottom: 18px; }
   .hero-note { font-size: 15px; margin-top: 18px; }
   .hero-cta .btn { --h: 56px; flex: 1 1 100%; min-width: 0; }
@@ -582,8 +591,10 @@ body[data-page='product'] .badge-cta { bottom: 92px; }
   .dir-row { grid-template-columns: 32px 1fr; }
   .dir-row h3 { font-size: 32px; }
   .dir-row .cnt { grid-column: 2; }
-  .stair { grid-template-columns: 1fr; gap: 8px; }
+  .stair { grid-template-columns: 1fr; gap: 8px; width: 100%; }
   .stair:nth-child(2), .stair:nth-child(3) { margin-left: 0; }
+  .stair .label { padding-left: 0; }
+  .curtain-panel .wrap::before { background-size: 25% 100%; }
   .curtain-panel { clip-path: inset(0 0 0 0 round 20px 20px 0 0); }
   .scheme-wrap { padding: 10px; overflow-x: auto; }
   .scheme { min-width: 820px; }
@@ -596,7 +607,8 @@ body[data-page='product'] .badge-cta { bottom: 92px; }
   .grid .tile-body, .picker-results .tile-body, .related .tile-body { padding: 12px; }
   .grid .tile-name, .picker-results .tile-name, .related .tile-name { font-size: 17px; }
   .grid .specs div:nth-child(n+3), .picker-results .specs, .related .specs { display: none; }
-  .grid .tile-foot .ql, .picker-results .tile-foot .ql, .related .tile-foot .ql { display: none; }
+  .grid .tile-foot .link, .picker-results .tile-foot .link, .related .tile-foot .link { display: none; }
+  .tile-foot .ql { width: 100%; height: 38px; padding: 0 8px; font-size: 13px; }
   .grid { grid-template-columns: 1fr 1fr; }
   .related { grid-template-columns: 1fr 1fr; }
   .pdp-cta { grid-template-columns: 1fr; }

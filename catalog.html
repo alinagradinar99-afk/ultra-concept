@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin><link rel="preconnect" href="https://unpkg.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
-<link rel="stylesheet" href="styles.css?v=12">
+<link rel="stylesheet" href="styles.css?v=14">
 </head>
 <body data-page="catalog">
 <div id="header-slot"></div>
@@ -41,7 +41,7 @@
       <p class="note">[ Значения характеристик в концепции условные — точная матрица свойств составляется на этапе аналитики, ТЗ п. 4.2 ]</p>
       <div class="seo-text">
         <h2>Расходомеры для жидкостей, газа и пара</h2>
-        <p>Здесь будет SEO-текст раздела по итогам семантики (ТЗ п. 3.4, 9.3): типы расходомеров, принципы измерения, как выбрать прибор под среду и диапазон, поверка и межповерочный интервал. Блок редактируется из админки Битрикс.</p>
+        <p>Здесь будет SEO-текст раздела по итогам семантики (ТЗ п. 3.4, 9.3): типы расходомеров, принципы измерения, как выбрать прибор под среду и диапазон, поверка и межповерочный интервал. Блок редактируется из админки Битрикс</p>
       </div>
     </div>
   </div></section>
@@ -54,7 +54,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 <script src="data.js"></script>
-<script src="app.js?v=11"></script>
+<script src="app.js?v=13"></script>
 <script>
 (function () {
   const U = window.ULTRA, { $, $$, I, tile, sections, products, facets, reduce, hasGsap } = U;
@@ -119,7 +119,7 @@
     $('[data-n]').textContent = String(list.length).padStart(2, '0'); $('[data-n2]').textContent = list.length;
     const grid = $('[data-grid]');
     grid.innerHTML = list.map(tile).join('') ||
-      `<div class="empty"><p>Готового прибора под эти условия нет</p>Инженер подберёт решение по опросному листу.<br><button class="btn btn-accent" data-modal="Запрос ТКП">Оставить запрос ${I.arrow}</button></div>`;
+      `<div class="empty"><p>Готового прибора под эти условия нет</p>Инженер подберёт решение по опросному листу<br><button class="btn btn-accent" data-modal="Запрос ТКП">Оставить запрос ${I.arrow}</button></div>`;
     if (G) gsap.from($$('.tile', grid), { opacity: 0, y: 30, duration: .9, stagger: .04, ease: 'expo.out', clearProps: 'all' });
     const chips = [];
     ['medium', 'signal', 'industry'].forEach(k => sel[k].forEach(v => chips.push(`<button data-k="${k}" data-v="${v}">${v}</button>`)));

@@ -103,20 +103,33 @@
       <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
       <button class="btn btn-accent btn-submit" type="submit">Отправить запрос ${I.arrow}</button>
       <p class="legal">Нажимая кнопку, вы соглашаетесь с <a href="#">политикой обработки персональных данных</a></p>
-      <div class="form-done"><div><div class="check">${I.check}</div><h3>Заявка отправлена</h3><p>Номер заявки <span class="mono" style="color:var(--text)">№ ${Math.floor(10000 + Math.random() * 89999)}</span>. Инженер свяжется с вами в течение рабочего дня.</p></div></div>
+      <div class="form-done"><div><div class="check">${I.check}</div><h3>Заявка отправлена</h3><p>Номер заявки <span class="mono" style="color:var(--text)">№ ${Math.floor(10000 + Math.random() * 89999)}</span>. Инженер свяжется с вами в течение рабочего дня</p></div></div>
     </form>`;
   }
+
+  /* ——— Типографика: короткие слова не висят в конце строки, тире не переносится в начало ——— */
+  const SHORT = /(^|[\s(«"„—–-])(в|во|и|к|ко|с|со|у|о|об|а|на|по|до|от|за|из|не|ни|для|при|без|под|над|или|но|что|как|же|ли|это|их|его|её|№)[ \t\n]+/gi;
+  function typo(root) {
+    const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, { acceptNode: n => /SCRIPT|STYLE|TEXTAREA/.test(n.parentNode && n.parentNode.nodeName) ? 2 : 1 });
+    for (let n; (n = w.nextNode());) {
+      const t = n.nodeValue, r = t.replace(SHORT, '$1$2 ').replace(SHORT, '$1$2 ').replace(/[ \t\n]+(—|–)/g, ' $1');
+      if (r !== t) n.nodeValue = r;
+    }
+  }
+  new MutationObserver(ms => ms.forEach(m => m.addedNodes.forEach(n => { if (n.nodeType === 1) typo(n); else if (n.nodeType === 3 && n.parentNode) typo(n.parentNode); })))
+    .observe(document.body, { childList: true, subtree: true });
 
   $('#header-slot').outerHTML = header;
   $('#footer-slot').outerHTML = footer;
   $$('i[data-i]').forEach(i => { i.outerHTML = I[i.dataset.i]; });
+  typo(document.body);
 
   /* ——— Плитка товара ——— */
   function tile(p) {
     const s = Object.entries(p.key).slice(0, 4);
     return `<article class="tile">
       <div class="tile-img"><div class="badges">${p.soon ? '<span class="badge soon">Скоро</span>' : ''}</div>
-        <img src="img/${p.img}?v=2" alt="${p.type} ${p.name}" loading="lazy"></div>
+        <img src="img/${p.img}?v=3" alt="${p.type} ${p.name}" loading="lazy"></div>
       <div class="tile-body">
         <div class="tile-type">${p.type}</div>
         <h3 class="tile-name">${p.name}</h3>
@@ -264,9 +277,9 @@
     const walk = n => [...n.childNodes].forEach(c => {
       if (c.nodeType === 3) {
         const frag = document.createDocumentFragment();
-        c.textContent.split(/(\s+)/).forEach(w => {
+        c.textContent.split(/([ \t\n\r]+)/).forEach(w => {
           if (!w) return;
-          if (/^\s+$/.test(w)) { frag.append(' '); return; }
+          if (/^[ \t\n\r]+$/.test(w)) { frag.append(' '); return; }
           const word = document.createElement('span'); word.style.cssText = 'display:inline-block;white-space:nowrap';
           [...w].forEach(ch => { const s = document.createElement('span'); s.className = 'ch'; s.textContent = ch; word.append(s); out.push(s); });
           frag.append(word);
