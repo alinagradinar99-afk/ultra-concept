@@ -133,7 +133,7 @@
     counter.textContent = `0${i + 1} / 04`;
   };
   // Отверстие фланца на фото — точка, в которую «влетает» камера
-  gsap.set('#specimen', { transformOrigin: '25% 58%' });
+  gsap.set('#specimen', { transformOrigin: '23% 69%' });
   const tl = gsap.timeline({
     defaults: { ease: 'none' },
     scrollTrigger: {
