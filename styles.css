@@ -195,7 +195,7 @@ button { cursor: pointer; background: none; border: 0; padding: 0; }
 
 /* ——— Каталог: крупные карточки направлений ——— */
 .cat-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line-2); border: 1px solid var(--line-2); }
-.cat-card { position: relative; display: flex; flex-direction: column; min-height: 640px; padding: 28px; background: var(--bg); overflow: hidden; isolation: isolate; transition: background .5s; }
+.cat-card { position: relative; display: flex; flex-direction: column; min-height: 560px; padding: 28px; background: var(--bg); overflow: hidden; isolation: isolate; transition: background .5s; }
 .cat-card::before { content: ''; position: absolute; left: 50%; top: 38%; width: 90%; aspect-ratio: 1; translate: -50% -50%; border-radius: 50%; z-index: -1; opacity: .55; transition: opacity .6s, scale .8s var(--ease);
   background: radial-gradient(circle, rgba(155, 107, 255, .45), transparent 62%); }
 .cat-card[data-k="level"]::before { background: radial-gradient(circle, rgba(62, 230, 200, .32), transparent 62%); }
@@ -204,8 +204,8 @@ button { cursor: pointer; background: none; border: 0; padding: 0; }
 .cat-card:hover::before { opacity: 1; scale: 1.08; }
 .cat-num, .cat-cnt { position: absolute; top: 28px; }
 .cat-num { left: 28px; color: var(--accent); } .cat-cnt { right: 28px; }
-.cat-img { flex: 1; display: grid; place-items: center; padding: 56px 8px 20px; }
-.cat-img img { width: 100%; max-height: 340px; object-fit: contain; filter: drop-shadow(0 26px 34px rgba(0, 0, 0, .5)); transition: transform 1s var(--ease); }
+.cat-img { flex: 1; display: grid; place-items: center; padding: 64px 40px 28px; }
+.cat-img img { width: 78%; max-height: 230px; object-fit: contain; filter: drop-shadow(0 26px 34px rgba(0, 0, 0, .5)); transition: transform 1s var(--ease); }
 .cat-card:hover .cat-img img { transform: scale(1.06) rotate(-1.5deg); }
 .cat-body h3 { margin: 0 0 12px; font-size: clamp(26px, 2.3vw, 36px); font-weight: 300; letter-spacing: -.035em; line-height: 1.05; }
 .cat-body p { margin: 0 0 26px; color: var(--muted); font-size: 15px; line-height: 1.5; min-height: 3em; }

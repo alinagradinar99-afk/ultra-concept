@@ -102,16 +102,7 @@
     U.lenis ? U.lenis.scrollTo(y, { duration: 1.2 }) : scrollTo({ top: y, behavior: 'smooth' });
   }));
 
-  // «Живой» прибор: парит и наклоняется за курсором
-  const stage = $('#device'), look = { x: 0, y: 0 };
-  gsap.to(stage, { y: -12, duration: 3.2, ease: 'sine.inOut', repeat: -1, yoyo: true });
-  const sway = gsap.fromTo(look, { x: -5 }, { x: 5, duration: 6, ease: 'sine.inOut', repeat: -1, yoyo: true });
-  hero.addEventListener('pointermove', e => {
-    sway.pause();
-    gsap.to(look, { x: (e.clientX / innerWidth - .5) * 18, y: (e.clientY / innerHeight - .5) * -10, duration: 1.2, ease: 'power3.out', overwrite: true });
-  });
-  hero.addEventListener('pointerleave', () => gsap.to(look, { x: 0, y: 0, duration: 1.2, onComplete: () => sway.restart() }));
-  gsap.ticker.add(() => { if (htl.scrollTrigger.isActive || scrollY < innerHeight) gsap.set(stage, { rotationY: look.x, rotationX: look.y, transformPerspective: 1400 }); });
+  // Прибор стоит неподвижно — анимируется только смена направления
 
   /* Видео: обложка чуть приближается при прокрутке */
   gsap.fromTo('.video-full .video-poster', { scale: 1.15 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: '#video', start: 'top bottom', end: 'top top', scrub: true } });
