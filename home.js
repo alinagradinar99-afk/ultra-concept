@@ -5,47 +5,6 @@
   const small = matchMedia('(max-width: 680px)').matches;
   const G = hasGsap && !reduce;
 
-  /* ——— Направления (строки) ——— */
-  const art = { flow: 'optiflux9090.webp', level: 'rrf5.webp', aux: 'venturi.webp' };
-  $('#dirList').innerHTML = Object.entries(sections).map(([k, s], i) => `
-    <a class="dir-row reveal" href="${s.url}" data-img="img/${art[k]}?v=3">
-      <span class="num">0${i + 1}</span><h3>${s.name}</h3><p>${s.text}</p>
-      <span class="cnt">${String(products.filter(p => p.s === k).length).padStart(2, '0')} поз. ${I.ne}</span>
-    </a>`).join('');
-  // Фото направления едет за курсором
-  const fl = $('#dirFloat'), flImg = $('img', fl);
-  if (G) {
-    const qx = gsap.quickTo(fl, 'x', { duration: .6, ease: 'power3' }), qy = gsap.quickTo(fl, 'y', { duration: .6, ease: 'power3' });
-    $('#dirList').addEventListener('pointermove', e => { qx(e.clientX); qy(e.clientY); });
-  }
-  $$('.dir-row').forEach(r => {
-    r.addEventListener('pointerenter', () => { flImg.src = r.dataset.img; fl.classList.add('is-on'); });
-    r.addEventListener('pointerleave', () => fl.classList.remove('is-on'));
-  });
-
-  /* ——— Подбор ——— */
-  const st = { s: 'flow', medium: '', ex: '' };
-  const out = $('[data-picker-out]'), nEl = $('[data-picker-n]');
-  function renderPicker() {
-    const list = products.filter(p => p.s === st.s && (!st.medium || p.medium.includes(st.medium)) && (!st.ex || p.ex));
-    const from = { v: +nEl.textContent || 0 };
-    if (G) gsap.to(from, { v: list.length, duration: .6, ease: 'power2.out', onUpdate: () => nEl.textContent = String(Math.round(from.v)).padStart(2, '0') });
-    else nEl.textContent = String(list.length).padStart(2, '0');
-    $$('[data-pick="medium"] button').forEach(b => { const v = b.dataset.v; b.disabled = !!v && !products.some(p => p.s === st.s && p.medium.includes(v)); });
-    out.innerHTML = list.slice(0, 6).map(tile).join('') || '<div class="empty"><p>Готового прибора нет</p>Инженер подберёт решение по опросному листу</div>';
-    if (G) gsap.from($$('.tile', out), { opacity: 0, y: 24, duration: .8, stagger: .05, ease: 'expo.out' });
-    const q = new URLSearchParams({ s: st.s }); if (st.medium) q.set('medium', st.medium); if (st.ex) q.set('ex', 'Взрывозащищенное Ex');
-    $('[data-picker-link]').href = 'catalog.html?' + q;
-  }
-  $$('[data-pick]').forEach(g => g.addEventListener('click', e => {
-    const b = e.target.closest('button'); if (!b || b.disabled) return;
-    $$('button', g).forEach(x => x.setAttribute('aria-pressed', x === b));
-    st[g.dataset.pick] = b.dataset.v;
-    if (g.dataset.pick === 's') { st.medium = ''; $$('[data-pick="medium"] button').forEach((x, i) => x.setAttribute('aria-pressed', i === 0)); }
-    renderPicker();
-  }));
-  renderPicker();
-
   /* ——— Отраслевые решения: лесенка ——— */
   $('#stairs').innerHTML = solutions.map((s, i) => {
     const n = products.filter(p => p.industry.includes(s.industry)).length;
@@ -64,12 +23,12 @@
       : `<span class="static">${ch}</span>`).join('') + '</div>' + (unit ? `<span class="unit">${unit}</span>` : '');
   });
 
-  /* ——— Видео: Rutube грузится только по клику (не тормозит загрузку страницы) ——— */
+  /* ——— Видео на весь экран: Rutube грузится только по клику ——— */
   const vid = $('#video');
   vid.addEventListener('click', () => {
     if (vid.querySelector('iframe')) return;
-    vid.insertAdjacentHTML('beforeend', `<iframe src="${vid.dataset.src}" allow="clipboard-write; autoplay; fullscreen" allowfullscreen title="Видео ГК «УЛЬТРА»"></iframe>`);
-    $$('.video-play, .video-dur', vid).forEach(e => e.remove());
+    vid.insertAdjacentHTML('beforeend', `<iframe src="${vid.dataset.src}" allow="clipboard-write; autoplay; fullscreen" allowfullscreen title="Видео ГК «УЛЬТРА»: собственное производство"></iframe>`);
+    vid.classList.add('is-playing');
   });
 
   // Шкала-прогресс услуг
@@ -91,9 +50,8 @@
   const seen = sessionStorage.getItem('ultraSeen') || sessionStorage.getItem('ultraNav');
   const heroIn = () => {
     // На мобильном заголовок не прячем (opacity 0 задерживает LCP) — только лёгкий сдвиг
-    gsap.from('.hx-head > *, .hx-slide[data-i="0"] .hx-copy > *, .hx-slide[data-i="0"] .hx-facts, .hx-progress', { opacity: 0, y: 24, duration: 1.2, ease: 'expo.out', stagger: .08, delay: .2 });
+    gsap.from('.hx-slide[data-i="0"] .hx-num, .hx-slide[data-i="0"] .hx-copy > *, .hx-slide[data-i="0"] .hx-facts, .hx-progress', { opacity: 0, y: 24, duration: 1.2, ease: 'expo.out', stagger: .08, delay: .2 });
     gsap.from('.hx-stage', { opacity: 0, scale: .86, duration: 1.8, ease: 'expo.out' }); // анимируем сцену целиком: у самих приборов прозрачностью управляет прокрутка
-    gsap.from('.hx-slide[data-i="0"] .hx-word', { opacity: 0, xPercent: 8, duration: 2, ease: 'expo.out' });
   };
   if (seen) { pre.remove(); U.ready(); heroIn(); }
   else {
@@ -113,12 +71,16 @@
 
   /* ——— Первый экран: вертикальная прокрутка двигает направления по горизонтали ——— */
   const hero = $('#hero'), track = $('#hxTrack'), devs = $$('.hx-dev'), segs = $$('.hx-seg');
-  // Слова-контуры — в отдельный слой под прибором (текст — над прибором), едут синхронно с текстом
-  const wtrack = document.createElement('div'); wtrack.className = 'hx-wtrack';
-  $$('.hx-word', track).forEach(w => { const cell = document.createElement('div'); cell.append(w); wtrack.append(cell); });
-  $('.hx-pin').insertBefore(wtrack, $('#device'));
-  const words = $$('.hx-word', wtrack);
   const N = devs.length;
+  // Прибор не исчезает, а сменяется: новый «встаёт» с лёгким поворотом и масштабом
+  let shown = -1;
+  const showDev = i => {
+    if (i === shown) return;
+    const dir = i > shown ? 1 : -1; shown = i;
+    devs.forEach((d, k) => d.classList.toggle('is-on', k === i));
+    gsap.fromTo(devs[i], { rotationY: 28 * dir, scale: .9, xPercent: 6 * dir }, { rotationY: 0, scale: 1, xPercent: 0, duration: 1, ease: 'expo.out', overwrite: true });
+  };
+  showDev(0);
   const htl = gsap.timeline({
     defaults: { ease: 'none' },
     scrollTrigger: {
@@ -127,19 +89,14 @@
       onUpdate: self => {
         const p = self.progress * (N - 1), a = Math.round(p);
         if (hero.dataset.active != a) hero.dataset.active = a;
+        showDev(a);
         segs.forEach((g, i) => { g.style.setProperty('--p', Math.max(0, Math.min(1, p - i + 1))); g.classList.toggle('is-on', i === a); });
       }
     }
   });
   // круглый бейдж «Отправить запрос» не мешает прогрессу, пока закреплён первый экран
   ScrollTrigger.create({ trigger: hero, start: 'top top', end: () => htl.scrollTrigger.end, toggleClass: { targets: document.body, className: 'in-scene' } });
-  htl.to([track, wtrack], { xPercent: -100 * (N - 1) / N, duration: N - 1 }, 0);
-  words.forEach((w, i) => htl.fromTo(w, { xPercent: 22 }, { xPercent: -22, duration: 2 }, i - 1)); // надпись-контур едет с параллаксом
-  // Прибор сменяется: уходит с поворотом влево, следующий приходит справа
-  for (let i = 1; i < N; i++) {
-    htl.to(devs[i - 1], { opacity: 0, scale: .8, rotationY: -35, xPercent: -18, duration: .45, ease: 'power2.in' }, i - .7)
-      .fromTo(devs[i], { opacity: 0, scale: .8, rotationY: 35, xPercent: 18 }, { opacity: 1, scale: 1, rotationY: 0, xPercent: 0, duration: .45, ease: 'power2.out' }, i - .3);
-  }
+  htl.to(track, { xPercent: -100 * (N - 1) / N, duration: N - 1 }, 0);
   segs.forEach((g, i) => g.addEventListener('click', () => {
     const st = htl.scrollTrigger, y = st.start + (st.end - st.start) * i / (N - 1);
     U.lenis ? U.lenis.scrollTo(y, { duration: 1.2 }) : scrollTo({ top: y, behavior: 'smooth' });
@@ -157,7 +114,7 @@
   gsap.ticker.add(() => { if (htl.scrollTrigger.isActive || scrollY < innerHeight) gsap.set(stage, { rotationY: look.x, rotationX: look.y, transformPerspective: 1400 }); });
 
   /* Видео: обложка чуть приближается при прокрутке */
-  gsap.fromTo('.video-poster', { scale: 1.12 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: '#video', start: 'top bottom', end: 'center center', scrub: true } });
+  gsap.fromTo('.video-full .video-poster', { scale: 1.15 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: '#video', start: 'top bottom', end: 'top top', scrub: true } });
 
   /* Занавес: фиолетовая панель раскрывается на всю ширину (ON) */
   gsap.fromTo('#curtainPanel',

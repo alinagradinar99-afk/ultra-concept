@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin><link rel="preconnect" href="https://unpkg.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
-<link rel="stylesheet" href="styles.css?v=23">
+<link rel="stylesheet" href="styles.css?v=24">
 </head>
 <body data-page="home">
 <div id="header-slot"></div>
@@ -38,44 +38,41 @@
   <section class="hx" id="hero" data-active="0">
     <div class="hx-pin">
       <div class="hx-glow" aria-hidden="true"><i></i><i></i><i></i></div>
-      <div class="hx-head">
-        <span class="hero-over"><i></i>Точность в потоке</span>
-        <h1 id="heroTitle">Расходомеры и уровнемеры российского производства</h1>
-      </div>
+      <h1 class="sr-only" id="heroTitle">Расходомеры и уровнемеры российского производства — ГК «УЛЬТРА»</h1>
       <div class="hx-track" id="hxTrack">
         <article class="hx-slide" data-i="0">
-          <div class="hx-word" aria-hidden="true">РАСХОД</div>
+          <span class="label hx-num">01 / 03 · направление</span>
           <div class="hx-copy">
-            <span class="label">01 / 03 · направление</span>
+            <span class="hx-count">12 моделей</span>
             <h2>Измерение расхода</h2>
             <p>Ультразвуковые, вихревые, электромагнитные и массовые расходомеры, трубы Вентури — для жидкости, газа и пара</p>
-            <div class="hx-cta"><a class="btn btn-accent" href="catalog.html?s=flow">Перейти в раздел <i data-i="arrow"></i></a><span class="hx-count">12 моделей</span></div>
+            <a class="btn btn-accent" href="catalog.html?s=flow">Перейти в раздел <i data-i="arrow"></i></a>
           </div>
           <dl class="hx-facts"><div><dt>±0,1 %</dt><dd>лучшая погрешность</dd></div><div><dt>3–3000 мм</dt><dd>диаметр условного прохода</dd></div><div><dt>до 25 МПа</dt><dd>давление среды</dd></div></dl>
         </article>
         <article class="hx-slide" data-i="1">
-          <div class="hx-word" aria-hidden="true">УРОВЕНЬ</div>
+          <span class="label hx-num">02 / 03 · направление</span>
           <div class="hx-copy">
-            <span class="label">02 / 03 · направление</span>
+            <span class="hx-count">08 моделей</span>
             <h2>Измерение уровня</h2>
             <p>Радарные, магнитострикционные, байпасные и буйковые уровнемеры, сигнализаторы уровня для резервуаров и колонн</p>
-            <div class="hx-cta"><a class="btn btn-accent" href="catalog.html?s=level">Перейти в раздел <i data-i="arrow"></i></a><span class="hx-count">08 моделей</span></div>
+            <a class="btn btn-accent" href="catalog.html?s=level">Перейти в раздел <i data-i="arrow"></i></a>
           </div>
           <dl class="hx-facts"><div><dt>±1 мм</dt><dd>магнитострикционные</dd></div><div><dt>до 70 м</dt><dd>диапазон радаров</dd></div><div><dt>80 ГГц</dt><dd>частота RRF-5</dd></div></dl>
         </article>
         <article class="hx-slide" data-i="2">
-          <div class="hx-word" aria-hidden="true">УЗЕЛ</div>
+          <span class="label hx-num">03 / 03 · направление</span>
           <div class="hx-copy">
-            <span class="label">03 / 03 · направление</span>
+            <span class="hx-count">05 позиций</span>
             <h2>Вспомогательное оборудование</h2>
             <p>Струевыпрямители, прямые участки, фланцы, выносные колонки и камеры СОД — узел учёта из одного источника</p>
-            <div class="hx-cta"><a class="btn btn-accent" href="catalog.html?s=aux">Перейти в раздел <i data-i="arrow"></i></a><span class="hx-count">05 позиций</span></div>
+            <a class="btn btn-accent" href="catalog.html?s=aux">Перейти в раздел <i data-i="arrow"></i></a>
           </div>
           <dl class="hx-facts"><div><dt>50–1400 мм</dt><dd>струевыпрямители</dd></div><div><dt>ГОСТ 33259</dt><dd>фланцы</dd></div><div><dt>под ключ</dt><dd>узел учёта</dd></div></dl>
         </article>
       </div>
       <div class="hx-stage" id="device">
-        <div class="hx-dev" data-i="0" style="--src:url(img/dir-flow.webp?v=1)">
+        <div class="hx-dev is-on" data-i="0" style="--src:url(img/dir-flow.webp?v=1)">
           <img class="hx-img" src="img/dir-flow.webp?v=1" alt="Измерение расхода" fetchpriority="high" draggable="false">
           <div class="hx-tint" aria-hidden="true"></div>
           <img class="hx-refl" src="img/dir-flow.webp?v=1" alt="" aria-hidden="true" draggable="false">
@@ -95,53 +92,47 @@
     </div>
   </section>
 
-  <!-- КАТАЛОГ: редакционные строки -->
-  <section class="section">
+  <!-- КАТАЛОГ: крупные карточки направлений -->
+  <section class="section cat-sec">
     <div class="wrap">
       <div class="s-head">
-        <div><span class="marker reveal">Каталог · 25 позиций</span><h2 class="d2" data-blur>Три направления</h2></div>
+        <div><span class="marker reveal">Каталог · 25 позиций</span><h2 class="d2" data-blur>Каталог оборудования</h2></div>
         <p class="lead reveal">Характеристики, документация и опросный лист — в карточке каждого прибора</p>
       </div>
-      <div class="dir-list" id="dirList"></div>
+      <div class="cat-cards">
+        <a class="cat-card reveal" href="catalog.html?s=flow" data-k="flow">
+          <span class="label cat-num">01</span><span class="label cat-cnt">12 моделей</span>
+          <div class="cat-img"><img src="img/dir-flow.webp?v=2" alt="Измерение расхода" loading="lazy"></div>
+          <div class="cat-body"><h3>Измерение расхода</h3><p>Ультразвуковые, вихревые, электромагнитные и массовые расходомеры, трубы Вентури</p>
+            <span class="btn btn-line">Перейти в каталог <i data-i="arrow"></i></span></div>
+        </a>
+        <a class="cat-card reveal" href="catalog.html?s=level" data-k="level">
+          <span class="label cat-num">02</span><span class="label cat-cnt">08 моделей</span>
+          <div class="cat-img"><img src="img/dir-level.webp?v=2" alt="Измерение уровня" loading="lazy"></div>
+          <div class="cat-body"><h3>Измерение уровня</h3><p>Радарные, магнитострикционные, байпасные и буйковые уровнемеры, сигнализаторы</p>
+            <span class="btn btn-line">Перейти в каталог <i data-i="arrow"></i></span></div>
+        </a>
+        <a class="cat-card reveal" href="catalog.html?s=aux" data-k="aux">
+          <span class="label cat-num">03</span><span class="label cat-cnt">05 позиций</span>
+          <div class="cat-img"><img src="img/dir-aux.webp?v=2" alt="Вспомогательное оборудование" loading="lazy"></div>
+          <div class="cat-body"><h3>Вспомогательное оборудование</h3><p>Струевыпрямители, прямые участки, фланцы, выносные колонки, камеры СОД</p>
+            <span class="btn btn-line">Перейти в каталог <i data-i="arrow"></i></span></div>
+        </a>
+      </div>
     </div>
-    <div class="dir-float" id="dirFloat"><img alt=""></div>
   </section>
 
-  <!-- ВИДЕО с действующего сайта (Rutube) -->
-  <section class="section video-sec" style="padding-top:0">
-    <div class="wrap">
-      <div class="s-head">
-        <div><span class="marker reveal">Видео · 0:30</span><h2 class="d2" data-blur>ГК «УЛЬТРА» в движении</h2></div>
-        <p class="lead reveal">Производство, сборка и поверка приборов — коротко и без слов</p>
-      </div>
-      <div class="video reveal" id="video" data-src="https://rutube.ru/play/embed/1f3866f85ddc5fd1e99569d8aca94b78?p=WtxOtoEuUpTdDAI0pe_eDQ&autoplay=1">
-        <img class="video-poster" src="img/video-poster.webp?v=1" alt="Производство ГК «УЛЬТРА»" loading="lazy">
-        <button class="video-play" aria-label="Смотреть видео"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg><span>Смотреть видео</span></button>
-        <span class="label br video-dur">0:30</span>
-      </div>
+  <!-- ВИДЕО на весь экран (Rutube с ultra-gk.ru) -->
+  <section class="video-full" id="video" data-src="https://rutube.ru/play/embed/1f3866f85ddc5fd1e99569d8aca94b78?p=WtxOtoEuUpTdDAI0pe_eDQ&autoplay=1">
+    <img class="video-poster" src="img/video-poster.webp?v=2" alt="Механическая обработка на производстве УЛЬТРАМАШ" loading="lazy">
+    <div class="video-shade" aria-hidden="true"></div>
+    <div class="video-in wrap">
+      <span class="marker reveal">О компании</span>
+      <h2 class="d2" data-blur>Собственное производство</h2>
+      <p class="lead reveal">Механическая обработка, сборка и поверка приборов на площадке УЛЬТРАМАШ в Самарской области</p>
+      <button class="btn btn-white reveal" data-play>Запустить <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></button>
     </div>
-  </section>
-
-  <!-- ПОДБОР -->
-  <section class="section" id="picker" style="padding-top:0">
-    <div class="wrap">
-      <div class="s-head">
-        <div><span class="marker reveal">Подбор за 10 секунд</span><h2 class="d2" data-blur>Что нужно измерить?</h2></div>
-        <p class="lead reveal">Задача, среда, исполнение — и сразу подходящие приборы. Тот же фильтр работает в каталоге</p>
-      </div>
-      <div class="picker reveal">
-        <div class="picker-panel">
-          <div class="picker-step"><span class="label">01 · Задача</span><div class="seg" data-pick="s">
-            <button aria-pressed="true" data-v="flow">Расход</button><button aria-pressed="false" data-v="level">Уровень</button></div></div>
-          <div class="picker-step"><span class="label">02 · Среда</span><div class="seg" data-pick="medium">
-            <button aria-pressed="true" data-v="">Любая</button><button aria-pressed="false" data-v="Жидкость">Жидкость</button><button aria-pressed="false" data-v="Газ">Газ</button><button aria-pressed="false" data-v="Пар">Пар</button><button aria-pressed="false" data-v="Сыпучие">Сыпучие</button></div></div>
-          <div class="picker-step"><span class="label">03 · Исполнение</span><div class="seg" data-pick="ex">
-            <button aria-pressed="true" data-v="">Любое</button><button aria-pressed="false" data-v="1">Взрывозащищённое Ex</button></div></div>
-          <div class="picker-count"><div><b data-picker-n>0</b><div class="label" style="margin-top:10px">приборов подходят</div></div><a class="btn btn-accent btn-s" data-picker-link href="catalog.html">Смотреть <i data-i="arrow"></i></a></div>
-        </div>
-        <div class="picker-results" data-picker-out></div>
-      </div>
-    </div>
+    <span class="label br video-dur">0:30</span>
   </section>
 
   <!-- ЗАНАВЕС: отраслевые решения (ON) + лесенка (Zeggo) -->
@@ -304,7 +295,7 @@
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script defer src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 <script defer src="data.js"></script>
-<script defer src="app.js?v=18"></script>
-<script defer src="home.js?v=23"></script>
+<script defer src="app.js?v=24"></script>
+<script defer src="home.js?v=24"></script>
 </body>
 </html>
