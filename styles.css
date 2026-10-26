@@ -126,7 +126,7 @@ button { cursor: pointer; background: none; border: 0; padding: 0; }
 .mm-foot { margin-top: auto; display: grid; gap: 8px; padding-top: 24px; }
 
 /* Вращающийся бейдж «Отправить запрос» */
-.badge-cta { position: fixed; right: var(--gutter); bottom: var(--gutter); z-index: 50; width: 108px; height: 108px; display: grid; place-items: center; border-radius: 50%; background: var(--ui); color: #fff; transform: scale(0); transition: transform .6s var(--ease); }
+.badge-cta { display: none !important; position: fixed; right: var(--gutter); bottom: var(--gutter); z-index: 50; width: 108px; height: 108px; display: grid; place-items: center; border-radius: 50%; background: var(--ui); color: #fff; transform: scale(0); transition: transform .6s var(--ease); }
 .badge-cta.is-on { transform: scale(1); }
 .in-scene .badge-cta.is-on { transform: scale(0); }
 .badge-cta.is-on:hover { transform: scale(1.08); }
@@ -146,16 +146,16 @@ button { cursor: pointer; background: none; border: 0; padding: 0; }
 .hx-glow i:nth-child(1) { background: radial-gradient(circle, rgba(124, 58, 237, .78), rgba(91, 33, 182, .34) 45%, transparent 70%); }
 .hx-glow i:nth-child(2) { background: radial-gradient(circle, rgba(62, 230, 200, .3), transparent 62%); }
 .hx-glow i:nth-child(3) { background: radial-gradient(circle, rgba(196, 178, 255, .26), transparent 62%); }
-.hx[data-active="0"] .hx-glow i:nth-child(1), .hx[data-active="1"] .hx-glow i:nth-child(2), .hx[data-active="2"] .hx-glow i:nth-child(3) { opacity: 1; }
+.hx[data-active="0"] .hx-glow i:nth-child(1), .hx[data-active="1"] .hx-glow i:nth-child(1), .hx[data-active="2"] .hx-glow i:nth-child(2), .hx[data-active="3"] .hx-glow i:nth-child(3) { opacity: 1; }
 .hx-head { position: absolute; z-index: 4; left: var(--gutter); top: calc(var(--header-h) + 28px); max-width: 520px; }
 .hero-over { display: inline-flex; align-items: center; gap: 12px; font: 400 12px var(--f-mono); letter-spacing: .18em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
 .hero-over i { width: 28px; height: 1px; background: var(--accent); }
 .hx-head h1 { margin: 0; font-size: 15px; line-height: 1.4; font-weight: 400; color: var(--muted); letter-spacing: 0; }
-.hx-track { position: absolute; z-index: 3; inset: 0; display: flex; width: 300%; will-change: transform; pointer-events: none; }
+.hx-track { position: absolute; z-index: 3; inset: 0; display: flex; width: 400%; will-change: transform; pointer-events: none; }
 .hx-copy, .hx-facts { pointer-events: auto; }
 .hx-wtrack { position: absolute; z-index: 1; inset: 0; display: flex; width: 300%; will-change: transform; pointer-events: none; }
 .hx-wtrack > div { position: relative; width: calc(100% / 3); height: 100%; }
-.hx-slide { position: relative; width: calc(100% / 3); height: 100%; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr) minmax(0, .8fr); grid-template-rows: 1fr auto; align-items: end; gap: 0 24px; padding: 0 var(--gutter) 116px; }
+.hx-slide { position: relative; width: 25%; height: 100%; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr) minmax(0, .8fr); grid-template-rows: 1fr auto; align-items: end; gap: 0 24px; padding: 0 var(--gutter) 116px; }
 .hx-copy, .hx-side { grid-row: 2; }
 .hx-side { position: relative; z-index: 3; grid-column: 3; align-self: stretch; display: flex; flex-direction: column; pointer-events: auto; }
 .hx-side .hx-num { position: static; display: block; margin-bottom: 40px; color: var(--accent); }
@@ -187,6 +187,16 @@ button { cursor: pointer; background: none; border: 0; padding: 0; }
   background: linear-gradient(118deg, rgba(155, 107, 255, .95) 0%, rgba(155, 107, 255, 0) 38%, rgba(255, 255, 255, 0) 58%, rgba(62, 230, 200, .8) 100%); }
 .hx-dev[data-i="1"] .hx-tint { background: linear-gradient(118deg, rgba(62, 230, 200, .9) 0%, rgba(62, 230, 200, 0) 40%, rgba(255, 255, 255, 0) 60%, rgba(155, 107, 255, .8) 100%); }
 .hx-dev[data-i="2"] .hx-tint { background: linear-gradient(118deg, rgba(196, 178, 255, .9) 0%, rgba(196, 178, 255, 0) 40%, rgba(255, 255, 255, 0) 60%, rgba(62, 230, 200, .7) 100%); }
+/* Приветственный слайд: большой заголовок слева, прибор в разборе справа */
+.hx-welcome .hx-copy { grid-column: 1 / 3; max-width: 820px; }
+.hx-welcome h1 { margin: 0; font-size: clamp(48px, 5.6vw, 96px); line-height: .98; font-weight: 300; letter-spacing: -.05em; text-wrap: balance; max-width: 12ch; }
+.hx-welcome .hx-copy p { max-width: 54ch; font-size: clamp(16px, 1.25vw, 19px); }
+.hx-welcome .hx-stage { left: 72%; top: 46%; width: min(44vw, 78vh, 820px); }
+.hx-welcome .hx-img { filter: drop-shadow(0 40px 60px rgba(0, 0, 0, .55)); }
+.hx-scroll { display: inline-flex; align-items: center; gap: 12px; margin-top: 40px; color: var(--muted); }
+.hx-scroll i { position: relative; width: 1px; height: 28px; background: var(--line-2); overflow: hidden; }
+.hx-scroll i::after { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 40%; background: var(--accent); animation: hx-scroll 1.8s var(--ease) infinite; }
+@keyframes hx-scroll { 0% { transform: translateY(-100%); } 100% { transform: translateY(260%); } }
 /* Широкий узел учёта — чуть меньше, чтобы не заходить на текст */
 .hx-dev[data-i="2"] .hx-img, .hx-dev[data-i="2"] .hx-tint, .hx-dev[data-i="2"] .hx-refl { scale: .84; }
 /* Отражение на «полу» */

@@ -45,13 +45,16 @@
 
   /* ========== Анимации (GSAP) ========== */
 
+  const txt = sl => $$(".hx-copy > *, .hx-side .hx-num, .hx-facts > div", sl); // текст слайда для поэтапного появления
   /* Прелоадер-HUD: один раз за сессию */
   const pre = $('#preloader');
   const seen = sessionStorage.getItem('ultraSeen') || sessionStorage.getItem('ultraNav');
   const heroIn = () => {
     // На мобильном заголовок не прячем (opacity 0 задерживает LCP) — только лёгкий сдвиг
-    gsap.from('.hx-slide[data-i="0"] .hx-num, .hx-slide[data-i="0"] .hx-copy > *, .hx-slide[data-i="0"] .hx-facts, .hx-progress', { opacity: 0, y: 24, duration: 1.2, ease: 'expo.out', stagger: .08, delay: .2 });
-    gsap.from('.hx-stage', { opacity: 0, scale: .86, duration: 1.8, ease: 'expo.out' }); // анимируем сцену целиком: у самих приборов прозрачностью управляет прокрутка
+    const w = $('.hx-welcome');
+    gsap.from($('.hx-stage', w), { opacity: 0, scale: .86, x: 60, duration: 1.8, ease: 'expo.out' });
+    gsap.from(txt(w), { opacity: 0, y: 28, duration: 1.1, ease: 'expo.out', stagger: .12, delay: .6 });
+    gsap.from(".hx-progress", { opacity: 0, duration: 1, delay: 1.2 });
   };
   if (seen) { pre.remove(); U.ready(); heroIn(); }
   else {
@@ -70,19 +73,29 @@
   }
 
   /* ——— Первый экран: вертикальная прокрутка двигает направления по горизонтали ——— */
-  const hero = $('#hero'), track = $('#hxTrack'), segs = $$('.hx-seg');
-  const N = segs.length;
-  // Прибор лежит внутри своего слайда и едет вместе с текстом — меняются одновременно
+  const hero = $('#hero'), track = $('#hxTrack'), segs = $$('.hx-seg'), slides = $$('.hx-slide', track);
+  const N = slides.length; // приветствие + три направления; сегмент прогресса k = слайд k + 1
+  // Прибор лежит внутри своего слайда и едет вместе с текстом. Текст каждого слайда появляется
+  // после прибора — плавно, по строкам; уходящий текст гаснет до начала сдвига
+  slides.forEach((sl, k) => { if (k) gsap.set(txt(sl), { opacity: 0, y: 28 }); });
+  const reveal = (sl, delay) => {
+    gsap.fromTo($('.hx-stage', sl), { scale: .9 }, { scale: 1, duration: 1.4, ease: 'expo.out', overwrite: 'auto' });
+    gsap.to(txt(sl), { opacity: 1, y: 0, duration: 1, ease: 'expo.out', stagger: .09, delay, overwrite: true });
+  };
   // Одна прокрутка — одно направление. Слайды переключаются анимацией по времени, а не по положению
   // скролла, поэтому промежуточных состояний («застывший» на середине текст) не бывает.
   let idx = 0, busy = false, doneAt = -1e9;
   const justDone = now => now - doneAt < 1500; // хвост инерции после переключения
   const go = (i, scroll) => {
     i = Math.max(0, Math.min(N - 1, i));
-    const changed = i !== idx; idx = i;
+    const changed = i !== idx, prev = slides[idx]; idx = i;
     hero.dataset.active = i;
+    if (changed) {
+      gsap.to(txt(prev), { opacity: 0, y: -16, duration: .35, ease: 'power2.in', stagger: .02, overwrite: true });
+      reveal(slides[i], .7);
+    }
     gsap.to(track, { xPercent: -100 * i / N, duration: 1, ease: 'power3.inOut', overwrite: true });
-    segs.forEach((g, k) => { g.classList.toggle('is-on', k === i); gsap.to(g, { '--p': k <= i ? 1 : 0, duration: .8, ease: 'power2.inOut', overwrite: true }); });
+    segs.forEach((g, k) => { g.classList.toggle('is-on', k + 1 === i); gsap.to(g, { '--p': k + 1 <= i ? 1 : 0, duration: .8, ease: 'power2.inOut', overwrite: true }); });
     if (scroll) {
       busy = true;
       const y = st.start + step() * i;
@@ -129,7 +142,7 @@
     if (!inZone() || !['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', ' '].includes(e.key)) return;
     handle(e.key === 'ArrowUp' || e.key === 'PageUp' ? -1 : 1, e);
   });
-  segs.forEach((g, i) => g.addEventListener('click', () => go(i, true)));
+  segs.forEach((g, k) => g.addEventListener('click', () => go(k + 1, true)));
 
   // Прибор стоит неподвижно — анимируется только смена направления
 

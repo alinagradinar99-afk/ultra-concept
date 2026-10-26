@@ -64,10 +64,7 @@
       <div class="search-results"></div>
     </div></div>
     <div class="curtain" aria-hidden="true"><i></i><i></i><b>[ УЛЬТРА ]</b></div>
-    <button class="badge-cta" data-modal="Запрос ТКП" aria-label="Отправить запрос">
-      <svg class="txt" viewBox="0 0 100 100"><defs><path id="bc" d="M50 50m-38 0a38 38 0 1 1 76 0a38 38 0 1 1-76 0"/></defs><text><textPath href="#bc">ОТПРАВИТЬ ЗАПРОС · ОТПРАВИТЬ ЗАПРОС · </textPath></text></svg>
-      <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17 17 7M9 7h8v8"/></svg>
-    </button>`;
+`;
 
   const footer = `
     <footer class="footer" id="contacts"><div class="wrap">
@@ -166,12 +163,11 @@
   });
 
   /* ——— Шапка: прячется при прокрутке вниз ——— */
-  const hdr = $('#header'), badge = $('.badge-cta');
+  const hdr = $('#header');
   let lastY = 0;
   const onScroll = () => {
     const y = scrollY;
     hdr.classList.toggle('is-hidden', y > 300 && y > lastY && !$('#mobileMenu').classList.contains('is-open'));
-    badge.classList.toggle('is-on', y > innerHeight * .9);
     lastY = y;
   };
   addEventListener('scroll', onScroll, { passive: true }); onScroll();

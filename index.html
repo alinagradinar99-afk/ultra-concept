@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin><link rel="preconnect" href="https://unpkg.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
-<link rel="stylesheet" href="styles.css?v=31">
+<link rel="stylesheet" href="styles.css?v=33">
 </head>
 <body data-page="home">
 <div id="header-slot"></div>
@@ -38,12 +38,25 @@
   <section class="hx" id="hero" data-active="0">
     <div class="hx-pin">
       <div class="hx-glow" aria-hidden="true"><i></i><i></i><i></i></div>
-      <h1 class="sr-only" id="heroTitle">Расходомеры и уровнемеры российского производства — ГК «УЛЬТРА»</h1>
       <div class="hx-track" id="hxTrack">
+        <article class="hx-slide hx-welcome" data-i="w">
+          <div class="hx-stage">
+            <div class="hx-dev" style="--src:url(img/flowmeter-exploded.webp?v=1)">
+              <img class="hx-img" src="img/flowmeter-exploded.webp?v=1" alt="Расходомер ГК «УЛЬТРА» в разборе" fetchpriority="high" draggable="false">
+              <div class="hx-tint" aria-hidden="true"></div>
+            </div>
+          </div>
+          <div class="hx-copy">
+            <span class="hx-count">ГК «УЛЬТРА» · КИПиА</span>
+            <h1 id="heroTitle">Расходомеры и уровнемеры российского производства</h1>
+            <p>Разработка, производство и поверка КИПиА. Собственная производственная и метрологическая база в России, оборудование партнёров FEEJOY и WEMETRO, эксклюзивное представительство «КРОНЕ-Автоматика»</p>
+            <span class="hx-scroll label"><i></i>Листайте, чтобы увидеть направления</span>
+          </div>
+        </article>
         <article class="hx-slide" data-i="0">
           <div class="hx-stage">
             <div class="hx-dev" data-i="0" style="--src:url(img/dir-flow.webp?v=3)">
-              <img class="hx-img" src="img/dir-flow.webp?v=3" alt="Измерение расхода" fetchpriority="high" draggable="false">
+              <img class="hx-img" src="img/dir-flow.webp?v=3" alt="Измерение расхода" draggable="false">
               <div class="hx-tint" aria-hidden="true"></div>
               <img class="hx-refl" src="img/dir-flow.webp?v=3" alt="" aria-hidden="true" draggable="false">
             </div>
@@ -305,7 +318,7 @@
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script defer src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 <script defer src="data.js"></script>
-<script defer src="app.js?v=29"></script>
-<script defer src="home.js?v=29"></script>
+<script defer src="app.js?v=33"></script>
+<script defer src="home.js?v=33"></script>
 </body>
 </html>
