@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin><link rel="preconnect" href="https://unpkg.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
-<link rel="stylesheet" href="styles.css?v=37">
+<link rel="stylesheet" href="styles.css?v=38">
 </head>
 <body data-page="home">
 <div id="header-slot"></div>
@@ -24,8 +24,8 @@
     <path class="pl-base" d="M107,9.76H58.72l.17,55.06c0,6.94,5,12.59,11.24,12.59H79v5H52.57c-9,0-16.22-7.88-16.22-17.56L36.17,10A29.65,29.65,0,0,0,10,39.41v67.28a29.66,29.66,0,0,0,29.65,29.66H107a29.66,29.66,0,0,0,29.66-29.66V39.41A29.65,29.65,0,0,0,107,9.76Zm3.33,83.52c0,9.68-7.28,17.56-16.22,17.56H57.54v-5H73.72c6.19,0,11.23-5.650,11.23-12.59l.19-37.44,3.61,0v0l4.63,0v0h4l4.63,0v0l3.5,0v0l5,0Z"/>
     <path class="pl-full" d="M107,9.76H58.72l.17,55.06c0,6.94,5,12.59,11.24,12.59H79v5H52.57c-9,0-16.22-7.88-16.22-17.56L36.17,10A29.65,29.65,0,0,0,10,39.41v67.28a29.66,29.66,0,0,0,29.65,29.66H107a29.66,29.66,0,0,0,29.66-29.66V39.41A29.65,29.65,0,0,0,107,9.76Zm3.33,83.52c0,9.68-7.28,17.56-16.22,17.56H57.54v-5H73.72c6.19,0,11.23-5.650,11.23-12.59l.19-37.44,3.61,0v0l4.63,0v0h4l4.63,0v0l3.5,0v0l5,0Z" clip-path="url(#plClip)"/>
   </svg>
-  <div class="pl-bar"><i id="plBar"></i></div>
   </div>
+  <div class="pl-bar"><i id="plBar"></i></div>
 </div>
 
 <main>
@@ -36,10 +36,9 @@
       <div class="hx-track" id="hxTrack">
         <article class="hx-slide hx-welcome" data-i="w">
           <div class="hx-copy">
-            <span class="hx-count">ГК «УЛЬТРА» · КИПиА</span>
-            <h1 id="heroTitle">Расходомеры и уровнемеры российского производства</h1>
+            <h1 id="heroTitle">Расходомеры и уровнемеры<br> российского производства</h1>
             <p>Разработка, производство и поверка КИПиА. Собственная производственная и метрологическая база в России, оборудование партнёров FEEJOY и WEMETRO, эксклюзивное представительство «КРОНЕ-Автоматика»</p>
-            <span class="hx-scroll label"><i></i>Листайте, чтобы увидеть направления</span>
+            <a class="btn btn-white" href="catalog.html?s=">Перейти в каталог <i data-i="arrow"></i></a>
           </div>
         </article>
         <article class="hx-slide" data-i="0">
@@ -139,10 +138,12 @@
     <img class="video-poster" src="img/video-poster.webp?v=2" alt="Механическая обработка на производстве УЛЬТРАМАШ" loading="lazy">
     <div class="video-shade" aria-hidden="true"></div>
     <div class="video-in wrap">
-      <span class="marker reveal">О компании</span>
-      <h2 class="d2" data-blur>Собственное производство</h2>
-      <p class="lead reveal">Механическая обработка, сборка и поверка приборов на площадке УЛЬТРАМАШ в Самарской области</p>
-      <button class="btn btn-white reveal" data-play>Запустить <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></button>
+      <div class="video-txt">
+        <span class="marker reveal">О компании</span>
+        <h2 class="d2" data-blur>Собственное производство</h2>
+        <p class="lead reveal">Механическая обработка, сборка и поверка приборов на площадке УЛЬТРАМАШ в Самарской области</p>
+        <button class="btn btn-white reveal" data-play>Запустить <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></button>
+      </div>
     </div>
     <span class="label br video-dur">0:30</span>
   </section>
@@ -307,7 +308,7 @@
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script defer src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 <script defer src="data.js"></script>
-<script defer src="app.js?v=37"></script>
-<script defer src="home.js?v=37"></script>
+<script defer src="app.js?v=38"></script>
+<script defer src="home.js?v=38"></script>
 </body>
 </html>

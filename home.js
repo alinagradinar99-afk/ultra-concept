@@ -52,7 +52,7 @@
   const heroIn = () => {
     // На мобильном заголовок не прячем (opacity 0 задерживает LCP) — только лёгкий сдвиг
     const w = $('.hx-welcome');
-    gsap.from(txt(w), { opacity: 0, y: 28, duration: 1.1, ease: 'expo.out', stagger: .12, delay: .2 });
+    gsap.from(txt(w), { opacity: 0, y: 28, duration: 1.2, ease: 'power3.out', stagger: .12, delay: .2 });
     gsap.from(".hx-progress", { opacity: 0, duration: 1, delay: 1.2 });
   };
   if (seen) { pre.remove(); U.ready(); heroIn(); }
@@ -75,8 +75,8 @@
   // после прибора — плавно, по строкам; уходящий текст гаснет до начала сдвига
   slides.forEach((sl, k) => { if (k) gsap.set(txt(sl), { opacity: 0, y: 28 }); });
   const reveal = (sl, delay) => {
-    gsap.fromTo($$('.hx-stage', sl), { scale: .94, opacity: .6 }, { scale: 1, opacity: 1, duration: 1.8, ease: 'power2.out', overwrite: 'auto' });
-    gsap.to(txt(sl), { opacity: 1, y: 0, duration: 1.3, ease: 'power3.out', stagger: .1, delay, overwrite: true });
+    gsap.fromTo($$('.hx-stage', sl), { scale: .94, opacity: .6 }, { scale: 1, opacity: 1, duration: 1.6, ease: 'sine.inOut', overwrite: 'auto' });
+    gsap.to(txt(sl), { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out', stagger: .1, delay, overwrite: true });
   };
   // Одна прокрутка — одно направление. Слайды переключаются анимацией по времени, а не по положению
   // скролла, поэтому промежуточных состояний («застывший» на середине текст) не бывает.
@@ -87,18 +87,19 @@
     const changed = i !== idx, prev = slides[idx]; idx = i;
     hero.dataset.active = i;
     if (changed) {
-      gsap.to(txt(prev), { opacity: 0, y: -12, duration: .5, ease: 'power1.in', stagger: .03, overwrite: true });
-      gsap.to($$('.hx-stage', prev), { scale: .94, opacity: .6, duration: 1.2, ease: 'power2.inOut', overwrite: 'auto' });
-      reveal(slides[i], .75);
+      gsap.to(txt(prev), { opacity: 0, y: -12, duration: .45, ease: 'power1.in', stagger: .02, overwrite: true });
+      gsap.to($$('.hx-stage', prev), { scale: .94, opacity: .6, duration: 1.4, ease: 'sine.inOut', overwrite: 'auto' });
+      reveal(slides[i], 1.15); // текст — когда прибор уже на месте
     }
-    gsap.to(track, { xPercent: -100 * i / N, duration: 1.4, ease: 'power2.inOut', overwrite: true });
+    gsap.to(track, { xPercent: -100 * i / N, duration: 1.6, ease: 'sine.inOut', overwrite: true });
     segs.forEach((g, k) => { g.classList.toggle('is-on', k + 1 === i); gsap.to(g, { '--p': k + 1 <= i ? 1 : 0, duration: .8, ease: 'power2.inOut', overwrite: true }); });
     if (scroll) {
       busy = true;
       const y = st.start + step() * i;
       const done = () => { if (busy) { busy = false; doneAt = performance.now(); } };
-      U.lenis ? U.lenis.scrollTo(y, { duration: 1.4, lock: true, force: true, onComplete: done }) : (scrollTo({ top: y, behavior: 'smooth' }), setTimeout(done, 1400));
-      setTimeout(done, 1700); // страховка
+      const settle = () => setTimeout(done, 500); // ждём, пока проявится текст
+      U.lenis ? U.lenis.scrollTo(y, { duration: 1.6, lock: true, force: true, onComplete: settle }) : (scrollTo({ top: y, behavior: 'smooth' }), setTimeout(done, 2100));
+      setTimeout(done, 2500); // страховка
     }
     return changed;
   };
