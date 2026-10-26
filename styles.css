@@ -602,3 +602,12 @@ body[data-page='product'] .badge-cta { bottom: 92px; }
 /* Прибытие после шторки: экран закрыт до запуска скрипта */
 html.arriving body::after { content: ''; position: fixed; inset: 0; z-index: 300; background: var(--bg); }
 html.seen .preloader { display: none; }
+
+/* Резерв места под контент, который вставляет скрипт — без сдвигов вёрстки (CLS) */
+.cat-tabs:empty { min-height: 44px; }
+.page-head .lead:empty { min-height: 3em; }
+.page-head .marker:empty { min-height: 11px; }
+.grid:empty { min-height: 120vh; }
+.kpis:empty { min-height: 190px; }
+.pdp-info h1:empty::before { content: '\00a0'; }
+.pdp-badges:empty { min-height: 34px; }
