@@ -154,11 +154,10 @@ button { cursor: pointer; background: none; border: 0; padding: 0; }
 .hero-data b em { font-style: normal; font-size: 11px; color: var(--muted); margin-left: 4px; }
 
 /* Прибор: детали — отдельные слои в 3D-сцене */
-.device { position: relative; width: 100%; aspect-ratio: 1267 / 1241; perspective: 1600px; }
+.device { position: relative; width: 100%; aspect-ratio: 1239 / 1215; perspective: 1400px; user-select: none; }
 .device-glow { position: absolute; inset: 12%; border-radius: 50%; background: radial-gradient(circle, rgba(155, 107, 255, .35), transparent 65%); filter: blur(40px); }
-.device-rig { position: absolute; inset: 0; transform-style: preserve-3d; will-change: transform; }
-.part { position: absolute; transform-style: preserve-3d; will-change: transform; }
-.part img { width: 100%; height: 100%; display: block; user-select: none; -webkit-user-drag: none; }
+.device-rig { position: absolute; inset: 0; will-change: transform; }
+.device-img { width: 100%; height: 100%; display: block; filter: drop-shadow(0 40px 60px rgba(0, 0, 0, .55)); -webkit-user-drag: none; pointer-events: none; }
 .device-tag { position: absolute; color: var(--text); white-space: nowrap; }
 .device-tag::before { content: ''; position: absolute; width: 6px; height: 6px; background: var(--accent); left: -14px; top: 4px; }
 .device-tag.t1 { left: 64%; top: 6%; } .device-tag.t2 { left: 6%; top: 46%; } .device-tag.t3 { left: 70%; top: 92%; }
