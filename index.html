@@ -9,9 +9,9 @@
 <script>document.documentElement.classList.add('js');try{if(matchMedia('(max-width: 680px)').matches)sessionStorage.setItem('ultraSeen',1);if(sessionStorage.getItem('ultraNav'))document.documentElement.classList.add('arriving');if(sessionStorage.getItem('ultraSeen')||sessionStorage.getItem('ultraNav'))document.documentElement.classList.add('seen')}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin><link rel="preconnect" href="https://unpkg.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
-<link rel="stylesheet" href="styles.css?v=40">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&display=swap"></noscript>
+<link rel="stylesheet" href="styles.css?v=42">
 </head>
 <body data-page="home">
 <div id="header-slot"></div>
@@ -139,7 +139,10 @@
     <div class="video-shade" aria-hidden="true"></div>
     <div class="video-in wrap">
       <span class="marker reveal">О компании</span>
-      <h2 class="video-txt reveal">Собственное производство в Самарской области. Механическая обработка, сборка и поверка приборов на площадке УЛЬТРАМАШ</h2>
+      <div class="video-col">
+        <h2 class="video-txt reveal">Собственное производство в Самарской области. Механическая обработка, сборка и поверка приборов на площадке УЛЬТРАМАШ</h2>
+        <button class="btn btn-white reveal" data-play>Запустить видео <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></button>
+      </div>
     </div>
     <button class="video-play-c" data-play aria-label="Запустить видео"><svg viewBox="0 0 24 24"><path d="M7 4.5v15l12.5-7.5z" fill="currentColor"/></svg></button>
     <span class="label br video-dur">0:30</span>
@@ -305,7 +308,7 @@
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script defer src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 <script defer src="data.js"></script>
-<script defer src="app.js?v=40"></script>
-<script defer src="home.js?v=40"></script>
+<script defer src="app.js?v=42"></script>
+<script defer src="home.js?v=42"></script>
 </body>
 </html>
