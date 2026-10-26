@@ -45,14 +45,15 @@
 
   /* ========== Анимации (GSAP) ========== */
 
-  const txt = sl => $$(".hx-copy > *, .hx-side .hx-num, .hx-facts > div", sl); // текст слайда для поэтапного появления
+  const txt = sl => $$(".hx-copy > *, .hx-side .hx-num, .hx-facts > div, .hx-side > .btn", sl); // текст слайда для поэтапного появления
   /* Прелоадер: один раз за сессию */
   const pre = $('#preloader');
   const seen = sessionStorage.getItem('ultraSeen') || sessionStorage.getItem('ultraNav');
   const heroIn = () => {
     // На мобильном заголовок не прячем (opacity 0 задерживает LCP) — только лёгкий сдвиг
     const w = $('.hx-welcome');
-    gsap.from(txt(w), { opacity: 0, y: 28, duration: 1.2, ease: 'power3.out', stagger: .12, delay: .2 });
+    gsap.from($('.hx-stage', w), { opacity: 0, scale: .94, duration: 1.6, ease: 'sine.inOut' }); // сначала прибор,
+    gsap.from(txt(w), { opacity: 0, y: 28, duration: 1.2, ease: 'power3.out', stagger: .12, delay: 1 }); // потом текст
     gsap.from(".hx-progress", { opacity: 0, duration: 1, delay: 1.2 });
   };
   if (seen) { pre.remove(); U.ready(); heroIn(); }
@@ -106,10 +107,12 @@
   const step = () => innerHeight * (small ? .9 : 1.1);
   const st = ScrollTrigger.create({
     trigger: hero, start: 'top top', end: () => '+=' + step() * (N - 1), pin: '.hx-pin', anticipatePin: 1,
-    toggleClass: { targets: document.body, className: 'in-scene' },
     // если попали в блок не колесом (клавиши, ползунок, якорь) — показываем ближайший слайд целиком
     onUpdate: self => { if (!busy) { const a = Math.round(self.progress * (N - 1)); if (a !== idx) go(a); } }
   });
+  // Пока листаем направления — хедер стоит на месте (app.js не прячет его при body.in-scene).
+  // Зона чуть длиннее блока, чтобы на последнем слайде хедер не уезжал
+  ScrollTrigger.create({ trigger: hero, start: 'top top', end: () => '+=' + (step() * (N - 1) + innerHeight * .25), toggleClass: { targets: document.body, className: 'in-scene' } });
   go(0);
   // Колесо и свайп внутри закреплённого блока: жест = ровно один слайд, Lenis на это время не листает страницу
   const inZone = () => scrollY >= st.start - 2 && scrollY <= st.end + 2;

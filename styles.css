@@ -184,12 +184,12 @@ button { cursor: pointer; background: none; border: 0; padding: 0; }
   background: linear-gradient(118deg, rgba(155, 107, 255, .95) 0%, rgba(155, 107, 255, 0) 38%, rgba(255, 255, 255, 0) 58%, rgba(62, 230, 200, .8) 100%); }
 .hx-dev[data-i="1"] .hx-tint { background: linear-gradient(118deg, rgba(62, 230, 200, .9) 0%, rgba(62, 230, 200, 0) 40%, rgba(255, 255, 255, 0) 60%, rgba(155, 107, 255, .8) 100%); }
 .hx-dev[data-i="2"] .hx-tint { background: linear-gradient(118deg, rgba(196, 178, 255, .9) 0%, rgba(196, 178, 255, 0) 40%, rgba(255, 255, 255, 0) 60%, rgba(62, 230, 200, .7) 100%); }
-/* Приветственный слайд: заголовок в две строки, описание и кнопка каталога */
-.hx-welcome .hx-copy { grid-column: 1 / 3; max-width: none; }
-.hx-welcome h1 { margin: 0; font-size: clamp(40px, 4.4vw, 76px); line-height: 1; font-weight: 300; letter-spacing: -.05em; }
-.hx-welcome .hx-copy p { max-width: 66ch; font-size: clamp(16px, 1.25vw, 19px); }
+/* Приветственный слайд: заголовок слева, прибор по центру, кнопка каталога справа внизу */
+.hx-welcome h1 { margin: 0; font-size: clamp(40px, 4.2vw, 72px); line-height: 1; font-weight: 300; letter-spacing: -.05em; max-width: 11ch; }
+.hx-welcome .hx-side { justify-content: flex-end; align-items: flex-start; }
 /* Приборы выровнены по визуальной массе (площадь силуэта): массивный расходомер меньше, тонкие уровнемер и узел учёта крупнее */
 .hx-dev { --k: 1; }
+.hx-dev[data-i="w"] { --k: .8; }
 .hx-dev[data-i="0"] { --k: .7; }
 .hx-dev[data-i="1"] { --k: .74; }
 .hx-dev[data-i="2"] { --k: .8; }
