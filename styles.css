@@ -76,7 +76,8 @@ button { cursor: pointer; background: none; border: 0; padding: 0; }
 .pl-bar i { position: absolute; inset: 0; background: var(--ui-hover); transform: scaleX(0); transform-origin: left; }
 
 /* ——— Шапка: ряд тёмных плашек ——— */
-.header { position: fixed; z-index: 60; top: 0; left: 0; right: 0; padding: 12px var(--gutter); display: flex; align-items: center; gap: 6px; transition: transform .6s var(--ease); }
+/* хедер и первый экран — по той же центрированной сетке, что и контент (.wrap) */
+.header { position: fixed; z-index: 60; top: 0; left: 0; right: 0; padding: 12px max(var(--gutter), calc((100% - var(--wrap)) / 2 + var(--gutter))); display: flex; align-items: center; gap: 6px; transition: transform .6s var(--ease); }
 .header.is-hidden { transform: translateY(-110%); }
 .logo { display: flex; align-items: center; gap: 10px; height: 40px; padding-right: 14px; flex: none; }
 .logo svg { width: 34px; height: 34px; }
@@ -153,7 +154,7 @@ button { cursor: pointer; background: none; border: 0; padding: 0; }
 .hx-copy, .hx-facts { pointer-events: auto; }
 .hx-wtrack { position: absolute; z-index: 1; inset: 0; display: flex; width: 300%; will-change: transform; pointer-events: none; }
 .hx-wtrack > div { position: relative; width: calc(100% / 3); height: 100%; }
-.hx-slide { position: relative; width: 25%; height: 100%; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr) minmax(0, .8fr); grid-template-rows: 1fr auto; align-items: end; gap: 0 24px; padding: 0 var(--gutter) 116px; }
+.hx-slide { position: relative; width: 25%; height: 100%; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr) minmax(0, .8fr); grid-template-rows: 1fr auto; align-items: end; gap: 0 24px; padding: 0 max(var(--gutter), calc((25% - var(--wrap)) / 2 + var(--gutter))) 116px; }
 .hx-copy, .hx-side { grid-row: 2; }
 .hx-side { position: relative; z-index: 3; grid-column: 3; align-self: stretch; display: flex; flex-direction: column; pointer-events: auto; }
 .hx-side .hx-num { position: static; display: block; margin-bottom: 40px; color: var(--accent); }
@@ -194,7 +195,7 @@ button { cursor: pointer; background: none; border: 0; padding: 0; }
 .hx-refl { transform: translateY(88%) scaleY(-1); opacity: .22; filter: blur(2px);
   -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 32%); mask-image: linear-gradient(to top, #000 0%, transparent 32%); }
 /* Прогресс по направлениям */
-.hx-progress { position: absolute; z-index: 4; left: var(--gutter); right: var(--gutter); bottom: 36px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.hx-progress { position: absolute; z-index: 4; left: max(var(--gutter), calc((100% - var(--wrap)) / 2 + var(--gutter))); right: max(var(--gutter), calc((100% - var(--wrap)) / 2 + var(--gutter))); bottom: 36px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
 .hx-seg { text-align: left; padding-top: 12px; position: relative; color: var(--dim); font: 400 11px var(--f-mono); letter-spacing: .12em; text-transform: uppercase; transition: color .4s; }
 .hx-seg i { position: absolute; left: 0; right: 0; top: 0; height: 2px; background: var(--line-2); overflow: hidden; }
 .hx-seg i::after { content: ''; position: absolute; inset: 0; background: var(--accent); transform-origin: left; transform: scaleX(var(--p, 0)); }
