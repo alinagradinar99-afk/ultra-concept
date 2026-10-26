@@ -203,7 +203,7 @@ button { cursor: pointer; background: none; border: 0; padding: 0; }
 .hx-progress { position: absolute; z-index: 4; left: max(var(--gutter), calc((100% - var(--wrap)) / 2 + var(--gutter))); right: max(var(--gutter), calc((100% - var(--wrap)) / 2 + var(--gutter))); bottom: 36px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
 .hx-seg { text-align: left; padding-top: 12px; position: relative; color: var(--dim); font: 400 11px var(--f-mono); letter-spacing: .12em; text-transform: uppercase; transition: color .4s; }
 .hx-seg i { position: absolute; left: 0; right: 0; top: 0; height: 2px; background: var(--line-2); overflow: hidden; }
-.hx-seg i::after { content: ''; position: absolute; inset: 0; background: var(--ui-hover); /* как полоса прелоадера */ transform-origin: left; transform: scaleX(var(--p, 0)); }
+.hx-seg i::after { content: ''; position: absolute; inset: 0; background: #5aae9f; /* приглушённый бирюзовый, спокойнее акцента */ transform-origin: left; transform: scaleX(var(--p, 0)); }
 .hx-seg.is-on { color: var(--text); }
 
 /* ——— Каталог: крупные карточки направлений ——— */
