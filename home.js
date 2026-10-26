@@ -1,4 +1,4 @@
-// Главная v2: прелоадер, hero, сцена «внутрь прибора», манифест, направления,
+// Главная: прелоадер, первый экран с горизонтальной прокруткой по направлениям, каталог, видео,
 // подбор, занавес, схема узла учёта, одометры, шаги услуг.
 (function () {
   const U = window.ULTRA, { $, $$, I, tile, sections, products, solutions, facets, reduce, hasGsap } = U;
@@ -64,17 +64,13 @@
       : `<span class="static">${ch}</span>`).join('') + '</div>' + (unit ? `<span class="unit">${unit}</span>` : '');
   });
 
-  // Манифест: разбиваем на слова
-  const man = $('#manifesto');
-  (function split(n) {
-    [...n.childNodes].forEach(c => {
-      if (c.nodeType === 3) {
-        const f = document.createDocumentFragment();
-        c.textContent.split(/([ \t\n\r]+)/).forEach(w => { if (!w) return; if (/^[ \t\n\r]+$/.test(w)) { f.append(w); return; } const s = document.createElement('span'); s.className = 'w'; s.textContent = w; f.append(s); });
-        c.replaceWith(f);
-      } else if (c.nodeType === 1) { c.style.fontStyle = 'normal'; split(c); [...c.querySelectorAll('.w')].forEach(w => w.dataset.hl = 1); }
-    });
-  })(man);
+  /* ——— Видео: Rutube грузится только по клику (не тормозит загрузку страницы) ——— */
+  const vid = $('#video');
+  vid.addEventListener('click', () => {
+    if (vid.querySelector('iframe')) return;
+    vid.insertAdjacentHTML('beforeend', `<iframe src="${vid.dataset.src}" allow="clipboard-write; autoplay; fullscreen" allowfullscreen title="Видео ГК «УЛЬТРА»"></iframe>`);
+    $$('.video-play, .video-dur', vid).forEach(e => e.remove());
+  });
 
   // Шкала-прогресс услуг
   $('#ticks').innerHTML = '<i></i>'.repeat(small ? 24 : 48);
@@ -82,9 +78,7 @@
   /* ——— Без анимаций: показываем всё в финальном состоянии ——— */
   if (!G) {
     $('#preloader').remove();
-    $$('.chapter, .chapter-note').forEach((c, i) => c.style.display = c.dataset.ch === '3' ? '' : 'none');
     $$('.odo .col').forEach(c => c.style.transform = `translateY(-${(10 + +c.dataset.d) * 5}%)`);
-    $$('.manifesto .w').forEach(w => w.style.color = w.dataset.hl ? 'var(--accent)' : 'var(--text)');
     $$('#ticks i').forEach(i => i.classList.add('on'));
     U.ready();
     return;
@@ -97,10 +91,9 @@
   const seen = sessionStorage.getItem('ultraSeen') || sessionStorage.getItem('ultraNav');
   const heroIn = () => {
     // На мобильном заголовок не прячем (opacity 0 задерживает LCP) — только лёгкий сдвиг
-    if (small) gsap.from('#heroTitle', { y: 24, duration: 1.2, ease: 'expo.out' });
-    else U.blurIn($('#heroTitle'), { delay: .1, stagger: .018 });
-    gsap.to('#hero .reveal', { opacity: 1, y: 0, duration: 1.2, ease: 'expo.out', stagger: .12, delay: .4 });
-    window.DEVICE && window.DEVICE.start();
+    gsap.from('.hx-head > *, .hx-slide[data-i="0"] .hx-copy > *, .hx-slide[data-i="0"] .hx-facts, .hx-progress', { opacity: 0, y: 24, duration: 1.2, ease: 'expo.out', stagger: .08, delay: .2 });
+    gsap.from('.hx-stage', { opacity: 0, scale: .86, duration: 1.8, ease: 'expo.out' }); // анимируем сцену целиком: у самих приборов прозрачностью управляет прокрутка
+    gsap.from('.hx-slide[data-i="0"] .hx-word', { opacity: 0, xPercent: 8, duration: 2, ease: 'expo.out' });
   };
   if (seen) { pre.remove(); U.ready(); heroIn(); }
   else {
@@ -118,59 +111,53 @@
     U.ready({ holdCurtain: false });
   }
 
-  /* Hero: параллакс при уходе */
-  gsap.to('.hero-text', { yPercent: -18, opacity: .25, ease: 'none', scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true } });
-  gsap.to('#device', { yPercent: 12, scale: .92, ease: 'none', scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true } });
-
-  /* ——— Сцена «внутрь прибора»: закреплена, камера движется по прокрутке ——— */
-  const S = window.SCENE.state;
-  const ch = $$('.chapter'), notes = $$('.chapter-note'), dots = $$('#sceneDots i'), counter = $('#sceneCounter');
-  gsap.set([...ch, ...notes], { autoAlpha: 0, y: 40 });
-  gsap.set([ch[0], notes[0]], { autoAlpha: 1, y: 0 });
-  const showCh = (i) => {
-    dots.forEach((d, k) => d.classList.toggle('is-on', k === i));
-    counter.textContent = `0${i + 1} / 04`;
-  };
-  // Отверстие фланца на фото — точка, в которую «влетает» камера
-  gsap.set('#specimen', { transformOrigin: '23% 69%' });
-  const tl = gsap.timeline({
+  /* ——— Первый экран: вертикальная прокрутка двигает направления по горизонтали ——— */
+  const hero = $('#hero'), track = $('#hxTrack'), devs = $$('.hx-dev'), segs = $$('.hx-seg');
+  // Слова-контуры — в отдельный слой под прибором (текст — над прибором), едут синхронно с текстом
+  const wtrack = document.createElement('div'); wtrack.className = 'hx-wtrack';
+  $$('.hx-word', track).forEach(w => { const cell = document.createElement('div'); cell.append(w); wtrack.append(cell); });
+  $('.hx-pin').insertBefore(wtrack, $('#device'));
+  const words = $$('.hx-word', wtrack);
+  const N = devs.length;
+  const htl = gsap.timeline({
     defaults: { ease: 'none' },
     scrollTrigger: {
-      trigger: '#scene', start: 'top top', end: small ? '+=300%' : '+=420%', pin: true, scrub: 1, anticipatePin: 1,
-      onUpdate: self => showCh(Math.min(3, Math.floor(self.progress * 4.0001 - (self.progress > .99 ? .001 : 0))))
+      trigger: hero, start: 'top top', end: () => '+=' + innerHeight * (N - 1) * (small ? .9 : 1.1), pin: '.hx-pin', scrub: 1, anticipatePin: 1,
+      snap: { snapTo: 1 / (N - 1), duration: { min: .3, max: .8 }, ease: 'power2.inOut', delay: .08 },
+      onUpdate: self => {
+        const p = self.progress * (N - 1), a = Math.round(p);
+        if (hero.dataset.active != a) hero.dataset.active = a;
+        segs.forEach((g, i) => { g.style.setProperty('--p', Math.max(0, Math.min(1, p - i + 1))); g.classList.toggle('is-on', i === a); });
+      }
     }
   });
-  const swap = (a, b, at) => {
-    tl.to([ch[a], notes[a]], { autoAlpha: 0, y: -40, duration: .4, ease: 'power2.in' }, at)
-      .fromTo([ch[b], notes[b]], { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: .5, ease: 'power2.out' }, at + .35);
-  };
-  tl.from('#frame .scene-tag', { autoAlpha: 0, x: i => i < 2 ? -20 : 20, stagger: .1, duration: .4 }, 0)
-    .to({}, { duration: .6 })                                                // пауза на приборе
-    .to('#frame', { autoAlpha: 0, scale: 1.3, duration: .6 }, 1)
-    .to('#specimen', { scale: small ? 9 : 12, duration: 1.6, ease: 'power2.in' }, 1)
-    .to('#specimen', { autoAlpha: 0, duration: .5 }, 2.2)
-    .to(S, { tunnel: 1, duration: .6 }, 2.1)
-    .fromTo(S, { speed: .6 }, { speed: 1.6, duration: 2.2 }, 2.1);
-  swap(0, 1, 1.9);
-  tl.to(S, { tunnel: 0, duration: .6 }, 4.3)
-    .to(S, { vortex: 1, duration: .6 }, 4.4)
-    .fromTo(S, { speed: .8 }, { speed: 1.4, duration: 2.4 }, 4.4);
-  swap(1, 2, 4.3);
-  swap(2, 3, 6.6);
-  // Камера выходит из трубы обратно к прибору — сцена замыкается
-  tl.to(S, { vortex: .18, duration: .8 }, 6.6)
-    .to('#specimen', { scale: 1, autoAlpha: 1, duration: 1.2, ease: 'power3.out' }, 6.7)
-    .to('#frame', { autoAlpha: 1, scale: 1, duration: .6 }, 7.4)
-    .to({}, { duration: .7 }, 8);
+  // круглый бейдж «Отправить запрос» не мешает прогрессу, пока закреплён первый экран
+  ScrollTrigger.create({ trigger: hero, start: 'top top', end: () => htl.scrollTrigger.end, toggleClass: { targets: document.body, className: 'in-scene' } });
+  htl.to([track, wtrack], { xPercent: -100 * (N - 1) / N, duration: N - 1 }, 0);
+  words.forEach((w, i) => htl.fromTo(w, { xPercent: 22 }, { xPercent: -22, duration: 2 }, i - 1)); // надпись-контур едет с параллаксом
+  // Прибор сменяется: уходит с поворотом влево, следующий приходит справа
+  for (let i = 1; i < N; i++) {
+    htl.to(devs[i - 1], { opacity: 0, scale: .8, rotationY: -35, xPercent: -18, duration: .45, ease: 'power2.in' }, i - .7)
+      .fromTo(devs[i], { opacity: 0, scale: .8, rotationY: 35, xPercent: 18 }, { opacity: 1, scale: 1, rotationY: 0, xPercent: 0, duration: .45, ease: 'power2.out' }, i - .3);
+  }
+  segs.forEach((g, i) => g.addEventListener('click', () => {
+    const st = htl.scrollTrigger, y = st.start + (st.end - st.start) * i / (N - 1);
+    U.lenis ? U.lenis.scrollTo(y, { duration: 1.2 }) : scrollTo({ top: y, behavior: 'smooth' });
+  }));
 
-  // Круглый бейдж прячется, пока идёт сцена
-  ScrollTrigger.create({ trigger: '#scene', start: 'top 60%', end: () => tl.scrollTrigger.end + innerHeight * .4, toggleClass: { targets: document.body, className: 'in-scene' } });
-
-  /* Манифест: слова закрашиваются */
-  gsap.to('.manifesto .w', {
-    color: (i, el) => el.dataset.hl ? '#3ee6c8' : '#f2eff7', stagger: .1, ease: 'none',
-    scrollTrigger: { trigger: man, start: 'top 78%', end: 'bottom 45%', scrub: true }
+  // «Живой» прибор: парит и наклоняется за курсором
+  const stage = $('#device'), look = { x: 0, y: 0 };
+  gsap.to(stage, { y: -12, duration: 3.2, ease: 'sine.inOut', repeat: -1, yoyo: true });
+  const sway = gsap.fromTo(look, { x: -5 }, { x: 5, duration: 6, ease: 'sine.inOut', repeat: -1, yoyo: true });
+  hero.addEventListener('pointermove', e => {
+    sway.pause();
+    gsap.to(look, { x: (e.clientX / innerWidth - .5) * 18, y: (e.clientY / innerHeight - .5) * -10, duration: 1.2, ease: 'power3.out', overwrite: true });
   });
+  hero.addEventListener('pointerleave', () => gsap.to(look, { x: 0, y: 0, duration: 1.2, onComplete: () => sway.restart() }));
+  gsap.ticker.add(() => { if (htl.scrollTrigger.isActive || scrollY < innerHeight) gsap.set(stage, { rotationY: look.x, rotationX: look.y, transformPerspective: 1400 }); });
+
+  /* Видео: обложка чуть приближается при прокрутке */
+  gsap.fromTo('.video-poster', { scale: 1.12 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: '#video', start: 'top bottom', end: 'center center', scrub: true } });
 
   /* Занавес: фиолетовая панель раскрывается на всю ширину (ON) */
   gsap.fromTo('#curtainPanel',

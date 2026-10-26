@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin><link rel="preconnect" href="https://unpkg.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
-<link rel="stylesheet" href="styles.css?v=17">
+<link rel="stylesheet" href="styles.css?v=23">
 </head>
 <body data-page="home">
 <div id="header-slot"></div>
@@ -34,69 +34,69 @@
 </div>
 
 <main>
-  <!-- HERO: тёмный фон, прибор в разборе собирается и вращается -->
-  <section class="hero" id="hero">
-    <div class="hero-in">
-      <div class="hero-text">
-        <span class="hero-over reveal"><i></i>Точность в потоке</span>
+  <!-- HERO: горизонтальная прокрутка по трём направлениям, прибор в центре меняется -->
+  <section class="hx" id="hero" data-active="0">
+    <div class="hx-pin">
+      <div class="hx-glow" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="hx-head">
+        <span class="hero-over"><i></i>Точность в потоке</span>
         <h1 id="heroTitle">Расходомеры и уровнемеры российского производства</h1>
-        <p class="hero-note reveal">Разработка, производство и поверка КИПиА для нефтегаза, энергетики и водоканалов. Собственная метрологическая база в России</p>
-        <div class="hero-cta reveal">
-          <a class="btn btn-accent" href="#picker">Подобрать прибор <i data-i="arrow"></i></a>
-          <a class="btn btn-line" href="#ql">Скачать опросный лист <i data-i="down"></i></a>
+      </div>
+      <div class="hx-track" id="hxTrack">
+        <article class="hx-slide" data-i="0">
+          <div class="hx-word" aria-hidden="true">РАСХОД</div>
+          <div class="hx-copy">
+            <span class="label">01 / 03 · направление</span>
+            <h2>Измерение расхода</h2>
+            <p>Ультразвуковые, вихревые, электромагнитные и массовые расходомеры, трубы Вентури — для жидкости, газа и пара</p>
+            <div class="hx-cta"><a class="btn btn-accent" href="catalog.html?s=flow">Перейти в раздел <i data-i="arrow"></i></a><span class="hx-count">12 моделей</span></div>
+          </div>
+          <dl class="hx-facts"><div><dt>±0,1 %</dt><dd>лучшая погрешность</dd></div><div><dt>3–3000 мм</dt><dd>диаметр условного прохода</dd></div><div><dt>до 25 МПа</dt><dd>давление среды</dd></div></dl>
+        </article>
+        <article class="hx-slide" data-i="1">
+          <div class="hx-word" aria-hidden="true">УРОВЕНЬ</div>
+          <div class="hx-copy">
+            <span class="label">02 / 03 · направление</span>
+            <h2>Измерение уровня</h2>
+            <p>Радарные, магнитострикционные, байпасные и буйковые уровнемеры, сигнализаторы уровня для резервуаров и колонн</p>
+            <div class="hx-cta"><a class="btn btn-accent" href="catalog.html?s=level">Перейти в раздел <i data-i="arrow"></i></a><span class="hx-count">08 моделей</span></div>
+          </div>
+          <dl class="hx-facts"><div><dt>±1 мм</dt><dd>магнитострикционные</dd></div><div><dt>до 70 м</dt><dd>диапазон радаров</dd></div><div><dt>80 ГГц</dt><dd>частота RRF-5</dd></div></dl>
+        </article>
+        <article class="hx-slide" data-i="2">
+          <div class="hx-word" aria-hidden="true">УЗЕЛ</div>
+          <div class="hx-copy">
+            <span class="label">03 / 03 · направление</span>
+            <h2>Вспомогательное оборудование</h2>
+            <p>Струевыпрямители, прямые участки, фланцы, выносные колонки и камеры СОД — узел учёта из одного источника</p>
+            <div class="hx-cta"><a class="btn btn-accent" href="catalog.html?s=aux">Перейти в раздел <i data-i="arrow"></i></a><span class="hx-count">05 позиций</span></div>
+          </div>
+          <dl class="hx-facts"><div><dt>50–1400 мм</dt><dd>струевыпрямители</dd></div><div><dt>ГОСТ 33259</dt><dd>фланцы</dd></div><div><dt>под ключ</dt><dd>узел учёта</dd></div></dl>
+        </article>
+      </div>
+      <div class="hx-stage" id="device">
+        <div class="hx-dev" data-i="0" style="--src:url(img/dir-flow.webp?v=1)">
+          <img class="hx-img" src="img/dir-flow.webp?v=1" alt="Измерение расхода" fetchpriority="high" draggable="false">
+          <div class="hx-tint" aria-hidden="true"></div>
+          <img class="hx-refl" src="img/dir-flow.webp?v=1" alt="" aria-hidden="true" draggable="false">
         </div>
-        <div class="hero-data reveal">
-          <div><span class="label">Расход Q</span><b data-live="1284.6,3.2,1">1 284,6<em>м³/ч</em></b></div>
-          <div><span class="label">Давл. P</span><b data-live="6.42,.02,2">6,42<em>МПа</em></b></div>
-          <div><span class="label">Темп. T</span><b data-live="186.3,.4,1">186,3<em>°С</em></b></div>
+        <div class="hx-dev" data-i="1" style="--src:url(img/dir-level.webp?v=1)">
+          <img class="hx-img" src="img/dir-level.webp?v=1" alt="Измерение уровня" loading="lazy" draggable="false">
+          <div class="hx-tint" aria-hidden="true"></div>
+          <img class="hx-refl" src="img/dir-level.webp?v=1" alt="" aria-hidden="true" draggable="false">
+        </div>
+        <div class="hx-dev" data-i="2" style="--src:url(img/dir-aux.webp?v=1)">
+          <img class="hx-img" src="img/dir-aux.webp?v=1" alt="Вспомогательное оборудование" loading="lazy" draggable="false">
+          <div class="hx-tint" aria-hidden="true"></div>
+          <img class="hx-refl" src="img/dir-aux.webp?v=1" alt="" aria-hidden="true" draggable="false">
         </div>
       </div>
-      <div class="device" id="device" aria-label="Расходомер в разборе: корпус, электроника, крышки, измерительная часть">
-        <div class="device-glow"></div>
-        <div class="device-rig" id="rig"></div>
-        <span class="label br device-tag t1">Электроника</span>
-        <span class="label br device-tag t2">Корпус Ex d</span>
-        <span class="label br device-tag t3">Измерительная часть</span>
-        <span class="label device-state" id="deviceState">[ сборка ]</span>
-      </div>
-    </div>
-    <div class="scroll-hint" aria-hidden="true"><span class="label">Прокрутите</span><i></i></div>
-  </section>
-
-  <!-- СЦЕНА «ВНУТРЬ ПРИБОРА» (Bright Biotech / ON) -->
-  <section class="scene" id="scene" aria-label="Как работает вихревой расходомер">
-    <canvas id="sceneCanvas" aria-hidden="true"></canvas>
-    <div class="scene-specimen" id="specimen"><img src="img/flowmeter-ultra.webp?v=2" alt="Расходомер ГК «УЛЬТРА»"></div>
-    <div class="scene-frame" id="frame"><span class="c"></span><span class="c"></span><span class="c"></span><span class="c"></span>
-      <span class="label scene-tag" style="left:calc(100% + 34px);top:12%">Ду 15–300 мм</span>
-      <span class="label scene-tag" style="left:calc(100% + 34px);top:46%">до 10 МПа</span>
-      <span class="label scene-tag" style="right:calc(100% + 34px);top:30%">Ex d · Ex i</span>
-      <span class="label scene-tag" style="right:calc(100% + 34px);top:70%">SIL 2</span>
-    </div>
-    <div class="scene-top"><span class="label br">OPTISWIRL 4200 · вихревой расходомер</span><span class="label br" id="sceneCounter">01 / 04</span></div>
-    <div class="scene-dots" id="sceneDots"><i class="is-on"></i><i></i><i></i><i></i></div>
-    <div class="scene-chapters">
-      <div class="chapter" data-ch="0"><span class="label">01 · Прибор</span><h2>Сделан, чтобы измерять</h2></div>
-      <div class="chapter" data-ch="1"><span class="label">02 · Поток</span><h2>Внутри трубы</h2></div>
-      <div class="chapter" data-ch="2"><span class="label">03 · Вихрь</span><h2>Частота вихрей — это расход</h2></div>
-      <div class="chapter" data-ch="3"><span class="label">04 · Точность</span><h2>Поверено до отгрузки</h2></div>
-      <div class="chapter-note" data-ch="0"><b>±0,75 %</b><p>Жидкость, газ и пар. Встроенная компенсация по давлению и температуре</p></div>
-      <div class="chapter-note" data-ch="1"><b id="vNote">3,2 м/с</b><p>У стенки поток тормозится, в центре — быстрее всего. Профиль скорости параболический</p></div>
-      <div class="chapter-note" data-ch="2"><b id="fNote">42,7 Гц</b><p>Тело обтекания срывает вихри поочерёдно сверху и снизу. Датчик считает их частоту — она пропорциональна скорости</p></div>
-      <div class="chapter-note" data-ch="3"><b>5 лет</b><p>Межповерочный интервал. Первичная поверка — на собственной базе УЛЬТРА-СТАНДАРТ</p></div>
-    </div>
-  </section>
-
-  <!-- МАНИФЕСТ: слова закрашиваются по прокрутке (ON / Vast) -->
-  <section class="section" id="company">
-    <div class="wrap">
-      <span class="marker reveal" style="margin-bottom:40px">О группе компаний</span>
-      <p class="manifesto" id="manifesto">ГК «УЛЬТРА» разрабатывает, производит и поверяет приборы учёта расхода и уровня. <em>Своё производство</em> в Самарской области и <em>своя метрологическая база</em> — прибор приходит к вам уже поверенным, а сроки зависят от нас, а не от импорта</p>
+      <div class="hx-progress" id="hxProgress"><button class="hx-seg" data-i="0"><i></i><span>Измерение расхода</span></button><button class="hx-seg" data-i="1"><i></i><span>Измерение уровня</span></button><button class="hx-seg" data-i="2"><i></i><span>Вспомогательное оборудование</span></button></div>
     </div>
   </section>
 
   <!-- КАТАЛОГ: редакционные строки -->
-  <section class="section" style="padding-top:0">
+  <section class="section">
     <div class="wrap">
       <div class="s-head">
         <div><span class="marker reveal">Каталог · 25 позиций</span><h2 class="d2" data-blur>Три направления</h2></div>
@@ -105,6 +105,21 @@
       <div class="dir-list" id="dirList"></div>
     </div>
     <div class="dir-float" id="dirFloat"><img alt=""></div>
+  </section>
+
+  <!-- ВИДЕО с действующего сайта (Rutube) -->
+  <section class="section video-sec" style="padding-top:0">
+    <div class="wrap">
+      <div class="s-head">
+        <div><span class="marker reveal">Видео · 0:30</span><h2 class="d2" data-blur>ГК «УЛЬТРА» в движении</h2></div>
+        <p class="lead reveal">Производство, сборка и поверка приборов — коротко и без слов</p>
+      </div>
+      <div class="video reveal" id="video" data-src="https://rutube.ru/play/embed/1f3866f85ddc5fd1e99569d8aca94b78?p=WtxOtoEuUpTdDAI0pe_eDQ&autoplay=1">
+        <img class="video-poster" src="img/video-poster.webp?v=1" alt="Производство ГК «УЛЬТРА»" loading="lazy">
+        <button class="video-play" aria-label="Смотреть видео"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg><span>Смотреть видео</span></button>
+        <span class="label br video-dur">0:30</span>
+      </div>
+    </div>
   </section>
 
   <!-- ПОДБОР -->
@@ -289,9 +304,7 @@
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script defer src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 <script defer src="data.js"></script>
-<script defer src="app.js?v=15"></script>
-<script defer src="scene.js?v=15"></script>
-<script defer src="device.js?v=17"></script>
-<script defer src="home.js?v=15"></script>
+<script defer src="app.js?v=18"></script>
+<script defer src="home.js?v=23"></script>
 </body>
 </html>
