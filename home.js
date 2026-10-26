@@ -70,17 +70,9 @@
   }
 
   /* ——— Первый экран: вертикальная прокрутка двигает направления по горизонтали ——— */
-  const hero = $('#hero'), track = $('#hxTrack'), devs = $$('.hx-dev'), segs = $$('.hx-seg');
-  const N = devs.length;
-  // Прибор не исчезает, а сменяется: новый «встаёт» с лёгким поворотом и масштабом
-  let shown = -1;
-  const showDev = i => {
-    if (i === shown) return;
-    const dir = i > shown ? 1 : -1; shown = i;
-    devs.forEach((d, k) => d.classList.toggle('is-on', k === i));
-    gsap.fromTo(devs[i], { rotationY: 28 * dir, scale: .9, xPercent: 6 * dir }, { rotationY: 0, scale: 1, xPercent: 0, duration: 1, ease: 'expo.out', overwrite: true });
-  };
-  showDev(0);
+  const hero = $('#hero'), track = $('#hxTrack'), segs = $$('.hx-seg');
+  const N = segs.length;
+  // Прибор лежит внутри своего слайда и едет вместе с текстом — меняются одновременно
   // Одна прокрутка — одно направление. Слайды переключаются анимацией по времени, а не по положению
   // скролла, поэтому промежуточных состояний («застывший» на середине текст) не бывает.
   let idx = 0, busy = false, doneAt = -1e9;
@@ -89,7 +81,6 @@
     i = Math.max(0, Math.min(N - 1, i));
     const changed = i !== idx; idx = i;
     hero.dataset.active = i;
-    showDev(i);
     gsap.to(track, { xPercent: -100 * i / N, duration: 1, ease: 'power3.inOut', overwrite: true });
     segs.forEach((g, k) => { g.classList.toggle('is-on', k === i); gsap.to(g, { '--p': k <= i ? 1 : 0, duration: .8, ease: 'power2.inOut', overwrite: true }); });
     if (scroll) {

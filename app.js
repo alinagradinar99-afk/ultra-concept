@@ -25,7 +25,7 @@
     truck: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M3 6h11v10H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>'
   };
   // Оригинальный знак ГК «УЛЬТРА» (ultra-gk-logo/ultra-logo-icon.svg), белый — для тёмного фона
-  const logoSvg = '<svg viewBox="0 0 146.63 146.1" aria-hidden="true"><path fill="#fff" d="M107,9.76H58.72l.17,55.06c0,6.94,5,12.59,11.24,12.59H79v5H52.57c-9,0-16.22-7.88-16.22-17.56L36.17,10A29.65,29.65,0,0,0,10,39.41v67.28a29.66,29.66,0,0,0,29.65,29.66H107a29.66,29.66,0,0,0,29.66-29.66V39.41A29.65,29.65,0,0,0,107,9.76Zm3.33,83.52c0,9.68-7.28,17.56-16.22,17.56H57.54v-5H73.72c6.19,0,11.23-5.650,11.23-12.59l.19-37.44,3.61,0v0l4.63,0v0h4l4.63,0v0l3.5,0v0l5,0Z"/></svg>';
+  const logoSvg = '<svg viewBox="0 0 146.63 146.1" aria-hidden="true"><path fill="#8B5CF6" d="M107,9.76H58.72l.17,55.06c0,6.94,5,12.59,11.24,12.59H79v5H52.57c-9,0-16.22-7.88-16.22-17.56L36.17,10A29.65,29.65,0,0,0,10,39.41v67.28a29.66,29.66,0,0,0,29.65,29.66H107a29.66,29.66,0,0,0,29.66-29.66V39.41A29.65,29.65,0,0,0,107,9.76Zm3.33,83.52c0,9.68-7.28,17.56-16.22,17.56H57.54v-5H73.72c6.19,0,11.23-5.650,11.23-12.59l.19-37.44,3.61,0v0l4.63,0v0h4l4.63,0v0l3.5,0v0l5,0Z"/></svg>';
   const page = document.body.dataset.page;
   const count = s => D.products.filter(p => p.s === s).length;
 
@@ -45,7 +45,7 @@
       <div class="h-actions">
         <button class="icon-btn" data-search aria-label="Поиск по сайту">${I.search}</button>
         <a class="icon-btn" href="tel:+74999677799" aria-label="Позвонить +7 (499) 967-77-99">${I.phone}</a>
-        <button class="btn btn-accent btn-s h-cta" data-modal="Запрос ТКП">Отправить запрос ${I.arrow}</button>
+        <button class="btn btn-violet btn-s h-cta" data-modal="Запрос ТКП">Отправить запрос ${I.arrow}</button>
         <button class="icon-btn burger" aria-label="Меню" aria-expanded="false">${I.menu}</button>
       </div>
     </header>
