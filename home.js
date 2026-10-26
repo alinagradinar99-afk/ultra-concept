@@ -4,16 +4,16 @@
   const U = window.ULTRA, { $, $$, I, tile, sections, products, solutions, facets, reduce, hasGsap } = U;
   const small = matchMedia('(max-width: 680px)').matches;
   const G = hasGsap && !reduce;
+  const full = !!$('#solutions'); // в короткой версии страницы (home-short.html) блоков ниже видео нет
 
   /* ——— Отраслевые решения: лесенка ——— */
-  $('#stairs').innerHTML = solutions.map((s, i) => {
+  if (full) $('#stairs').innerHTML = solutions.map((s, i) => {
     const n = products.filter(p => p.industry.includes(s.industry)).length;
     return `<a class="stair reveal" href="catalog.html?industry=${encodeURIComponent(s.industry)}"><span class="label">0${i + 1}</span>
       <div><h3>${s.name}</h3><p>${s.text}</p><span class="go">${n} приборов в фильтре →</span></div></a>`;
   }).join('');
 
-  $('#inlineForm').innerHTML = U.formHtml('inline');
-  U.bindForms($('#inlineForm'));
+  if (full) { $('#inlineForm').innerHTML = U.formHtml('inline'); U.bindForms($('#inlineForm')); }
 
   /* ——— Одометры: колонки цифр ——— */
   $$('[data-odo]').forEach(el => {
@@ -32,7 +32,7 @@
   });
 
   // Шкала-прогресс услуг
-  $('#ticks').innerHTML = '<i></i>'.repeat(small ? 24 : 48);
+  if (full) $('#ticks').innerHTML = '<i></i>'.repeat(small ? 24 : 48);
 
   /* ——— Без анимаций: показываем всё в финальном состоянии ——— */
   if (!G) {
@@ -149,6 +149,8 @@
 
   /* Видео: обложка чуть приближается при прокрутке */
   gsap.fromTo('.video-full .video-poster', { scale: 1.15 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: '#video', start: 'top bottom', end: 'top top', scrub: true } });
+
+  if (!full) return;
 
   /* Занавес: фиолетовая панель раскрывается на всю ширину (ON) */
   gsap.fromTo('#curtainPanel',
