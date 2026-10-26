@@ -71,8 +71,10 @@ button { cursor: pointer; background: none; border: 0; padding: 0; }
 .pl-base { fill: rgba(236, 230, 255, .08); }
 .pl-full { fill: var(--ui-hover); }
 .pl-wrap { display: grid; justify-items: center; gap: 32px; }
-.pl-bar { position: absolute; left: var(--gutter); right: var(--gutter); bottom: 40px; height: 2px; background: var(--line-2); overflow: hidden; }
-.pl-bar i { position: absolute; inset: 0; background: var(--ui-hover); transform: scaleX(0); transform-origin: left; }
+/* Строка загрузки из делений, как шкала в блоке услуг: заполненные деления выше и фиолетовые */
+.pl-ticks { position: absolute; left: max(var(--gutter), calc((100% - var(--wrap)) / 2 + var(--gutter))); right: max(var(--gutter), calc((100% - var(--wrap)) / 2 + var(--gutter))); bottom: 40px; height: 14px; display: flex; gap: 5px; align-items: center; }
+.pl-ticks i { flex: 1; height: 5px; border-radius: 2px; background: var(--line-2); transition: background .2s, height .2s; }
+.pl-ticks i.on { height: 14px; background: var(--ui-hover); }
 
 /* ——— Шапка: ряд тёмных плашек ——— */
 /* хедер и первый экран — по той же центрированной сетке, что и контент (.wrap) */

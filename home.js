@@ -60,11 +60,14 @@
   else {
     sessionStorage.setItem('ultraSeen', 1);
     U.lenis && U.lenis.stop();
-    // Минималистичный прелоадер: логотип заполняется снизу вверх, внизу тонкая строка загрузки
+    // Минималистичный прелоадер: логотип заполняется снизу вверх, внизу шкала загрузки из делений
+    const plTicks = $('#plTicks'), plN = small ? 20 : 48, pl = { v: 0 };
+    plTicks.innerHTML = '<i></i>'.repeat(plN);
+    const plI = $$('i', plTicks);
     gsap.timeline()
-      .from('.pl-logo, .pl-bar', { opacity: 0, duration: .5, ease: 'power1.out' })
+      .from('.pl-logo, .pl-ticks', { opacity: 0, duration: .5, ease: 'power1.out' })
       .to('#plFill', { attr: { y: 0 }, duration: 1.8, ease: 'power2.inOut' }, '<.1')
-      .to('#plBar', { scaleX: 1, duration: 1.8, ease: 'power2.inOut' }, '<')
+      .to(pl, { v: plN, duration: 1.8, ease: 'power2.inOut', onUpdate: () => plI.forEach((t, i) => t.classList.toggle('on', i < Math.round(pl.v))) }, '<')
       .to(pre, { opacity: 0, duration: .7, ease: 'power1.inOut', onStart: heroIn, onComplete: () => { pre.remove(); U.lenis && U.lenis.start(); } }, '+=.2');
     U.ready({ holdCurtain: false });
   }
