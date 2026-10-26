@@ -46,7 +46,7 @@
   /* ========== Анимации (GSAP) ========== */
 
   const txt = sl => $$(".hx-copy > *, .hx-side .hx-num, .hx-facts > div", sl); // текст слайда для поэтапного появления
-  /* Прелоадер-HUD: один раз за сессию */
+  /* Прелоадер: один раз за сессию */
   const pre = $('#preloader');
   const seen = sessionStorage.getItem('ultraSeen') || sessionStorage.getItem('ultraNav');
   const heroIn = () => {
@@ -60,15 +60,12 @@
   else {
     sessionStorage.setItem('ultraSeen', 1);
     U.lenis && U.lenis.stop();
-    const cnt = $('#plCount'), arc = $('#plArc'), p = { v: 0 };
-    $$('.orbit', pre).forEach(g => gsap.to(g, { rotation: 360 * Math.sign(+g.dataset.s), duration: 6 / Math.abs(+g.dataset.s), repeat: -1, ease: 'none', svgOrigin: '0 0' }));
-    gsap.from($$('.ring', pre), { attr: { r: 0 }, opacity: 0, duration: 1.6, stagger: .1, ease: 'expo.out' });
-    gsap.from('.pl-tag', { opacity: 0, filter: 'blur(8px)', duration: 1, stagger: .2, delay: .4 });
+    // Минималистичный прелоадер: логотип заполняется снизу вверх, внизу тонкая строка загрузки
     gsap.timeline()
-      .to(p, { v: 100, duration: 2.6, ease: 'power2.inOut', onUpdate: () => { cnt.textContent = String(Math.round(p.v)).padStart(3, '0'); arc.setAttribute('stroke-dashoffset', 1 - p.v / 100); } })
-      .to(pre.querySelector('svg'), { rotationX: 68, scale: 1.5, opacity: 0, duration: 1.1, ease: 'expo.in', transformPerspective: 900 }, '+=.15')
-      .to('.pl-tag, .pl-brand, .pl-count', { opacity: 0, y: -20, duration: .6, stagger: .04 }, '<')
-      .to(pre, { clipPath: 'inset(0 0 100% 0)', duration: 1, ease: 'expo.inOut', onStart: heroIn, onComplete: () => { pre.remove(); U.lenis && U.lenis.start(); } }, '-=.3');
+      .from('.pl-logo, .pl-bar', { opacity: 0, duration: .5, ease: 'power1.out' })
+      .to('#plFill', { attr: { y: 0 }, duration: 1.8, ease: 'power2.inOut' }, '<.1')
+      .to('#plBar', { scaleX: 1, duration: 1.8, ease: 'power2.inOut' }, '<')
+      .to(pre, { opacity: 0, duration: .7, ease: 'power1.inOut', onStart: heroIn, onComplete: () => { pre.remove(); U.lenis && U.lenis.start(); } }, '+=.2');
     U.ready({ holdCurtain: false });
   }
 
@@ -79,8 +76,8 @@
   // после прибора — плавно, по строкам; уходящий текст гаснет до начала сдвига
   slides.forEach((sl, k) => { if (k) gsap.set(txt(sl), { opacity: 0, y: 28 }); });
   const reveal = (sl, delay) => {
-    gsap.fromTo($('.hx-stage', sl), { scale: .9 }, { scale: 1, duration: 1.4, ease: 'expo.out', overwrite: 'auto' });
-    gsap.to(txt(sl), { opacity: 1, y: 0, duration: 1, ease: 'expo.out', stagger: .09, delay, overwrite: true });
+    gsap.fromTo($('.hx-stage', sl), { scale: .94, opacity: .6 }, { scale: 1, opacity: 1, duration: 1.8, ease: 'power2.out', overwrite: 'auto' });
+    gsap.to(txt(sl), { opacity: 1, y: 0, duration: 1.3, ease: 'power3.out', stagger: .1, delay, overwrite: true });
   };
   // Одна прокрутка — одно направление. Слайды переключаются анимацией по времени, а не по положению
   // скролла, поэтому промежуточных состояний («застывший» на середине текст) не бывает.
@@ -91,17 +88,18 @@
     const changed = i !== idx, prev = slides[idx]; idx = i;
     hero.dataset.active = i;
     if (changed) {
-      gsap.to(txt(prev), { opacity: 0, y: -16, duration: .35, ease: 'power2.in', stagger: .02, overwrite: true });
-      reveal(slides[i], .7);
+      gsap.to(txt(prev), { opacity: 0, y: -12, duration: .5, ease: 'power1.in', stagger: .03, overwrite: true });
+      gsap.to($('.hx-stage', prev), { scale: .94, opacity: .6, duration: 1.2, ease: 'power2.inOut', overwrite: 'auto' });
+      reveal(slides[i], .75);
     }
-    gsap.to(track, { xPercent: -100 * i / N, duration: 1, ease: 'power3.inOut', overwrite: true });
+    gsap.to(track, { xPercent: -100 * i / N, duration: 1.4, ease: 'power2.inOut', overwrite: true });
     segs.forEach((g, k) => { g.classList.toggle('is-on', k + 1 === i); gsap.to(g, { '--p': k + 1 <= i ? 1 : 0, duration: .8, ease: 'power2.inOut', overwrite: true }); });
     if (scroll) {
       busy = true;
       const y = st.start + step() * i;
       const done = () => { if (busy) { busy = false; doneAt = performance.now(); } };
-      U.lenis ? U.lenis.scrollTo(y, { duration: 1, lock: true, force: true, onComplete: done }) : (scrollTo({ top: y, behavior: 'smooth' }), setTimeout(done, 1000));
-      setTimeout(done, 1300); // страховка
+      U.lenis ? U.lenis.scrollTo(y, { duration: 1.4, lock: true, force: true, onComplete: done }) : (scrollTo({ top: y, behavior: 'smooth' }), setTimeout(done, 1400));
+      setTimeout(done, 1700); // страховка
     }
     return changed;
   };

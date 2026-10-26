@@ -68,14 +68,12 @@ button { cursor: pointer; background: none; border: 0; padding: 0; }
 
 /* ——— Прелоадер-HUD ——— */
 .preloader { position: fixed; inset: 0; z-index: 150; background: var(--bg); display: grid; place-items: center; overflow: hidden; }
-.preloader svg { width: min(70vmin, 560px); height: auto; overflow: visible; }
-.preloader .ring { fill: none; stroke: var(--line-2); }
-.preloader .ring.tick { stroke-dasharray: 1 7; stroke: rgba(236, 230, 255, .3); }
-.preloader .arc { fill: none; stroke: var(--accent); stroke-width: 1.5; }
-.preloader .orb { fill: var(--accent); filter: drop-shadow(0 0 6px var(--accent)); }
-.pl-tag { position: absolute; font: 400 11px var(--f-mono); letter-spacing: .14em; color: var(--muted); white-space: nowrap; }
-.pl-count { position: absolute; right: var(--gutter); bottom: var(--gutter); font: 300 clamp(64px, 12vw, 180px)/.8 var(--f); letter-spacing: -.06em; font-variant-numeric: tabular-nums; }
-.pl-brand { position: absolute; left: var(--gutter); bottom: var(--gutter); }
+.pl-logo { width: 72px; height: auto; }
+.pl-base { fill: rgba(236, 230, 255, .08); }
+.pl-full { fill: var(--ui-hover); }
+.pl-wrap { display: grid; justify-items: center; gap: 32px; }
+.pl-bar { position: relative; width: 140px; height: 1px; background: var(--line-2); overflow: hidden; }
+.pl-bar i { position: absolute; inset: 0; background: var(--ui-hover); transform: scaleX(0); transform-origin: left; }
 
 /* ——— Шапка: ряд тёмных плашек ——— */
 .header { position: fixed; z-index: 60; top: 0; left: 0; right: 0; padding: 12px var(--gutter); display: flex; align-items: center; gap: 6px; transition: transform .6s var(--ease); }
@@ -218,8 +216,7 @@ button { cursor: pointer; background: none; border: 0; padding: 0; }
 .cat-card[data-k="aux"]::before { background: radial-gradient(circle, rgba(196, 178, 255, .3), transparent 62%); }
 .cat-card:hover { background: var(--surface); }
 .cat-card:hover::before { opacity: 1; scale: 1.08; }
-.cat-num, .cat-cnt { position: absolute; top: 28px; }
-.cat-num { left: 28px; color: var(--accent); } .cat-cnt { right: 28px; }
+.cat-cnt { position: absolute; top: 28px; left: 28px; color: var(--accent); }
 .cat-img { flex: 1; display: grid; place-items: center; padding: 64px 40px 28px; }
 .cat-img img { width: 78%; max-height: 230px; object-fit: contain; filter: drop-shadow(0 26px 34px rgba(0, 0, 0, .5)); transition: transform 1s var(--ease); }
 .cat-card:hover .cat-img img { transform: scale(1.06) rotate(-1.5deg); }

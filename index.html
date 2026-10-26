@@ -11,26 +11,21 @@
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin><link rel="preconnect" href="https://unpkg.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
-<link rel="stylesheet" href="styles.css?v=33">
+<link rel="stylesheet" href="styles.css?v=35">
 </head>
 <body data-page="home">
 <div id="header-slot"></div>
 
 <!-- Прелоадер-HUD (Aether / Zeggo) -->
 <div class="preloader" id="preloader" aria-hidden="true">
-  <svg viewBox="-260 -260 520 520">
-    <circle class="ring" r="60"/><circle class="ring" r="110"/><circle class="ring" r="160"/><circle class="ring" r="210"/>
-    <circle class="ring tick" r="236"/>
-    <circle class="arc" r="210" transform="rotate(-90)" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" id="plArc"/>
-    <g class="orbit" data-s="1"><circle class="orb" r="3.5" cx="110"/></g>
-    <g class="orbit" data-s="-.6"><circle class="orb" r="3" cx="160"/></g>
-    <g class="orbit" data-s="1.8"><circle class="orb" r="2.5" cx="60"/></g>
+  <div class="pl-wrap">
+  <svg class="pl-logo" viewBox="0 0 146.63 146.1">
+    <defs><clipPath id="plClip"><rect id="plFill" x="0" y="146.1" width="146.63" height="146.1"/></clipPath></defs>
+    <path class="pl-base" d="M107,9.76H58.72l.17,55.06c0,6.94,5,12.59,11.24,12.59H79v5H52.57c-9,0-16.22-7.88-16.22-17.56L36.17,10A29.65,29.65,0,0,0,10,39.41v67.28a29.66,29.66,0,0,0,29.65,29.66H107a29.66,29.66,0,0,0,29.66-29.66V39.41A29.65,29.65,0,0,0,107,9.76Zm3.33,83.52c0,9.68-7.28,17.56-16.22,17.56H57.54v-5H73.72c6.19,0,11.23-5.650,11.23-12.59l.19-37.44,3.61,0v0l4.63,0v0h4l4.63,0v0l3.5,0v0l5,0Z"/>
+    <path class="pl-full" d="M107,9.76H58.72l.17,55.06c0,6.94,5,12.59,11.24,12.59H79v5H52.57c-9,0-16.22-7.88-16.22-17.56L36.17,10A29.65,29.65,0,0,0,10,39.41v67.28a29.66,29.66,0,0,0,29.65,29.66H107a29.66,29.66,0,0,0,29.66-29.66V39.41A29.65,29.65,0,0,0,107,9.76Zm3.33,83.52c0,9.68-7.28,17.56-16.22,17.56H57.54v-5H73.72c6.19,0,11.23-5.650,11.23-12.59l.19-37.44,3.61,0v0l4.63,0v0h4l4.63,0v0l3.5,0v0l5,0Z" clip-path="url(#plClip)"/>
   </svg>
-  <span class="pl-tag" style="left:calc(50% + min(26vmin,200px));top:calc(50% - min(26vmin,200px))">[ РАСХОД ]</span>
-  <span class="pl-tag" style="right:calc(50% + min(30vmin,230px));top:50%">[ УРОВЕНЬ ]</span>
-  <span class="pl-tag" style="left:50%;top:calc(50% + min(31vmin,240px));transform:translateX(-50%)">[ ПОВЕРКА ]</span>
-  <div class="pl-brand"><span class="label br">ГК УЛЬТРА · КИПиА</span></div>
-  <div class="pl-count" id="plCount">000</div>
+  <div class="pl-bar"><i id="plBar"></i></div>
+  </div>
 </div>
 
 <main>
@@ -124,19 +119,19 @@
       </div>
       <div class="cat-cards">
         <a class="cat-card reveal" href="catalog.html?s=flow" data-k="flow">
-          <span class="label cat-num">01</span><span class="label cat-cnt">12 моделей</span>
+          <span class="label cat-cnt">12 моделей</span>
           <div class="cat-img"><img src="img/dir-flow.webp?v=2" alt="Измерение расхода" loading="lazy"></div>
           <div class="cat-body"><h3>Измерение расхода</h3><p>Ультразвуковые, вихревые, электромагнитные и массовые расходомеры, трубы Вентури</p>
             <span class="btn btn-line">Перейти в каталог <i data-i="arrow"></i></span></div>
         </a>
         <a class="cat-card reveal" href="catalog.html?s=level" data-k="level">
-          <span class="label cat-num">02</span><span class="label cat-cnt">08 моделей</span>
+          <span class="label cat-cnt">08 моделей</span>
           <div class="cat-img"><img src="img/dir-level.webp?v=2" alt="Измерение уровня" loading="lazy"></div>
           <div class="cat-body"><h3>Измерение уровня</h3><p>Радарные, магнитострикционные, байпасные и буйковые уровнемеры, сигнализаторы</p>
             <span class="btn btn-line">Перейти в каталог <i data-i="arrow"></i></span></div>
         </a>
         <a class="cat-card reveal" href="catalog.html?s=aux" data-k="aux">
-          <span class="label cat-num">03</span><span class="label cat-cnt">05 позиций</span>
+          <span class="label cat-cnt">05 позиций</span>
           <div class="cat-img"><img src="img/dir-aux.webp?v=2" alt="Вспомогательное оборудование" loading="lazy"></div>
           <div class="cat-body"><h3>Вспомогательное оборудование</h3><p>Струевыпрямители, прямые участки, фланцы, выносные колонки, камеры СОД</p>
             <span class="btn btn-line">Перейти в каталог <i data-i="arrow"></i></span></div>
@@ -318,7 +313,7 @@
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script defer src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 <script defer src="data.js"></script>
-<script defer src="app.js?v=33"></script>
-<script defer src="home.js?v=33"></script>
+<script defer src="app.js?v=35"></script>
+<script defer src="home.js?v=35"></script>
 </body>
 </html>
