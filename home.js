@@ -6,7 +6,7 @@
   const G = hasGsap && !reduce;
 
   /* ——— Направления (строки) ——— */
-  const art = { flow: 'optiflux9090.png', level: 'rrf5.png', aux: 'venturi.png' };
+  const art = { flow: 'optiflux9090.webp', level: 'rrf5.webp', aux: 'venturi.webp' };
   $('#dirList').innerHTML = Object.entries(sections).map(([k, s], i) => `
     <a class="dir-row reveal" href="${s.url}" data-img="img/${art[k]}">
       <span class="num">0${i + 1}</span><h3>${s.name}</h3><p>${s.text}</p>
@@ -97,7 +97,9 @@
   const pre = $('#preloader');
   const seen = sessionStorage.getItem('ultraSeen') || sessionStorage.getItem('ultraNav');
   const heroIn = () => {
-    U.blurIn($('#heroTitle'), { delay: .1 });
+    // На мобильном заголовок не прячем (opacity 0 задерживает LCP) — только лёгкий сдвиг
+    if (small) gsap.from('#heroTitle', { y: 24, duration: 1.2, ease: 'expo.out' });
+    else U.blurIn($('#heroTitle'), { delay: .1 });
     gsap.from('.hero-media img', { scale: 1.18, duration: 2.4, ease: 'expo.out' });
     gsap.to('#hero .reveal', { opacity: 1, y: 0, duration: 1.2, ease: 'expo.out', stagger: .12, delay: .5 });
   };
