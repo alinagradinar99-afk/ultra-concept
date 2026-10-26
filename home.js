@@ -45,7 +45,7 @@
 
   /* ========== Анимации (GSAP) ========== */
 
-  const txt = sl => $$(".hx-copy > *, .hx-side .hx-num, .hx-facts > div, .hx-side > .btn", sl); // текст слайда для поэтапного появления
+  const txt = sl => $$(".hx-copy > *, .hx-side .hx-num, .hx-facts > div, .hx-side > p, .hx-side > .btn", sl); // текст слайда для поэтапного появления
   /* Прелоадер: один раз за сессию */
   const pre = $('#preloader');
   const seen = sessionStorage.getItem('ultraSeen') || sessionStorage.getItem('ultraNav');
