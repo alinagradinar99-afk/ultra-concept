@@ -140,11 +140,11 @@ button { cursor: pointer; background: none; border: 0; padding: 0; }
   background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px); background-size: 80px 80px;
   mask-image: radial-gradient(60% 65% at 50% 55%, #000, transparent 75%); -webkit-mask-image: radial-gradient(60% 65% at 50% 55%, #000, transparent 75%); }
 /* Свечение фона: у каждого направления свой цвет, сменяется плавно */
-.hx-glow i { position: absolute; left: 50%; top: 52%; width: min(130vh, 1300px); aspect-ratio: 1; translate: -50% -50%; border-radius: 50%; filter: blur(30px); opacity: 0; transition: opacity 1s var(--ease); }
-.hx-glow i:nth-child(1) { background: radial-gradient(circle, rgba(124, 58, 237, .78), rgba(91, 33, 182, .34) 45%, transparent 70%); }
+.hx-glow i { position: absolute; left: 50%; top: 52%; width: min(100vh, 1000px); aspect-ratio: 1; translate: -50% -50%; border-radius: 50%; filter: blur(30px); opacity: 0; transition: opacity 1s var(--ease); }
+/* одно спокойное свечение одной силы: фиолетовое, на уровне — бирюзовое */
+.hx-glow i:nth-child(1) { background: radial-gradient(circle, rgba(124, 58, 237, .34), transparent 62%); }
 .hx-glow i:nth-child(2) { background: radial-gradient(circle, rgba(62, 230, 200, .3), transparent 62%); }
-.hx-glow i:nth-child(3) { background: radial-gradient(circle, rgba(196, 178, 255, .26), transparent 62%); }
-.hx[data-active="0"] .hx-glow i:nth-child(1), .hx[data-active="1"] .hx-glow i:nth-child(1), .hx[data-active="2"] .hx-glow i:nth-child(2), .hx[data-active="3"] .hx-glow i:nth-child(3) { opacity: 1; }
+.hx[data-active="0"] .hx-glow i:nth-child(1), .hx[data-active="1"] .hx-glow i:nth-child(1), .hx[data-active="2"] .hx-glow i:nth-child(2), .hx[data-active="3"] .hx-glow i:nth-child(1) { opacity: 1; }
 .hx-head { position: absolute; z-index: 4; left: var(--gutter); top: calc(var(--header-h) + 28px); max-width: 520px; }
 .hero-over { display: inline-flex; align-items: center; gap: 12px; font: 400 12px var(--f-mono); letter-spacing: .18em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
 .hero-over i { width: 28px; height: 1px; background: var(--accent); }
