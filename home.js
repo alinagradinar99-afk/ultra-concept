@@ -81,26 +81,64 @@
     gsap.fromTo(devs[i], { rotationY: 28 * dir, scale: .9, xPercent: 6 * dir }, { rotationY: 0, scale: 1, xPercent: 0, duration: 1, ease: 'expo.out', overwrite: true });
   };
   showDev(0);
-  const htl = gsap.timeline({
-    defaults: { ease: 'none' },
-    scrollTrigger: {
-      trigger: hero, start: 'top top', end: () => '+=' + innerHeight * (N - 1) * (small ? .9 : 1.1), pin: '.hx-pin', scrub: 1, anticipatePin: 1,
-      snap: { snapTo: 1 / (N - 1), duration: { min: .3, max: .8 }, ease: 'power2.inOut', delay: .08 },
-      onUpdate: self => {
-        const p = self.progress * (N - 1), a = Math.round(p);
-        if (hero.dataset.active != a) hero.dataset.active = a;
-        showDev(a);
-        segs.forEach((g, i) => { g.style.setProperty('--p', Math.max(0, Math.min(1, p - i + 1))); g.classList.toggle('is-on', i === a); });
-      }
+  // Одна прокрутка — одно направление. Слайды переключаются анимацией по времени, а не по положению
+  // скролла, поэтому промежуточных состояний («застывший» на середине текст) не бывает.
+  let idx = 0, busy = false, doneAt = -1e9;
+  const justDone = now => now - doneAt < 1500; // хвост инерции после переключения
+  const go = (i, scroll) => {
+    i = Math.max(0, Math.min(N - 1, i));
+    const changed = i !== idx; idx = i;
+    hero.dataset.active = i;
+    showDev(i);
+    gsap.to(track, { xPercent: -100 * i / N, duration: 1, ease: 'power3.inOut', overwrite: true });
+    segs.forEach((g, k) => { g.classList.toggle('is-on', k === i); gsap.to(g, { '--p': k <= i ? 1 : 0, duration: .8, ease: 'power2.inOut', overwrite: true }); });
+    if (scroll) {
+      busy = true;
+      const y = st.start + step() * i;
+      const done = () => { if (busy) { busy = false; doneAt = performance.now(); } };
+      U.lenis ? U.lenis.scrollTo(y, { duration: 1, lock: true, force: true, onComplete: done }) : (scrollTo({ top: y, behavior: 'smooth' }), setTimeout(done, 1000));
+      setTimeout(done, 1300); // страховка
     }
+    return changed;
+  };
+  const step = () => innerHeight * (small ? .9 : 1.1);
+  const st = ScrollTrigger.create({
+    trigger: hero, start: 'top top', end: () => '+=' + step() * (N - 1), pin: '.hx-pin', anticipatePin: 1,
+    toggleClass: { targets: document.body, className: 'in-scene' },
+    // если попали в блок не колесом (клавиши, ползунок, якорь) — показываем ближайший слайд целиком
+    onUpdate: self => { if (!busy) { const a = Math.round(self.progress * (N - 1)); if (a !== idx) go(a); } }
   });
-  // круглый бейдж «Отправить запрос» не мешает прогрессу, пока закреплён первый экран
-  ScrollTrigger.create({ trigger: hero, start: 'top top', end: () => htl.scrollTrigger.end, toggleClass: { targets: document.body, className: 'in-scene' } });
-  htl.to(track, { xPercent: -100 * (N - 1) / N, duration: N - 1 }, 0);
-  segs.forEach((g, i) => g.addEventListener('click', () => {
-    const st = htl.scrollTrigger, y = st.start + (st.end - st.start) * i / (N - 1);
-    U.lenis ? U.lenis.scrollTo(y, { duration: 1.2 }) : scrollTo({ top: y, behavior: 'smooth' });
-  }));
+  go(0);
+  // Колесо и свайп внутри закреплённого блока: жест = ровно один слайд, Lenis на это время не листает страницу
+  const inZone = () => scrollY >= st.start - 2 && scrollY <= st.end + 2;
+  const handle = (dir, e) => {
+    if (!inZone()) return;
+    if (busy) { e.preventDefault(); e.stopImmediatePropagation(); return; }
+    const next = idx + dir;
+    if (next < 0 || next > N - 1) return;           // крайний слайд — дальше обычная прокрутка страницы
+    e.preventDefault(); e.stopImmediatePropagation();
+    go(next, true);
+  };
+  // Инерция тачпада шлёт события ещё ~1 с после жеста: новый жест принимаем только после паузы в колесе
+  let lastWheel = 0;
+  window.addEventListener('wheel', e => {
+    const now = performance.now(), gap = now - lastWheel; lastWheel = now;
+    if (!inZone()) return;
+    if (Math.abs(e.deltaY) < 4 || (gap < 160 && !busy && justDone(now))) { e.preventDefault(); e.stopImmediatePropagation(); return; }
+    handle(e.deltaY > 0 ? 1 : -1, e);
+  }, { capture: true, passive: false });
+  let ty = null;
+  window.addEventListener('touchstart', e => { ty = e.touches[0].clientY; }, { capture: true, passive: true });
+  window.addEventListener('touchmove', e => {
+    if (ty == null) return; const d = ty - e.touches[0].clientY;
+    if (inZone() && (busy || Math.abs(d) > 4)) { const dir = d > 0 ? 1 : -1; const next = idx + dir; if (busy || (next >= 0 && next < N)) e.preventDefault(); }
+    if (Math.abs(d) > 40) { handle(d > 0 ? 1 : -1, e); ty = null; }
+  }, { capture: true, passive: false });
+  window.addEventListener('keydown', e => {
+    if (!inZone() || !['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', ' '].includes(e.key)) return;
+    handle(e.key === 'ArrowUp' || e.key === 'PageUp' ? -1 : 1, e);
+  });
+  segs.forEach((g, i) => g.addEventListener('click', () => go(i, true)));
 
   // Прибор стоит неподвижно — анимируется только смена направления
 
