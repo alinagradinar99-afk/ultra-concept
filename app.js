@@ -162,12 +162,12 @@
     }
   });
 
-  /* ——— Шапка: прячется при прокрутке вниз ——— */
+  /* ——— Шапка: прячется при прокрутке вниз, но не на горизонтальном скролле первого экрана (body.in-scene) ——— */
   const hdr = $('#header');
   let lastY = 0;
   const onScroll = () => {
     const y = scrollY;
-    hdr.classList.toggle('is-hidden', y > 300 && y > lastY && !$('#mobileMenu').classList.contains('is-open'));
+    hdr.classList.toggle('is-hidden', y > 300 && y > lastY && !document.body.classList.contains('in-scene') && !$('#mobileMenu').classList.contains('is-open'));
     lastY = y;
   };
   addEventListener('scroll', onScroll, { passive: true }); onScroll();
