@@ -1,6 +1,5 @@
-// Холсты главной.
-// 1) heroFlow — тонкие линии тока поверх фото; курсор срывает вихри.
-// 2) sceneCanvas — сцена «внутрь прибора»: туннель трубы с параболическим профилем скорости
+// Холст главной и телеметрия hero.
+// sceneCanvas — сцена «внутрь прибора»: туннель трубы с параболическим профилем скорости
 //    и дорожка Кармана за телом обтекания. Режимы смешиваются через SCENE.state (им управляет GSAP).
 (function () {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -19,44 +18,12 @@
   }
   const fade = (o, a) => { const c = o.ctx; c.globalCompositeOperation = 'destination-out'; c.fillStyle = `rgba(0,0,0,${a})`; c.fillRect(0, 0, o.W, o.H); c.globalCompositeOperation = 'source-over'; };
 
-  /* ——— 1. Hero ——— */
-  const hcv = document.getElementById('heroFlow');
-  if (hcv) {
-    const o = setup(hcv), m = { x: -1e4, y: -1e4, on: false };
-    let P = [], t = 0;
-    const seed = () => { P = Array.from({ length: small ? 140 : 320 }, () => ({ x: Math.random() * o.W, r: Math.random() * 2 - 1, y: 0, life: Math.random() * 99 })); P.forEach(p => p.y = o.H * .5 + p.r * o.H * .46); };
-    seed(); o.onResize = seed;
-    hcv.parentElement.addEventListener('pointermove', e => { const r = hcv.getBoundingClientRect(); m.x = e.clientX - r.left; m.y = e.clientY - r.top; m.on = true; });
-    hcv.parentElement.addEventListener('pointerleave', () => m.on = false);
-    o.loop = () => {
-      t++; fade(o, .14);
-      const c = o.ctx, umax = Math.max(1.6, o.W / 600), cy = o.H * .5, R = o.H * .46;
-      for (const p of P) {
-        let vx = umax * Math.max(.1, 1 - p.r * p.r), vy = 0;
-        if (m.on) {
-          const dx = p.x - m.x, dy = p.y - m.y, d = Math.hypot(dx, dy) || 1;
-          if (d < 80) { vx *= .3; vy += dy / d * 2.6; }
-          else if (dx > 0 && Math.abs(dy) < 140) vy += Math.sin(dx * .045 - t * .18) * 2.2 * Math.exp(-dx / 380);
-        }
-        const px = p.x, py = p.y;
-        p.x += vx; p.y += vy + (cy + p.r * R - p.y) * .02;
-        if (p.x > o.W + 5) { p.x = -5; continue; }
-        const fast = vx / umax > .75;
-        c.strokeStyle = fast ? `rgba(${ACC},.55)` : `rgba(${WHITE},.22)`;
-        c.lineWidth = fast ? 1.2 : .8;
-        c.beginPath(); c.moveTo(px, py); c.lineTo(p.x, p.y); c.stroke();
-      }
-      if (o.on && !reduce) requestAnimationFrame(o.loop);
-    };
-    if (reduce) { for (let i = 0; i < 60; i++) o.loop(); } else requestAnimationFrame(o.loop);
-
-    // Живая телеметрия в hero
-    const live = [...document.querySelectorAll('[data-live]')];
-    setInterval(() => live.forEach(el => {
-      const [b, a, d] = el.dataset.live.split(',').map(Number);
-      el.firstChild.textContent = (b + (Math.random() * 2 - 1) * a).toLocaleString('ru-RU', { minimumFractionDigits: d, maximumFractionDigits: d });
-    }), 1000);
-  }
+  /* ——— Живая телеметрия в hero ——— */
+  const live = [...document.querySelectorAll('[data-live]')];
+  setInterval(() => live.forEach(el => {
+    const [b, a, d] = el.dataset.live.split(',').map(Number);
+    el.firstChild.textContent = (b + (Math.random() * 2 - 1) * a).toLocaleString('ru-RU', { minimumFractionDigits: d, maximumFractionDigits: d });
+  }), 1000);
 
   /* ——— 2. Сцена ——— */
   const scv = document.getElementById('sceneCanvas');

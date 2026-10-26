@@ -99,9 +99,9 @@
   const heroIn = () => {
     // На мобильном заголовок не прячем (opacity 0 задерживает LCP) — только лёгкий сдвиг
     if (small) gsap.from('#heroTitle', { y: 24, duration: 1.2, ease: 'expo.out' });
-    else U.blurIn($('#heroTitle'), { delay: .1 });
-    gsap.from('.hero-media img', { scale: 1.18, duration: 2.4, ease: 'expo.out' });
-    gsap.to('#hero .reveal', { opacity: 1, y: 0, duration: 1.2, ease: 'expo.out', stagger: .12, delay: .5 });
+    else U.blurIn($('#heroTitle'), { delay: .1, stagger: .018 });
+    gsap.to('#hero .reveal', { opacity: 1, y: 0, duration: 1.2, ease: 'expo.out', stagger: .12, delay: .4 });
+    window.DEVICE && window.DEVICE.start();
   };
   if (seen) { pre.remove(); U.ready(); heroIn(); }
   else {
@@ -120,8 +120,8 @@
   }
 
   /* Hero: параллакс при уходе */
-  gsap.to('.hero-media', { yPercent: 18, ease: 'none', scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true } });
-  gsap.to('#heroTitle', { yPercent: -30, opacity: .2, ease: 'none', scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true } });
+  gsap.to('.hero-text', { yPercent: -18, opacity: .25, ease: 'none', scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true } });
+  gsap.to('#device', { yPercent: 12, scale: .92, ease: 'none', scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true } });
 
   /* ——— Сцена «внутрь прибора»: закреплена, камера движется по прокрутке ——— */
   const S = window.SCENE.state;

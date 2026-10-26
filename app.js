@@ -24,7 +24,8 @@
     gauge: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 18a8 8 0 1 1 16 0"/><path d="m12 18 4-6"/></svg>',
     truck: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M3 6h11v10H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>'
   };
-  const logoSvg = '<svg viewBox="0 0 34 34" fill="none"><rect width="34" height="34" fill="#5b2d90"/><path d="M10 8v10a7 7 0 0 0 14 0V8M17 8v10" stroke="#fff" stroke-width="2.4"/></svg>';
+  // Оригинальный знак ГК «УЛЬТРА» (ultra-gk-logo/ultra-logo-icon.svg)
+  const logoSvg = '<svg viewBox="0 0 146.63 146.1" aria-hidden="true"><path fill="#552878" d="M107,9.76H58.72l.17,55.06c0,6.94,5,12.59,11.24,12.59H79v5H52.57c-9,0-16.22-7.88-16.22-17.56L36.17,10A29.65,29.65,0,0,0,10,39.41v67.28a29.66,29.66,0,0,0,29.65,29.66H107a29.66,29.66,0,0,0,29.66-29.66V39.41A29.65,29.65,0,0,0,107,9.76Zm3.33,83.52c0,9.68-7.28,17.56-16.22,17.56H57.54v-5H73.72c6.19,0,11.23-5.650,11.23-12.59l.19-37.44,3.61,0v0l4.63,0v0h4l4.63,0v0l3.5,0v0l5,0Z"/></svg>';
   const page = document.body.dataset.page;
   const count = s => D.products.filter(p => p.s === s).length;
 
