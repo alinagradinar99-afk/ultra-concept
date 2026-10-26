@@ -52,8 +52,7 @@
   const heroIn = () => {
     // На мобильном заголовок не прячем (opacity 0 задерживает LCP) — только лёгкий сдвиг
     const w = $('.hx-welcome');
-    gsap.from($('.hx-stage', w), { opacity: 0, scale: .86, x: 60, duration: 1.8, ease: 'expo.out' });
-    gsap.from(txt(w), { opacity: 0, y: 28, duration: 1.1, ease: 'expo.out', stagger: .12, delay: .6 });
+    gsap.from(txt(w), { opacity: 0, y: 28, duration: 1.1, ease: 'expo.out', stagger: .12, delay: .2 });
     gsap.from(".hx-progress", { opacity: 0, duration: 1, delay: 1.2 });
   };
   if (seen) { pre.remove(); U.ready(); heroIn(); }
@@ -76,7 +75,7 @@
   // после прибора — плавно, по строкам; уходящий текст гаснет до начала сдвига
   slides.forEach((sl, k) => { if (k) gsap.set(txt(sl), { opacity: 0, y: 28 }); });
   const reveal = (sl, delay) => {
-    gsap.fromTo($('.hx-stage', sl), { scale: .94, opacity: .6 }, { scale: 1, opacity: 1, duration: 1.8, ease: 'power2.out', overwrite: 'auto' });
+    gsap.fromTo($$('.hx-stage', sl), { scale: .94, opacity: .6 }, { scale: 1, opacity: 1, duration: 1.8, ease: 'power2.out', overwrite: 'auto' });
     gsap.to(txt(sl), { opacity: 1, y: 0, duration: 1.3, ease: 'power3.out', stagger: .1, delay, overwrite: true });
   };
   // Одна прокрутка — одно направление. Слайды переключаются анимацией по времени, а не по положению
@@ -89,7 +88,7 @@
     hero.dataset.active = i;
     if (changed) {
       gsap.to(txt(prev), { opacity: 0, y: -12, duration: .5, ease: 'power1.in', stagger: .03, overwrite: true });
-      gsap.to($('.hx-stage', prev), { scale: .94, opacity: .6, duration: 1.2, ease: 'power2.inOut', overwrite: 'auto' });
+      gsap.to($$('.hx-stage', prev), { scale: .94, opacity: .6, duration: 1.2, ease: 'power2.inOut', overwrite: 'auto' });
       reveal(slides[i], .75);
     }
     gsap.to(track, { xPercent: -100 * i / N, duration: 1.4, ease: 'power2.inOut', overwrite: true });
