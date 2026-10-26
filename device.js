@@ -1,6 +1,7 @@
 // Hero: расходомер в разборе. Каждая деталь — отдельный слой со своей глубиной (translateZ),
 // поэтому при повороте всей сборки слои смещаются друг относительно друга и картинка читается как объём.
-// Цикл: детали прилетают → прибор собирается → пауза → снова разбирается; вся сборка медленно вращается.
+// Детали прилетают и встают на место (сборка), дальше прибор «дышит» и мягко поворачивается.
+// Картинка плоская: большие сдвиги деталей и глубокий поворот открывают линии разреза, поэтому амплитуды малые.
 (function () {
   const W = 1267, H = 1241;
   // x, y, w, h — положение детали на исходной картинке; z — глубина; ax, ay — куда деталь едет при сборке
@@ -17,7 +18,7 @@
     { id: 'bolt_l',   x: 22,  y: 388, w: 102, h: 91,  z: 60, ax: 190,  ay: -55 },
     { id: 'cap_r',    x: 782, y: 350, w: 477, h: 460, z: 70, ax: -210, ay: -85 }
   ];
-  const ASSEMBLE = .62; // насколько близко детали сходятся (1 — вплотную)
+  const BREATH = 4; // px: насколько детали «дышат» вдоль своей оси сборки
 
   const rig = document.getElementById('rig'), box = document.getElementById('device');
   if (!rig) return;
@@ -30,7 +31,7 @@
   // Сдвиги задаём в процентах от размера сцены, чтобы работало на любой ширине
   const sx = v => v / W * box.clientWidth, sy = v => v / H * box.clientHeight;
   const depth = () => box.clientWidth / 900; // глубина масштабируется вместе со сценой
-  els.forEach((el, i) => gsap.set(el, { z: PARTS[i].z * 4 * depth() }));
+  els.forEach((el, i) => gsap.set(el, { z: PARTS[i].z * .8 * depth() }));
 
   window.DEVICE = {
     start() {
@@ -44,23 +45,22 @@
         }, .05 * i);
       });
 
-      // 2. Бесконечный цикл: собрать → пауза → разобрать
-      const cycle = gsap.timeline({ repeat: -1, repeatDelay: 1.2, delay: intro.duration() + .6 });
-      cycle.call(() => state && (state.textContent = '[ сборка ]'))
-        .to(els, { x: (i) => sx(PARTS[i].ax) * ASSEMBLE, y: (i) => sy(PARTS[i].ay) * ASSEMBLE, duration: 1.8, ease: 'power3.inOut', stagger: { each: .05, from: 'end' } })
-        .call(() => state && (state.textContent = '[ в сборе ]'))
-        .to({}, { duration: 1.4 })
-        .call(() => state && (state.textContent = '[ разбор ]'))
-        .to(els, { x: 0, y: 0, duration: 1.8, ease: 'power3.inOut', stagger: { each: .05, from: 'start' } })
-        .call(() => state && (state.textContent = '[ в разборе ]'));
+      intro.call(() => state && (state.textContent = '[ в разборе ]'));
+
+      // 2. «Дыхание»: каждая деталь чуть ходит вдоль своей оси сборки, корпус неподвижен
+      els.forEach((el, i) => {
+        const p = PARTS[i], len = Math.hypot(p.ax, p.ay);
+        if (!len) return;
+        gsap.to(el, { x: p.ax / len * BREATH, y: p.ay / len * BREATH, duration: 2.4 + (i % 4) * .35, ease: 'sine.inOut', repeat: -1, yoyo: true, delay: intro.duration() + i * .12 });
+      });
 
       // 3. Медленное вращение всей сборки + наклон за курсором
       const spin = { ry: 0, rx: 0 }, mouse = { x: 0, y: 0 };
-      gsap.fromTo(spin, { ry: -18 }, { ry: 18, duration: 7, ease: 'sine.inOut', repeat: -1, yoyo: true });
-      gsap.fromTo(spin, { rx: 6 }, { rx: -4, duration: 5, ease: 'sine.inOut', repeat: -1, yoyo: true });
+      gsap.fromTo(spin, { ry: -9 }, { ry: 9, duration: 8, ease: 'sine.inOut', repeat: -1, yoyo: true });
+      gsap.fromTo(spin, { rx: 3 }, { rx: -2, duration: 6, ease: 'sine.inOut', repeat: -1, yoyo: true });
       box.closest('section').addEventListener('pointermove', e => {
         const r = box.getBoundingClientRect();
-        gsap.to(mouse, { x: ((e.clientX - r.left) / r.width - .5) * 16, y: ((e.clientY - r.top) / r.height - .5) * -10, duration: 1.2, ease: 'power3.out' });
+        gsap.to(mouse, { x: ((e.clientX - r.left) / r.width - .5) * 8, y: ((e.clientY - r.top) / r.height - .5) * -5, duration: 1.2, ease: 'power3.out' });
       });
       let visible = true;
       new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(box);
