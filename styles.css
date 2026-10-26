@@ -80,8 +80,9 @@ button { cursor: pointer; background: none; border: 0; padding: 0; }
 .header.is-hidden { transform: translateY(-110%); }
 .logo { display: flex; align-items: center; gap: 10px; height: 40px; padding-right: 14px; flex: none; }
 .logo svg { width: 34px; height: 34px; }
-.logo b { font: 500 19px/1 var(--f); letter-spacing: .02em; }
-.logo small { display: block; font: 400 8.5px/1 var(--f-mono); letter-spacing: .16em; color: var(--muted); margin-bottom: 4px; }
+.logo > span { display: grid; gap: 2px; line-height: 1; }
+.logo b { display: block; font: 500 19px/.9 var(--f); letter-spacing: .02em; }
+.logo small { display: block; font: 400 8.5px/1 var(--f-mono); letter-spacing: .16em; color: var(--muted); }
 .plates { display: flex; gap: 6px; flex: 1; }
 .plate { position: relative; flex: 1; max-width: 220px; height: 40px; padding: 0 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 13.5px; background: rgba(28, 24, 38, .78); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid var(--line); transition: background .3s, border-color .3s; white-space: nowrap; }
 .plate:hover, .plate.is-active { background: rgba(48, 40, 66, .9); border-color: var(--line-2); }
