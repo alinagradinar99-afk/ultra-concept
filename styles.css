@@ -208,7 +208,7 @@ button { cursor: pointer; background: none; border: 0; padding: 0; }
 .dir-row::before { content: ''; position: absolute; inset: 0 calc(var(--gutter) * -1); background: var(--surface); transform: scaleY(0); transform-origin: bottom; transition: transform .6s var(--ease); z-index: -1; }
 .dir-row:hover::before { transform: scaleY(1); }
 .dir-row .num { font: 400 12px var(--f-mono); color: var(--muted); }
-.dir-row h3 { font-size: clamp(30px, 4.6vw, 76px); line-height: 1; font-weight: 300; letter-spacing: -.045em; margin: 0; transition: transform .6s var(--ease); }
+.dir-row h3 { font-size: 44px; line-height: 1; font-weight: 300; letter-spacing: -.045em; margin: 0; transition: transform .6s var(--ease); }
 .dir-row:hover h3 { transform: translateX(16px); }
 .dir-row p { margin: 0; color: var(--muted); font-size: 15px; max-width: 38ch; }
 .dir-row .cnt { font: 400 13px var(--f-mono); color: var(--accent); display: flex; align-items: center; gap: 16px; white-space: nowrap; }
@@ -580,6 +580,7 @@ body[data-page='product'] .badge-cta { bottom: 92px; }
   .picker-results .tile:nth-child(n+5) { display: none; }
   .picker-count b { font-size: 64px; }
   .dir-row { grid-template-columns: 32px 1fr; }
+  .dir-row h3 { font-size: 32px; }
   .dir-row .cnt { grid-column: 2; }
   .stair { grid-template-columns: 1fr; gap: 8px; }
   .stair:nth-child(2), .stair:nth-child(3) { margin-left: 0; }
