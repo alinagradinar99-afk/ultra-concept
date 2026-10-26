@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin><link rel="preconnect" href="https://unpkg.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
-<link rel="stylesheet" href="styles.css?v=10">
+<link rel="stylesheet" href="styles.css?v=12">
 </head>
 <body data-page="product">
 <div id="header-slot"></div>
@@ -82,7 +82,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 <script src="data.js"></script>
-<script src="app.js?v=7"></script>
+<script src="app.js?v=11"></script>
 <script>
 (function () {
   const U = window.ULTRA, { $, $$, I, tile, sections, products, reduce, hasGsap } = U;
@@ -104,9 +104,9 @@
 
   // Галерея с лупой
   const imgs = [p.img, ...({ optiflux9090: ['optiflux9090-2.webp'], rrf5: ['rrf5-2.webp', 'rrf5-3.webp'], optiswirl4200: ['optiswirl4070.webp'] }[p.id] || [])];
-  const main = $('[data-main]'); main.src = 'img/' + imgs[0]; main.alt = full;
-  $('[data-sticky-img]').src = 'img/' + imgs[0]; $('[data-sticky-name]').textContent = p.name; $('[data-sticky-type]').textContent = p.type;
-  $('[data-thumbs]').innerHTML = imgs.length > 1 ? imgs.map((s, i) => `<button aria-current="${i === 0}" aria-label="Фото ${i + 1}"><img src="img/${s}" alt=""></button>`).join('') : '';
+  const main = $('[data-main]'); main.src = 'img/' + imgs[0] + '?v=2'; main.alt = full;
+  $('[data-sticky-img]').src = 'img/' + imgs[0] + '?v=2'; $('[data-sticky-name]').textContent = p.name; $('[data-sticky-type]').textContent = p.type;
+  $('[data-thumbs]').innerHTML = imgs.length > 1 ? imgs.map((s, i) => `<button aria-current="${i === 0}" aria-label="Фото ${i + 1}"><img src="img/${s}?v=2" alt=""></button>`).join('') : '';
   $('[data-thumbs]').addEventListener('click', e => {
     const b = e.target.closest('button'); if (!b) return;
     $$('[data-thumbs] button').forEach(x => x.setAttribute('aria-current', x === b));

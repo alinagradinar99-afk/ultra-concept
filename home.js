@@ -8,7 +8,7 @@
   /* ——— Направления (строки) ——— */
   const art = { flow: 'optiflux9090.webp', level: 'rrf5.webp', aux: 'venturi.webp' };
   $('#dirList').innerHTML = Object.entries(sections).map(([k, s], i) => `
-    <a class="dir-row reveal" href="${s.url}" data-img="img/${art[k]}">
+    <a class="dir-row reveal" href="${s.url}" data-img="img/${art[k]}?v=2">
       <span class="num">0${i + 1}</span><h3>${s.name}</h3><p>${s.text}</p>
       <span class="cnt">${String(products.filter(p => p.s === k).length).padStart(2, '0')} поз. ${I.ne}</span>
     </a>`).join('');

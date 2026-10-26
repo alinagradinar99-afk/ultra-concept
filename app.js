@@ -116,7 +116,7 @@
     const s = Object.entries(p.key).slice(0, 4);
     return `<article class="tile">
       <div class="tile-img"><div class="badges">${p.soon ? '<span class="badge soon">Скоро</span>' : ''}</div>
-        <img src="img/${p.img}" alt="${p.type} ${p.name}" loading="lazy"></div>
+        <img src="img/${p.img}?v=2" alt="${p.type} ${p.name}" loading="lazy"></div>
       <div class="tile-body">
         <div class="tile-type">${p.type}</div>
         <h3 class="tile-name">${p.name}</h3>
